@@ -112,24 +112,17 @@ img {
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(1.25rem, 4vw, 4rem);
+  /* The page-level brand mark was removed (it duplicated the site header), so
+     the copy is the only child; anchor it to the bottom as the two-child
+     space-between layout used to, and clear the fixed header up top. */
+  justify-content: flex-end;
+  padding: calc(76px + clamp(1.25rem, 4vw, 4rem)) clamp(1.25rem, 4vw, 4rem) clamp(1.25rem, 4vw, 4rem);
   background:
     radial-gradient(circle at 78% 22%, rgba(35, 200, 98, 0.2), transparent 24rem),
     #070a08;
 }
 
-.not-found__brand {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-}
 
-.not-found__brand-image {
-  width: 150px;
-  height: auto;
-  object-fit: contain;
-}
 
 .not-found__copy {
   max-width: 52rem;

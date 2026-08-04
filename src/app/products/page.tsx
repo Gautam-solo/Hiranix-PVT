@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ProductCatalogue from "@/components/ProductCatalogue";
+import { SiteFooter } from "@/components/SiteFooter";
 import { products } from "@/data/products";
 
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function ProductsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
       <ProductCatalogue />
+      <SiteFooter currentPath="/products" />
     </>
   );
 }

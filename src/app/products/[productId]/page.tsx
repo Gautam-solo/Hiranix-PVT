@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
+import { SiteFooter } from "@/components/SiteFooter";
 import { findProductBySlug, productRouteSlugs, products } from "@/data/products";
 import styles from "./ProductDetail.module.css";
 
@@ -58,7 +59,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   };
 
   return (
-    <main id="main-content" tabIndex={-1} className={styles.page}>
+    <>
+      <main id="main-content" tabIndex={-1} className={styles.page}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
@@ -187,6 +189,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         <strong>{nextProduct.name}</strong>
         <ArrowRight size={34} weight="light" aria-hidden="true" />
       </Link>
-    </main>
+      </main>
+      <SiteFooter currentPath="/products" />
+    </>
   );
 }

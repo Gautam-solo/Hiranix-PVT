@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { BrandImage } from "@/components/ui/brand-image";
+import { SiteFooter } from "@/components/SiteFooter";
 import styles from "./BrandPage.module.css";
 
 export const metadata: Metadata = {
@@ -34,7 +35,8 @@ const brands = [
 
 export default function BrandPage() {
   return (
-    <main id="main-content" tabIndex={-1} className={styles.page}>
+    <>
+      <main id="main-content" tabIndex={-1} className={styles.page}>
       <section className={styles.portfolio} aria-labelledby="portfolio-title">
         <header className={styles.portfolioIntro}>
           <h1 id="portfolio-title">One house. Three perspectives.</h1>
@@ -74,6 +76,8 @@ export default function BrandPage() {
           <ArrowRight size={22} weight="bold" aria-hidden="true" />
         </Link>
       </section>
-    </main>
+      </main>
+      <SiteFooter currentPath="/brand" />
+    </>
   );
 }

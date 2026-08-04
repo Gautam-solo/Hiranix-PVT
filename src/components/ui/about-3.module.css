@@ -541,9 +541,17 @@
 }
 
 @media (max-width: 900px) {
+  /* Once every row is full-width the page reads as a stack of tall blocks, so
+     the vertical rhythm is tightened throughout and the section padding is
+     pulled in — the horizontal padding was sized for a 1500px canvas. */
+  .about {
+    padding: clamp(3.25rem, 7vw, 6rem) clamp(1.25rem, 4vw, 2.5rem);
+  }
+
   .intro {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
   }
 
   .intro p {
@@ -555,7 +563,7 @@
   }
 
   .mainImage {
-    min-height: 70svh;
+    min-height: 52svh;
   }
 
   .sideColumn {
@@ -569,13 +577,65 @@
     align-self: stretch;
   }
 
+  /* The card was held open at 25rem and its content spread with
+     space-between, leaving a large void between the copy and the button.
+     Let it size to its content and carry the rhythm with gap instead. */
+  .breakout {
+    min-height: 0;
+    justify-content: flex-start;
+    gap: 1.6rem;
+    padding: clamp(1.6rem, 4vw, 2.5rem);
+  }
+
+  .breakout h2 {
+    margin-bottom: 0.7rem;
+  }
+
+  .systems {
+    padding: clamp(3.75rem, 8vw, 7rem) 0;
+  }
+
+  .systems > div {
+    margin-top: 1.75rem;
+  }
+
+  .achievements {
+    padding: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  /* Three full-width blocks stacked to over 1000px. Card one keeps the width
+     it needs for the image and the long label; the two short stats pair off
+     into a row, which compacts the section and gives it a composed, mosaic
+     shape rather than a column of slabs. */
   .achievementGrid {
-    grid-template-columns: 1fr;
-    grid-template-rows: minmax(31rem, 64svh) repeat(2, minmax(16rem, auto));
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto auto;
+    margin-top: clamp(2rem, 4.5vw, 3.25rem);
+  }
+
+  .achievementGrid > div {
+    gap: 0.65rem;
+    padding: clamp(1.35rem, 3.5vw, 2.1rem);
   }
 
   .achievementGrid > div:first-child {
+    min-height: 34svh;
     grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  /* The cards are column-reverse, so flex-start seats the content at the
+     bottom — matching card one, which already sits its label on the floor of
+     the frame. Centred content made the row read as three unrelated boxes. */
+  .achievementGrid > div:nth-child(2),
+  .achievementGrid > div:nth-child(3) {
+    min-height: 11.5rem;
+    justify-content: flex-start;
+  }
+
+  .achievementIntro p {
+    margin-top: 0.85rem;
   }
 
   .contact {
@@ -593,15 +653,15 @@
 
 @media (max-width: 680px) {
   .about {
-    padding-top: 4rem;
+    padding-top: 3.25rem;
   }
 
   .intro h1 {
-    font-size: clamp(3.7rem, 18vw, 6rem);
+    font-size: clamp(3.2rem, 16vw, 5rem);
   }
 
   .mainImage {
-    min-height: 58svh;
+    min-height: 44svh;
   }
 
   .sideColumn {
@@ -609,8 +669,15 @@
     grid-template-rows: auto auto;
   }
 
-  .breakout {
-    min-height: 31rem;
+  /* 3/4 portrait ran to ~467px at this width. The product sits centred with
+     object-fit: contain, so a landscape frame loses nothing and reclaims
+     roughly 170px. */
+  .secondaryImage {
+    aspect-ratio: 4 / 3;
+  }
+
+  .breakoutLogo {
+    height: 2.7rem;
   }
 
   .systems {
@@ -619,6 +686,35 @@
 
   .systems > div {
     justify-content: flex-start;
+    gap: 0.8rem 1.75rem;
+  }
+
+  .achievementIntro h2 {
+    font-size: clamp(2.2rem, 10vw, 3.1rem);
+  }
+
+  /* The two short stats now share a row, so the numerals are set to the
+     half-width measure instead of the full-bleed one. */
+  .achievementGrid dt {
+    max-width: none;
+    font-size: 0.7rem;
+  }
+
+  .achievementGrid > div:nth-child(2),
+  .achievementGrid > div:nth-child(3) {
+    padding: 1.15rem;
+  }
+
+  /* "Worldwide" is nine characters in a ~105px measure. Rather than shrink it
+     to the point of losing its weight as a headline stat, narrow the variable
+     font's width axis — it keeps the size and the mass, and sets it condensed
+     rather than merely small. */
+  .achievementGrid > div:nth-child(2) dd,
+  .achievementGrid > div:nth-child(3) dd {
+    max-width: none;
+    font-size: clamp(1.6rem, 6.9vw, 2.2rem);
+    font-variation-settings: "wght" 820, "wdth" 78;
+    letter-spacing: -0.045em;
   }
 
   .footer {
