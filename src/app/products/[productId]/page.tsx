@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
+import { ProductGallery } from "@/components/ProductGallery";
 import { SiteFooter } from "@/components/SiteFooter";
 import { findProductBySlug, productRouteSlugs, products } from "@/data/products";
 import styles from "./ProductDetail.module.css";
@@ -76,23 +76,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
       <section className={styles.hero}>
         <div className={styles.media}>
-          <div className={styles.primaryImage}>
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              priority
-              sizes="(max-width: 700px) 100vw, (max-width: 1000px) 70vw, 45vw"
-            />
-          </div>
-          <div className={styles.secondaryImage}>
-            <Image
-              src={product.alternateImage}
-              alt={`${product.name}, alternate view`}
-              fill
-              sizes="(max-width: 700px) 100vw, (max-width: 1000px) 30vw, 22vw"
-            />
-          </div>
+          <ProductGallery
+            productName={product.name}
+            images={[
+              { src: product.image, alt: product.name },
+              { src: product.alternateImage, alt: `${product.name}, alternate view` },
+            ]}
+          />
         </div>
 
         <div className={styles.intro}>
