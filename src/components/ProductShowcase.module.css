@@ -1,0 +1,645 @@
+.hall {
+  position: relative;
+  z-index: 6;
+  width: 100%;
+  overflow: clip;
+  background: #050605;
+  color: var(--white);
+}
+
+.content {
+  padding: 2.5rem var(--container-pad) 1.25rem;
+}
+
+.sectionHeader {
+  display: flex;
+  min-height: 4.25rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(125, 255, 176, 0.28);
+}
+
+.sectionBrand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+  font-variation-settings: "wght" 850, "wdth" 102;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.sectionBrand span {
+  color: var(--lime-off);
+}
+
+.sectionActions {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.25rem, 3vw, 3rem);
+}
+
+.sectionActions > span {
+  color: var(--green-off-white-2);
+  font-size: 0.63rem;
+  font-variation-settings: "wght" 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sectionActions > a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(125, 255, 176, 0.45);
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-variation-settings: "wght" 760;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    color 220ms ease;
+}
+
+.sectionActions > a:hover,
+.sectionActions > a:focus-visible {
+  border-color: var(--lime-off);
+  background: var(--lime-off);
+  color: var(--black);
+}
+
+.introCopy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  min-height: 12.6875rem;
+  margin-bottom: 1.25rem;
+}
+
+.heading {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  align-self: start;
+  margin: 0;
+  font-size: clamp(3.4rem, 5vw, 4.5rem);
+  font-variation-settings: "wght" 750, "wdth" 93;
+  font-weight: 750;
+  letter-spacing: -0.055em;
+  line-height: 0.886;
+  text-transform: uppercase;
+}
+
+.brierLine {
+  position: relative;
+  z-index: 0;
+  color: var(--lime-off);
+  font-family: var(--font-brier), Georgia, serif;
+  font-size: 1.045em;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.brierLine::before,
+.brierLine::after {
+  position: absolute;
+  z-index: -1;
+  height: 0.13em;
+  background: var(--lime);
+  content: "";
+  opacity: 0.9;
+  transform: rotate(-1.5deg);
+}
+
+.brierLine::before {
+  right: 1.5%;
+  bottom: 0.07em;
+  width: 52%;
+}
+
+.brierLine::after {
+  right: 0;
+  bottom: -0.11em;
+  width: 25%;
+  transform: rotate(0.8deg);
+}
+
+.introCopy p {
+  width: min(100%, 31rem);
+  margin: 0;
+  align-self: start;
+  color: var(--green-off-white-1);
+  font-size: clamp(1rem, 1.4vw, 1.35rem);
+  font-variation-settings: "wght" 500, "wdth" 98;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.coverReveal {
+  position: relative;
+  isolation: isolate;
+}
+
+.coverReveal::after {
+  position: absolute;
+  z-index: 20;
+  inset: -0.06em -0.04em;
+  border-radius: 0.02em;
+  content: "";
+  pointer-events: none;
+  transform: scaleX(1);
+  transform-origin: right center;
+}
+
+.coverLime::after {
+  background: var(--lime);
+}
+
+.coverDark::after {
+  background: #050605;
+}
+
+.coverReveal[data-cover-visible="true"]::after {
+  animation: product-cover-reveal 0.95s var(--ease-hiranix) forwards;
+}
+
+.coverDelayed[data-cover-visible="true"]::after {
+  animation-delay: 0.12s;
+}
+
+@keyframes product-cover-reveal {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  column-gap: 1.25rem;
+}
+
+.column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.column:nth-child(even) {
+  transform: translateY(8.5rem);
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 406.89 / 411;
+  overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, 2.5rem, 0);
+  transition:
+    opacity 0.85s var(--ease-out-expo) var(--reveal-delay, 0ms),
+    transform 0.85s var(--ease-out-expo) var(--reveal-delay, 0ms),
+    filter 0.55s var(--ease-out-expo),
+    z-index 0s;
+}
+
+.card[data-visible="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.card:focus-visible {
+  outline: none;
+}
+
+.frame {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  color: var(--dark-green-tint-2);
+  pointer-events: none;
+}
+
+.frame path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+  transition: stroke 0.75s var(--ease-hiranix);
+}
+
+.imageStage {
+  position: absolute;
+  z-index: 0;
+  inset: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #070907;
+  cursor: pointer;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-touch-callout: none;
+  clip-path: polygon(
+    2.2% 0.3%,
+    97.8% 0.3%,
+    99.7% 2%,
+    99.7% 80.3%,
+    64.6% 80.3%,
+    59.7% 82.7%,
+    54.3% 92.9%,
+    49.4% 93%,
+    2.2% 93%,
+    0.3% 91%,
+    0.3% 2%
+  );
+}
+
+.imageStage:focus-visible {
+  outline: 2px solid var(--lime-off);
+  outline-offset: -4px;
+}
+
+.productImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+  transform: scale(0.92);
+  transition:
+    transform 0.75s var(--ease-hiranix),
+    opacity 0.75s var(--ease-hiranix);
+}
+
+.hoverImage {
+  opacity: 0;
+}
+
+.card[data-alternate="true"] .productImage {
+  transform: scale(0.97);
+}
+
+.card[data-alternate="true"] .hoverImage {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .imageStage:active .productImage {
+    transform: scale(0.97);
+  }
+
+  .imageStage:active .hoverImage {
+    opacity: 1;
+  }
+}
+
+.label {
+  position: absolute;
+  z-index: 4;
+  right: 0.18rem;
+  bottom: 0.12rem;
+  display: flex;
+  width: 45%;
+  min-height: 2.1rem;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 0.18rem 0.05rem 0.25rem;
+  font-size: clamp(0.62rem, 0.78vw, 0.84rem);
+  font-variation-settings: "wght" 600, "wdth" 96;
+  font-weight: 600;
+  line-height: 1;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.labelMedium {
+  font-size: clamp(0.56rem, 0.7vw, 0.76rem);
+}
+
+.labelLong {
+  font-size: clamp(0.49rem, 0.61vw, 0.66rem);
+  letter-spacing: -0.025em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card[data-visible="true"]:hover {
+    z-index: 8;
+    transform: translate3d(0, -0.55rem, 0) scale(1.025);
+    filter: drop-shadow(0 1.4rem 2.2rem rgba(35, 200, 98, 0.14));
+  }
+
+  .card:hover .productImage {
+    transform: scale(0.97);
+  }
+
+  .card:hover .hoverImage {
+    opacity: 1;
+  }
+
+  .card:hover .frame path {
+    stroke: var(--lime);
+  }
+}
+
+.card[data-visible="true"]:focus-visible {
+  z-index: 8;
+  transform: translate3d(0, -0.55rem, 0) scale(1.025);
+  filter: drop-shadow(0 1.4rem 2.2rem rgba(35, 200, 98, 0.14));
+}
+
+.card:focus-visible .productImage {
+  transform: scale(0.97);
+}
+
+.card:focus-visible .hoverImage {
+  opacity: 1;
+}
+
+.card:focus-visible .frame path {
+  stroke: var(--lime);
+}
+
+.cta {
+  position: relative;
+  display: flex;
+  min-height: 475.7734px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  overflow: hidden;
+  background: #050605;
+  color: var(--white);
+  text-align: center;
+}
+
+.ctaMark {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+  color: var(--lime-off);
+}
+
+.ctaMark span {
+  width: 0.42rem;
+  height: 1.2rem;
+  border-block: 0.16rem solid currentColor;
+  transform: skew(-13deg);
+}
+
+.ctaMark i {
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  border: 0.13rem solid currentColor;
+  border-radius: 50%;
+  font-size: 0.48rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.cta p {
+  max-width: 32.5rem;
+  margin: 0;
+  font-family: var(--font-brier), Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  line-height: 1.04;
+}
+
+.ctaLink {
+  display: inline-flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid var(--lime);
+  border-radius: 0.54rem;
+  background: var(--lime);
+  color: var(--dark-green);
+  padding: 0.8rem 1rem;
+  font-size: 0.75rem;
+  font-variation-settings: "wght" 800, "wdth" 86;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    background-color 0.45s var(--ease-out-expo),
+    transform 0.45s var(--ease-out-expo);
+}
+
+.ctaLink:hover {
+  background: var(--lime-off);
+  transform: translateY(-2px);
+}
+
+.ctaLink:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 4px;
+}
+
+@media (min-width: 992px) and (max-width: 1439px) {
+  .hall,
+  .cta {
+    width: 1440px;
+    zoom: calc(100vw / 1440px);
+  }
+}
+
+@media (max-width: 991px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .column {
+    display: contents;
+    transform: none;
+  }
+
+  .card {
+    order: var(--source-index);
+  }
+
+  .introCopy p {
+    width: min(100%, 24rem);
+  }
+
+  /* The card's notched corner reserves about 50% of the width and 12% of the
+     height for the name. On a ~190px card that is roughly 95x24px, which cannot
+     hold "MCB Distribution Push Button" at any readable size — the name either
+     shrinks to single digits or spills across the artwork and the frame.
+     Below this width, drop the notch: square off the image and give the name a
+     full-width band underneath, in normal flow. */
+  .card {
+    overflow: visible;
+    aspect-ratio: auto;
+  }
+
+  .frame {
+    display: none;
+  }
+
+  .imageStage {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    aspect-ratio: 406.89 / 340;
+    border: 1px solid var(--dark-green-tint-2);
+    border-radius: 0.6rem;
+    clip-path: none;
+  }
+
+  .label {
+    position: static;
+    width: auto;
+    min-height: 0;
+    padding: 0.6rem 0.1rem 0;
+    justify-content: flex-start;
+    font-size: 0.82rem;
+    line-height: 1.25;
+    text-align: left;
+    white-space: normal;
+  }
+
+  .labelMedium,
+  .labelLong {
+    font-size: 0.82rem;
+    letter-spacing: normal;
+  }
+}
+
+@media (max-width: 479px) {
+  .content {
+    padding: 3.5rem 0.875rem 0.875rem;
+  }
+
+  .sectionHeader {
+    min-height: 3.75rem;
+    margin-bottom: 2.75rem;
+  }
+
+  .sectionBrand {
+    display: grid;
+    gap: 0.12rem;
+    font-size: 0.68rem;
+    line-height: 1.05;
+  }
+
+  .sectionActions > span,
+  .sectionActions > a span {
+    display: none;
+  }
+
+  .sectionActions {
+    gap: 0;
+  }
+
+  .sectionActions > a {
+    width: 2.75rem;
+    padding: 0;
+    font-size: 0;
+  }
+
+  .introCopy {
+    grid-template-columns: 1fr;
+    gap: 1.35rem;
+    min-height: 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .heading {
+    font-size: clamp(2.6rem, 13vw, 3.65rem);
+    letter-spacing: -0.055em;
+    line-height: 0.86;
+  }
+
+  .brierLine {
+    font-size: 1.02em;
+  }
+
+  .introCopy p {
+    max-width: 19rem;
+    font-size: 0.94rem;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+  }
+
+  .grid {
+    gap: 1.1rem 0.75rem;
+  }
+
+  .imageStage {
+    bottom: 9%;
+  }
+
+  /* Inherits the un-notched layout above; just eases the name for the
+     narrowest cards. */
+  .label,
+  .labelMedium,
+  .labelLong {
+    font-size: 0.76rem;
+  }
+
+  .cta {
+    min-height: 380.2109px;
+    gap: 1.6rem;
+    padding-inline: 1rem;
+  }
+
+  .cta p {
+    max-width: 20rem;
+    font-size: 1.22rem;
+    letter-spacing: 0.025rem;
+  }
+
+  .ctaLink {
+    min-height: 3.25rem;
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .productImage,
+  .frame path,
+  .ctaLink {
+    transition-duration: 0.01ms;
+  }
+
+  .coverReveal::after {
+    display: none;
+    animation: none;
+  }
+}

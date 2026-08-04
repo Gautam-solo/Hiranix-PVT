@@ -1,0 +1,735 @@
+.hx {
+  --hx-bg: #070a08;
+  --hx-black: #050605;
+  --hx-ink: #f2f5f2;
+  --hx-muted: #98a29b;
+  --hx-green: #23c862;
+  --hx-green-bright: #7dffb0;
+  --hx-neon: #01ff69;
+  --hx-line: rgba(160, 255, 195, 0.3);
+  --hx-pad: clamp(20px, 3.5vw, 56px);
+  position: relative;
+  min-height: 100dvh;
+  background: var(--hx-bg);
+  color: var(--hx-ink);
+  font-size: 16px;
+}
+
+.hx h1,
+.hx p {
+  margin: 0;
+}
+
+.hx-site-header {
+  position: absolute;
+  z-index: 80;
+  inset: 0 0 auto;
+  min-height: 76px;
+  height: 76px;
+  background: transparent;
+}
+
+.hx-top {
+  position: relative;
+  min-height: 190dvh;
+  background: var(--hx-black);
+}
+
+.hx-nav {
+  position: absolute;
+  z-index: 30;
+  inset: 0 0 auto;
+  display: flex;
+  height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--hx-pad);
+}
+
+.hx-menu-trigger {
+  display: none;
+}
+
+.hx-logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hx-logo-image {
+  width: clamp(126px, 9.5vw, 150px);
+  height: auto;
+  object-fit: contain;
+}
+
+.hx-links {
+  display: flex;
+  gap: clamp(18px, 2.6vw, 44px);
+  color: var(--hx-muted);
+  font-size: 15px;
+}
+
+.hx-links a {
+  position: relative;
+  padding: 0.45rem 0;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hx-links a:hover,
+.hx-links a[aria-current="page"] {
+  color: var(--hx-ink);
+}
+
+.hx-links a[aria-current="page"]::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--hx-green);
+  content: "";
+}
+
+.hx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border: 1px solid var(--hx-line);
+  border-radius: 999px;
+  background: rgba(170, 255, 205, 0.03);
+  color: var(--hx-ink);
+  font-size: 15px;
+  white-space: nowrap;
+  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s ease;
+}
+
+.hx-pill:hover {
+  border-color: rgba(125, 255, 176, 0.5);
+  background: rgba(35, 200, 98, 0.14);
+}
+
+.hx-pill:active {
+  transform: scale(0.98);
+}
+
+.hx-pill:focus-visible,
+.hx-links a:focus-visible,
+.hx-logo:focus-visible,
+.hx-menu-trigger:focus-visible,
+.hx-menu-close:focus-visible,
+.hx-menu-links a:focus-visible {
+  outline: 2px solid var(--hx-green-bright);
+  outline-offset: 4px;
+}
+
+.hx-catalogue-icon {
+  flex: 0 0 auto;
+}
+
+.hx-menu-shell {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 0.35s;
+}
+
+.hx-menu-shell.is-open {
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.hx-menu-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background-color: rgba(1, 5, 3, 0.4);
+  cursor: pointer;
+  opacity: 0;
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  backdrop-filter: blur(12px) saturate(130%);
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hx-menu-shell.is-open .hx-menu-backdrop {
+  opacity: 1;
+}
+
+.hx-menu-drawer {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: min(89vw, 500px);
+  min-height: 100dvh;
+  flex-direction: column;
+  overflow: hidden;
+  padding:
+    max(20px, env(safe-area-inset-top))
+    clamp(22px, 5vw, 40px)
+    max(30px, env(safe-area-inset-bottom));
+  border: 0;
+  background-color: rgba(14, 31, 22, 0.46);
+  box-shadow:
+    inset 0 0 90px rgba(125, 255, 176, 0.025),
+    20px 0 80px rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(36px) saturate(155%) brightness(1.08) contrast(1.03);
+  backdrop-filter: blur(36px) saturate(155%) brightness(1.08) contrast(1.03);
+  transform: translateX(-102%);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hx-menu-shell.is-open .hx-menu-drawer {
+  transform: translateX(0);
+}
+
+.hx-menu-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hx-menu-wordmark {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hx-menu-logo-image {
+  width: 132px;
+  height: auto;
+  object-fit: contain;
+}
+
+.hx-menu-close,
+.hx-menu-trigger {
+  min-width: 48px;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(220, 255, 233, 0.36);
+  border-radius: 999px;
+  background-color: rgba(225, 255, 237, 0.1);
+  color: var(--hx-ink);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 0 rgba(35, 200, 98, 0.1),
+    0 12px 36px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(20px) saturate(150%) brightness(1.08);
+  backdrop-filter: blur(20px) saturate(150%) brightness(1.08);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hx-menu-close {
+  display: inline-flex;
+}
+
+.hx-menu-close:hover,
+.hx-menu-trigger:hover {
+  border-color: rgba(125, 255, 176, 0.68);
+  background-color: rgba(35, 200, 98, 0.18);
+}
+
+.hx-menu-close:active,
+.hx-menu-trigger:active {
+  transform: scale(0.96);
+}
+
+.hx-menu-links {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(6px, 1dvh, 12px);
+  margin-top: clamp(52px, 10dvh, 104px);
+}
+
+.hx-menu-links a {
+  display: flex;
+  min-height: clamp(70px, 9dvh, 88px);
+  align-items: center;
+  border: 0;
+  color: var(--hx-ink);
+  font-size: clamp(34px, 7.4vw, 58px);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  touch-action: manipulation;
+  transition: color 0.2s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hx-menu-links a:hover,
+.hx-menu-links a[aria-current="page"] {
+  color: var(--hx-green-bright);
+}
+
+.hx-menu-links a:hover {
+  transform: translateX(6px);
+}
+
+.hx-menu-note {
+  position: relative;
+  z-index: 1;
+  max-width: 29ch;
+  margin-top: auto !important;
+  color: rgba(226, 235, 229, 0.82);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.hx-hero {
+  position: sticky;
+  top: 0;
+  display: grid;
+  min-height: 100dvh;
+  grid-template-columns: minmax(340px, 5fr) 7fr;
+  align-items: center;
+  overflow: clip;
+  isolation: isolate;
+  padding: 96px var(--hx-pad) 48px;
+  perspective: 1100px;
+}
+
+.hx-stagewrap {
+  position: absolute;
+  z-index: -2;
+  inset: -1.5%;
+  overflow: hidden;
+  background: var(--hx-black);
+}
+
+.hx-stage {
+  --sw: max(100%, 165.54dvh);
+  position: absolute;
+  bottom: 0;
+  left: calc((100% - var(--sw)) * 0.58);
+  width: var(--sw);
+  /* Drop coordinates are authored in the plate's native 1614x975 space, so the
+     stage has to hold that ratio. Deriving the height from --sw instead lets its
+     `100%` resolve against the wrapper's height, skewing the plate away from the
+     products and dropping them through the pedestal surfaces. */
+  aspect-ratio: 1614 / 975;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+}
+
+.hx-plate {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+}
+
+.hx-pedestal-surface {
+  position: absolute;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* The contact line on the metal pedestal's top face, not the face's back edge —
+   the box's footprint sits forward of the back edge, so seating it at 42.26%
+   left the whole face in front of the box and read as hovering. */
+.hx-pedestal-metal {
+  top: 43.077%;
+  left: 41.76%;
+  width: 22.8%;
+  height: 0;
+}
+
+.hx-drop {
+  position: absolute;
+  will-change: transform;
+}
+
+.hx-drop img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+/* The source cutouts included portions of their display plinths. These masks
+   isolate the actual products so only the products move during the drop. */
+.hx-drop-pvc img {
+  clip-path: inset(0 0 5% 0);
+}
+
+.hx-drop-plate img {
+  clip-path: inset(3% 0 4% 0);
+}
+
+.hx-drop-metal img {
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.2));
+  transform-origin: 50% 100%;
+}
+
+/* First-paint fallback, derived the same way as the static drops so the box is
+   already seated before the runtime measure lands. Under reduced motion the
+   cutouts are visible immediately, so a stale fallback shows as a visible jump. */
+.hx-drop-metal {
+  top: 17.339%;
+  left: 48.06%;
+}
+
+.hx-drop-nail img {
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.2));
+}
+
+.hx-drop-clip img {
+  clip-path: inset(0 0 23% 0);
+}
+
+.hx-drop-tie img {
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.26));
+  transform: rotate(3deg);
+  transform-origin: 50% 50%;
+}
+
+.hx-fall {
+  will-change: transform;
+}
+
+.hx-drop-shadow {
+  position: absolute;
+  aspect-ratio: 7 / 1;
+  border-radius: 50%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.88), rgba(1, 255, 105, 0.16) 58%, transparent 78%);
+  filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  translate: -50% -50%;
+}
+
+.hx-orbit {
+  position: absolute;
+  top: 12vh;
+  right: 7.6vw;
+  width: min(45vw, 640px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.3;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+}
+
+.hx-orbit span {
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgba(125, 255, 176, 0.16);
+  border-radius: 48% 52% 44% 56%;
+  transform: rotate(-22deg);
+}
+
+.hx-orbit span:last-child {
+  inset: 22%;
+  border-color: rgba(1, 255, 105, 0.22);
+  transform: rotate(31deg);
+}
+
+.hx-spotlight {
+  --mx: 70vw;
+  --my: 42vh;
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: radial-gradient(360px circle at calc(var(--mx) * 1px) calc(var(--my) * 1px), rgba(1, 255, 105, 0.12), transparent 58%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hx-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(102deg, transparent 42%, rgba(1, 255, 105, 0.07) 50%, rgba(255, 255, 255, 0.05) 52%, transparent 60%);
+  pointer-events: none;
+}
+
+.hx-scrim {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, var(--hx-black) 12%, rgba(5, 6, 5, 0.9) 23%, transparent 50%), linear-gradient(to top, var(--hx-bg), transparent 14%);
+  pointer-events: none;
+}
+
+.hx-copy {
+  position: relative;
+  z-index: 20;
+  max-width: 38rem;
+  will-change: transform, opacity;
+}
+
+.hx-h1 {
+  font-size: clamp(36px, 4vw, 66px);
+  font-stretch: 105%;
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.hx-h1 .accent {
+  color: var(--hx-green);
+}
+
+.hx-h1 .line {
+  display: block;
+  overflow: hidden;
+}
+
+.hx-h1 .line > span {
+  display: block;
+}
+
+.hx-sub {
+  max-width: 26rem;
+  margin-top: 28px;
+  color: var(--hx-muted);
+  font-size: clamp(16px, 1.25vw, 20px);
+  line-height: 1.55;
+}
+
+.hx-cta {
+  gap: 14px;
+  margin-top: 44px;
+  padding: 18px 34px;
+  font-size: 16px;
+}
+
+.hx-cta span {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hx-cta:hover span {
+  transform: translateX(5px);
+}
+
+.hx-scroll-progress {
+  position: absolute;
+  z-index: 28;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--hx-neon), transparent);
+  box-shadow: 0 0 24px rgba(1, 255, 105, 0.45);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hx-fall {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1200px) and (min-width: 901px) {
+  .hx-scrim {
+    background: linear-gradient(90deg, var(--hx-black) 26%, transparent 60%), linear-gradient(to top, var(--hx-bg), transparent 14%);
+  }
+}
+
+@media (max-width: 900px) {
+  .hx-nav {
+    position: absolute;
+    display: grid;
+    height: 76px;
+    grid-template-columns: minmax(48px, 1fr) auto minmax(48px, 1fr);
+    gap: 12px;
+    padding:
+      max(8px, env(safe-area-inset-top))
+      max(16px, env(safe-area-inset-right))
+      0
+      max(16px, env(safe-area-inset-left));
+  }
+
+  .hx-menu-trigger {
+    display: inline-flex;
+    justify-self: start;
+  }
+
+  .hx-logo {
+    justify-self: center;
+  }
+
+  .hx-logo-image {
+    width: 124px;
+  }
+
+  .hx-links {
+    display: none;
+  }
+
+  .hx-catalogue {
+    min-width: 48px;
+    min-height: 48px;
+    justify-content: center;
+    justify-self: end;
+    padding: 0;
+  }
+
+  .hx-catalogue span {
+    display: none;
+  }
+
+  .hx-hero {
+    grid-template-columns: 1fr;
+    align-content: end;
+    padding: 76px 20px 0;
+  }
+
+  .hx-hero {
+    --hx-stage-top: calc(76px + max(18px, env(safe-area-inset-top)));
+    /* The stage is anchored at 58% and the cable tie's right edge sits at
+       91.16% of it, so the tie stays on screen only while the stage is at most
+       ~1.267x the viewport width. Capping at 125vw keeps the whole set framed
+       at any aspect, which means phones and portrait tablets keep the live
+       animated stage instead of falling back to a flat image.
+       vw, not %, deliberately: `%` inside a custom property resolves against
+       whichever axis consumes it, and this value feeds a height below. */
+    --hx-stage-width: min(max(100vw, 89.4dvh), 125vw);
+    --hx-stage-height: calc(var(--hx-stage-width) / 1.6554);
+  }
+
+  .hx-stagewrap {
+    inset: 0;
+  }
+
+  .hx-stage {
+    --sw: var(--hx-stage-width);
+    top: var(--hx-stage-top);
+    bottom: auto;
+    /* The desktop anchor biases the scene right to clear the copy overlaying it
+       on the left. Here the copy sits below the scene, so the scene should read
+       centred — but the plate's lit content spans 414..1556 of 1614, i.e. it is
+       centred at 61.03%, not 50%. Offsetting by that fraction centres the
+       products themselves at any stage width, rather than centring the plate's
+       (mostly empty) bounding box. */
+    left: calc(50% - var(--sw) * 0.6103);
+  }
+
+  /* The stage no longer runs behind the copy, so key the scrim to where it
+     actually ends: clear over the products, ramping to solid just past the
+     lower edge so the floor does not stop on a hard cut. */
+  .hx-scrim {
+    background: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--hx-stage-top) + var(--hx-stage-height) - 56px),
+      var(--hx-bg) calc(var(--hx-stage-top) + var(--hx-stage-height) + 4px)
+    );
+  }
+
+  /* The nail used to be relocated here with !important overrides, because the
+     old uncropped mobile framing pushed the right-hand slab off screen and left
+     it standing on nothing. The stage is now capped and centred so the whole
+     set is in frame, and those overrides put the nail 65px above its slab and
+     15% to the left. Removed: the derived DROPS coordinates are correct at
+     every viewport, since the stage holds the plate's aspect. */
+
+  .hx-scrim {
+    background: linear-gradient(to top, var(--hx-bg) 46%, rgba(7, 10, 8, 0.55) 55%, transparent 72%);
+  }
+
+  /* The copy is bottom-anchored, so it grows upward into the product scene on
+     short viewports. Tightening the bottom padding and the CTA gap drops the
+     headline back down and keeps the glass pedestals visible above it. */
+  .hx-copy {
+    width: min(100%, 32rem);
+    padding-bottom: clamp(24px, 3.4dvh, 48px);
+  }
+
+  .hx-cta {
+    margin-top: 26px;
+  }
+
+  .hx-h1 {
+    white-space: normal;
+    font-size: clamp(3rem, 15vw, 5.6rem);
+    line-height: 0.88;
+  }
+
+  .hx-sub {
+    width: min(100%, 22rem);
+    font-size: 0.98rem;
+    line-height: 1.4;
+  }
+
+  .hx-orbit {
+    display: none;
+  }
+
+  /* The pointer-tracking spotlight only runs above 900px, so below it --mx/--my
+     keep their `70vw`/`42vh` defaults, making `calc(var(--mx) * 1px)` invalid:
+     the gradient resolves to none and never paints. Drop the element rather
+     than leave an empty mix-blend-mode layer over the hero. */
+  .hx-spotlight {
+    display: none;
+  }
+
+  .hx-top {
+    min-height: 100dvh;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 900px) {
+  .hx-nav {
+    grid-template-columns: 1fr auto 1fr;
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .hx-catalogue {
+    min-width: 0;
+    padding: 12px 18px;
+  }
+
+  .hx-catalogue span {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-top {
+    min-height: 100dvh;
+  }
+
+  .hx-sweep {
+    display: none;
+  }
+
+  .hx-menu-shell,
+  .hx-menu-backdrop,
+  .hx-menu-drawer {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .hx-menu-backdrop {
+    background-color: rgba(3, 5, 4, 0.86);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .hx-menu-drawer {
+    background-color: #0a120d;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .hx-menu-close,
+  .hx-menu-trigger {
+    background-color: #101a14;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

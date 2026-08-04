@@ -1,0 +1,605 @@
+.story {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  overflow: clip;
+  --dark-green: #070a08;
+  --off-white: #f2f5f2;
+  --lime: #23c862;
+  --gallery-x: 0px;
+  --story-r: 7;
+  --story-g: 10;
+  --story-b: 8;
+}
+
+.intro {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: clamp(46rem, 82svh, 62rem);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--dark-green);
+  color: var(--off-white);
+}
+
+.contours {
+  position: absolute;
+  inset: -8%;
+  pointer-events: none;
+  opacity: 0.08;
+  background-image: url("/assets/hiranix/brand/contours.svg");
+  background-position: 50% 44%;
+  background-repeat: repeat-y;
+  background-size: auto 125%;
+  filter: saturate(0.4);
+}
+
+.introInner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(89vw, 80.1rem);
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 2.8rem);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.58rem;
+  font-variation-settings: "wght" 650, "wdth" 94;
+  letter-spacing: 0.045rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.headline {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  margin: 0;
+  font-size: clamp(4rem, 7vw, 7.4rem);
+  font-variation-settings: "wght" 660, "wdth" 93;
+  font-weight: 660;
+  letter-spacing: -0.09rem;
+  line-height: 0.906;
+  text-transform: uppercase;
+}
+
+.introCopy {
+  max-width: 42rem;
+  margin: 0;
+  color: rgba(242, 245, 242, 0.7);
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+
+.headline span {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+  white-space: nowrap;
+}
+
+.headline span::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: var(--lime-off);
+  content: "";
+  pointer-events: none;
+  transform: scaleX(var(--line-cover, 1));
+  transform-origin: right center;
+  transition: transform 80ms linear;
+}
+
+.headline strong {
+  color: #7dffb0;
+  font-family: var(--font-brier), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.18rem;
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  height: calc(387.29vh - 23.75vw);
+  color: rgb(
+    calc(249 - var(--story-r)),
+    calc(255 - var(--story-g)),
+    calc(250 - var(--story-b))
+  );
+}
+
+.galleryBackground {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  background-color: rgb(var(--story-r), var(--story-g), var(--story-b));
+}
+
+.galleryBackground .contours {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 0.095;
+}
+
+.viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.track {
+  position: relative;
+  width: max(4650px, 516.7vh);
+  height: 100vh;
+  transform: translate3d(var(--gallery-x), 0, 0);
+  will-change: transform;
+}
+
+.card,
+.quote {
+  position: absolute;
+  z-index: 1;
+  margin: 0;
+  transform: translate3d(var(--card-drift, 0px), 0, 0);
+  will-change: transform;
+}
+
+.label {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-bottom: 0.48rem;
+  font-size: 0.58rem;
+  font-variation-settings: "wght" 650, "wdth" 92;
+  letter-spacing: 0.015rem;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.label::after,
+.frame::before {
+  display: block;
+  width: clamp(1.5rem, 5.2vh, 3.2rem);
+  height: 0.48rem;
+  flex: none;
+  background: var(--lime);
+  content: "";
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.frame::before {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+}
+
+[data-visible="true"] .frame {
+  clip-path: inset(0 0 0 0);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: scale(1.16);
+  transition: transform 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+[data-visible="true"] .photo {
+  transform: scale(1);
+}
+
+.muted {
+  filter: grayscale(1) sepia(0.1) contrast(0.82) brightness(0.83);
+  opacity: 0.73;
+  mix-blend-mode: luminosity;
+}
+
+.dbElite {
+  top: 13vh;
+  left: 75vw;
+}
+
+.dbElite .frame {
+  width: 27vh;
+  height: 33.46vh;
+}
+
+.mcbBox {
+  top: 61vh;
+  left: calc(75vw + 14.4vh);
+}
+
+.mcbBox .frame {
+  width: 29.3vh;
+  height: 29.3vh;
+}
+
+.cableClip {
+  top: 34vh;
+  left: calc(75vw + 60.9vh);
+}
+
+.cableClip .frame {
+  width: 65.48vh;
+  height: 59.48vh;
+}
+
+.pvcTape {
+  top: 6vh;
+  left: calc(75vw + 157.9vh);
+}
+
+.pvcTape .frame {
+  width: 21.98vh;
+  height: 20.96vh;
+}
+
+.upvcPlug {
+  top: 59vh;
+  left: calc(75vw + 146vh);
+}
+
+.upvcPlug .frame {
+  width: 31.75vh;
+  height: 28.75vh;
+}
+
+.cpvcPlug {
+  top: 61vh;
+  left: calc(75vw + 205.8vh);
+}
+
+.cpvcPlug .frame {
+  width: 21.38vh;
+  height: 26.48vh;
+}
+
+.cableTie {
+  top: 8vh;
+  left: calc(75vw + 229.5vh);
+}
+
+.cableTie .frame {
+  width: 20.74vh;
+  height: 20.74vh;
+}
+
+.doubleClamp {
+  top: 9vh;
+  left: calc(75vw + 266vh);
+}
+
+.doubleClamp .frame {
+  width: 60.95vh;
+  height: 60.95vh;
+}
+
+.gangBox {
+  top: 9vh;
+  left: calc(75vw + 358.5vh);
+}
+
+.gangBox .frame {
+  width: 31.69vh;
+  height: 30.9vh;
+}
+
+.pushButton {
+  top: 65vh;
+  left: calc(75vw + 342.8vh);
+}
+
+.pushButton .frame {
+  width: 27.42vh;
+  height: 24.91vh;
+}
+
+.quote {
+  max-width: 30rem;
+  padding: 0;
+  border: 0;
+  color: #98a29b;
+  font-family: var(--font-brier), Georgia, serif;
+  font-size: clamp(1.25rem, 2.65vh, 1.5rem);
+  letter-spacing: 0.02rem;
+  line-height: 0.946;
+}
+
+.quote p {
+  margin: 0 0 1rem;
+}
+
+.noteIndex {
+  display: block;
+  margin-bottom: 0.85rem;
+  color: var(--lime);
+  font-family: var(--font-mona-sans), Arial, sans-serif;
+  font-size: 0.55rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.quote em {
+  color: #d9e4dc;
+  font-style: normal;
+}
+
+.quoteFirst {
+  top: 8vh;
+  left: calc(75vw + 60.9vh);
+  max-width: 17.375rem;
+}
+
+.quoteSecond {
+  top: 75vh;
+  left: calc(75vw + 266vh);
+  color: inherit;
+}
+
+@media (min-width: 992px) and (max-width: 1439px) {
+  .intro {
+    width: 1440px;
+    zoom: calc(100vw / 1440px);
+  }
+}@media (max-width: 991px){
+.intro {
+    height: 523.46875px;
+    min-height: 0;
+    padding: 0 0.85rem;
+  }
+.introInner {
+    width: 100%;
+    max-width: 38rem;
+    gap: 2.6rem;
+  }
+.introCopy {
+    max-width: 32rem;
+    font-size: 1rem;
+  }
+.eyebrow {
+    font-size: clamp(0.5rem, 1.6vw, 0.7rem);
+  }
+.headline {
+    max-width: 38rem;
+    font-size: clamp(2.1rem, 6.35vw, 3.6rem);
+    letter-spacing: -0.08rem;
+    line-height: 0.88;
+  }
+.headline strong {
+    letter-spacing: -0.12rem;
+  }
+.headline span::after {
+    display: none;
+  }
+.card,
+  .quote {
+    transform: none;
+  }
+.label {
+    margin-bottom: 0.42rem;
+    font-size: 0.58rem;
+  }
+.label::after {
+    width: 1.65rem;
+    height: 0.4rem;
+  }
+.frame {
+    width: auto;
+    height: auto;
+  }
+.quote {
+    font-size: 1.5rem;
+  }
+}@media (max-width: 479px){
+.story {
+    --mobile-unit: calc(clamp(320px, 100vw, 479px) / 1728 * 48);
+  }
+.intro {
+    padding-inline: 0.85rem;
+  }
+.introInner {
+    max-width: 360px;
+    gap: 2.7rem;
+  }
+.headline {
+    font-size: 2.1rem;
+  }
+.label {
+    font-size: calc(var(--mobile-unit) * 0.58);
+    letter-spacing: 0;
+  }
+.quote {
+    font-size: calc(var(--mobile-unit) * 1.5);
+  }
+}
+
+/*
+ * Phone layout uses normal document flow instead of the desktop scene's
+ * absolute coordinates. This keeps the editorial rhythm without creating
+ * fragile fixed-height gaps or overlap on narrow screens.
+ *@media (max-width: 767px){
+.intro {
+    height: auto;
+    min-height: 34rem;
+    padding: 5.5rem 1rem;
+  }
+
+.introInner {
+    gap: 1.7rem;
+  }
+
+.headline {
+    max-width: 22rem;
+    font-size: clamp(2.45rem, 12vw, 3.65rem);
+    line-height: 0.88;
+  }
+
+.headline span {
+    white-space: normal;
+  }
+
+.introCopy {
+    max-width: 21rem;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+.quote {
+    grid-column: 1 / -1;
+    padding: 1.6rem 0;
+    border-top: 1px solid rgba(125, 255, 176, 0.35);
+    color: #33473b;
+    font-size: clamp(1.35rem, 6vw, 1.8rem);
+    line-height: 1;
+  }
+
+.label {
+    gap: 0.45rem;
+    margin-bottom: 0.65rem;
+    font-size: 0.58rem;
+    letter-spacing: 0.035em;
+  }
+
+.label::after {
+    width: 1.2rem;
+    height: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame,
+  .photo {
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (min-width: 992px) {
+  .gallery {
+    height: auto;
+    min-height: 100vh;
+    padding: 8rem 4vw;
+    background: var(--off-white);
+    color: var(--dark-green);
+  }
+
+  .galleryBackground {
+    position: absolute;
+    background: var(--off-white);
+  }
+
+  .viewport {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
+
+  .track {
+    display: grid;
+    width: 100%;
+    height: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4rem 2rem;
+    transform: none;
+  }
+
+  .card,
+  .quote {
+    position: relative;
+    inset: auto;
+    transform: none;
+  }
+
+  .card .frame {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .quote {
+    align-self: center;
+    color: var(--dark-green);
+  }
+}
+
+/* Phone legibility floor. The eyebrow, card labels and note index are uppercase
+   micro-type that bottoms out at 8-9.3px here — too small to read on a handset,
+   and the .label calc() falls back to its base size anyway. Held at ~11px and
+   placed last so it wins over the earlier phone blocks. */
+@media (max-width: 600px) {
+  .eyebrow,
+  .label,
+  .noteIndex {
+    font-size: 0.7rem;
+  }
+
+  .noteIndex {
+    letter-spacing: 0.06em;
+  }
+}
+
+/* Small screens run the desktop composition, not a substitute layout.
+   Everything in the track is already expressed in vh — the scattered tops, the
+   offsets (calc(75vw + Nvh)) and the frame sizes — so the arrangement itself
+   survives any viewport. The only problem on a phone is absolute scale: at
+   844px tall, .cableClip's 65.48vh frame is ~553px, wider than the screen. So
+   scale the whole track down rather than re-laying it out; the composition, the
+   parallax and the traversal are preserved exactly, just smaller.
+   Type is divided back out by the same factor, so labels and quotes land at
+   their intended size instead of shrinking with the artwork. */
+@media (max-width: 991px) {
+  .track {
+    --story-scale: 0.58;
+    transform: translate3d(var(--gallery-x), 0, 0) scale(var(--story-scale));
+    transform-origin: 0 50%;
+  }
+
+  .label {
+    margin-bottom: calc(0.4rem / var(--story-scale));
+    font-size: calc(0.72rem / var(--story-scale));
+  }
+
+  .label::after,
+  .frame::before {
+    width: calc(1.4rem / var(--story-scale));
+    height: calc(0.42rem / var(--story-scale));
+  }
+
+  .quote {
+    max-width: calc(17rem / var(--story-scale));
+    font-size: calc(1.05rem / var(--story-scale));
+  }
+
+  .noteIndex {
+    margin-bottom: calc(0.6rem / var(--story-scale));
+    font-size: calc(0.62rem / var(--story-scale));
+  }
+}

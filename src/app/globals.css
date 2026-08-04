@@ -1,0 +1,313 @@
+:root {
+  --dark-green: #070a08;
+  --white: #f2f5f2;
+  --black: #050605;
+  --lime: #23c862;
+  --lime-off: #7dffb0;
+  --green-off-white-1: #d9e4dc;
+  --green-off-white-2: #98a29b;
+  --dark-green-tint-1: #102118;
+  --dark-green-tint-2: #33473b;
+  --track-grey: #839187;
+  --cream: #e8eee9;
+  --gap: 1.25rem;
+  --container-pad: 1.25rem;
+  --ease-hiranix: cubic-bezier(0.65, 0.05, 0, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --duration: 0.75s;
+  --background: var(--dark-green);
+  --foreground: var(--white);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--dark-green);
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mona-sans), Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.25;
+  overflow-x: clip;
+  transition: background-color 0.8s linear;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  color: inherit;
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--black);
+}
+
+.font-display {
+  font-family: var(--font-brier), Georgia, serif;
+}
+
+.contour-bg {
+  background-color: var(--white);
+  background-image:
+    radial-gradient(ellipse at 5% 15%, transparent 0 20%, rgba(7, 10, 8, 0.07) 20.3% 20.55%, transparent 20.9%),
+    radial-gradient(ellipse at 90% 40%, transparent 0 26%, rgba(7, 10, 8, 0.07) 26.2% 26.45%, transparent 26.8%),
+    radial-gradient(ellipse at 30% 85%, transparent 0 30%, rgba(7, 10, 8, 0.07) 30.2% 30.45%, transparent 30.8%);
+  background-size: 62rem 46rem, 54rem 42rem, 70rem 52rem;
+}
+
+.lime-button {
+  display: inline-flex;
+  min-height: 3.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  border: 1px solid var(--lime);
+  border-radius: 0.625rem;
+  background: var(--lime);
+  color: var(--black);
+  padding: 0.9rem 1.15rem;
+  font-variation-settings: "wght" 800, "wdth" 90;
+  text-transform: uppercase;
+  transition: transform 0.45s var(--ease-out-expo), background-color 0.45s var(--ease-out-expo);
+}
+
+.lime-button:hover {
+  background: var(--lime-off);
+  transform: translateY(-2px);
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.not-found {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.25rem, 4vw, 4rem);
+  background:
+    radial-gradient(circle at 78% 22%, rgba(35, 200, 98, 0.2), transparent 24rem),
+    #070a08;
+}
+
+.not-found__brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+}
+
+.not-found__brand-image {
+  width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+.not-found__copy {
+  max-width: 52rem;
+  padding-bottom: clamp(1rem, 8vh, 6rem);
+}
+
+.not-found__copy > span {
+  color: var(--lime-off);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.not-found__copy h1 {
+  max-width: 10ch;
+  margin: 1.25rem 0;
+  font-size: clamp(3.5rem, 10vw, 8.5rem);
+  font-weight: 850;
+  letter-spacing: -0.075em;
+  line-height: 0.84;
+}
+
+.not-found__copy p {
+  max-width: 31rem;
+  margin: 0 0 2rem;
+  color: rgba(242, 245, 242, 0.62);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  line-height: 1.45;
+}
+
+.not-found__copy a {
+  display: inline-flex;
+  min-height: 3.2rem;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0 1.25rem;
+  border: 1px solid rgba(125, 255, 176, 0.5);
+  border-radius: 999px;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --container-pad: 1.25rem;
+  }
+}
+
+@media (max-width: 479px) {
+  :root {
+    --container-pad: 1rem;
+  }
+
+  body {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.products-loading {
+  display: grid;
+  min-height: 100svh;
+  place-content: center;
+  gap: 1.5rem;
+  background: #f6f5f1;
+  color: #17362a;
+  text-align: center;
+}
+
+.products-loading > span {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.products-loading em {
+  color: #35df77;
+  font-style: normal;
+}
+
+.products-loading > div {
+  width: min(16rem, 70vw);
+  height: 1px;
+  overflow: hidden;
+  background: rgba(22, 139, 76, 0.22);
+}
+
+.products-loading > div::after {
+  display: block;
+  width: 45%;
+  height: 100%;
+  background: #168b4c;
+  content: "";
+  animation: products-loading 1.2s ease-in-out infinite alternate;
+}
+
+.products-loading p {
+  margin: 0;
+  color: rgba(23, 54, 42, 0.52);
+  font-size: 0.68rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes products-loading {
+  to {
+    transform: translateX(125%);
+  }
+}
+
+/* Touch targets on handsets.
+   Footer and contact links render 14-20px tall, under WCAG 2.2 Target Size
+   (Minimum) 2.5.8's 24px floor and far under a comfortable 44px. The footer is
+   implemented three times over (SocialFooter, ui/about-3, ProductIndex), each
+   with its own hashed module classes, so this is scoped by element rather than
+   duplicated in each module. Padding grows the hit area, leaving type and the
+   footer's visual rhythm untouched. */
+@media (max-width: 900px) {
+  footer nav a,
+  footer address a,
+  address a,
+  /* The legal row is a <nav> in one footer and a plain <div> in another, so
+     match it by destination instead of by structure. */
+  footer a[href^="/legal/"] {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  footer nav {
+    gap: 0;
+  }
+}
+
+/* Skip link. Off-screen until focused, then pinned over the header so keyboard
+   users can bypass the nav. Sits above the header's z-index (100). */
+.hx-skip-link {
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 50%;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid rgba(1, 255, 105, 0.5);
+  border-radius: 0 0 0.6rem 0.6rem;
+  background: #050605;
+  color: #f2f5f2;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transform: translate(-50%, -120%);
+  transition: transform 160ms ease;
+}
+
+/* :focus, not :focus-visible — the link is only reachable by keyboard, and
+   :focus-visible is not reliably matched when focus arrives programmatically. */
+.hx-skip-link:focus {
+  transform: translate(-50%, 0);
+  outline: 2px solid #01ff69;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-skip-link {
+    transition: none;
+  }
+}
+
+/* The skip target is a <main> given tabindex="-1" so focus can land on it;
+   suppress the focus ring it would otherwise draw around the whole page. */
+main:focus {
+  outline: none;
+}

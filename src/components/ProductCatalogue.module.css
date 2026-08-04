@@ -1,0 +1,494 @@
+.page {
+  --catalogue-line: rgba(125, 255, 176, 0.2);
+  min-height: 100svh;
+  padding-top: 76px;
+  background: #050605;
+  color: #f2f5f2;
+}
+
+.discovery {
+  display: grid;
+  min-height: 21rem;
+  grid-template-columns: minmax(0, 1.1fr) minmax(22rem, 0.9fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  align-items: end;
+  padding: clamp(4.5rem, 8vw, 7rem) clamp(1.25rem, 4vw, 4.5rem) 3rem;
+  border-bottom: 1px solid var(--catalogue-line);
+  background:
+    radial-gradient(circle at 74% 15%, rgba(35, 200, 98, 0.14), transparent 27rem),
+    linear-gradient(145deg, #050605 35%, #08110c 100%);
+}
+
+.discoveryCopy h1 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(4rem, 7.4vw, 7.6rem);
+  font-variation-settings: "wght" 840, "wdth" 96;
+  letter-spacing: -0.07em;
+  line-height: 0.86;
+}
+
+.searchBlock {
+  padding-bottom: 0.35rem;
+}
+
+.searchBlock label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #d9e4dc;
+  font-size: 0.72rem;
+  font-variation-settings: "wght" 720;
+  letter-spacing: 0.04em;
+}
+
+.searchField {
+  display: grid;
+  min-height: 4.25rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0 1.2rem;
+  border: 1px solid rgba(125, 255, 176, 0.34);
+  border-radius: 1rem;
+  background: rgba(8, 17, 12, 0.76);
+  box-shadow:
+    inset 0 1px 0 rgba(242, 245, 242, 0.06),
+    0 1.4rem 4rem rgba(1, 15, 7, 0.18);
+  transition:
+    border-color 0.35s var(--ease-out-expo),
+    background-color 0.35s var(--ease-out-expo);
+}
+
+.searchField:focus-within {
+  border-color: #7dffb0;
+  background: rgba(12, 28, 18, 0.9);
+}
+
+.searchField > svg {
+  color: #7dffb0;
+}
+
+.searchField input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #f2f5f2;
+  font: inherit;
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  appearance: none;
+}
+
+.searchField input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.searchField input::placeholder {
+  color: #879189;
+  opacity: 1;
+}
+
+.searchField button {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.7rem;
+  background: rgba(242, 245, 242, 0.08);
+  color: #f2f5f2;
+  cursor: pointer;
+  place-items: center;
+}
+
+.filterBar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  min-height: 5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  border-bottom: 1px solid var(--catalogue-line);
+  background: #050806;
+}
+
+.filterScroll {
+  display: flex;
+  min-width: 0;
+  align-items: stretch;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0 0.9rem 0 clamp(1.25rem, 4vw, 4.5rem);
+  scrollbar-width: none;
+}
+
+.filterScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.filterScroll button {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0 0.85rem;
+  border: 0;
+  background: transparent;
+  color: #98a29b;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-variation-settings: "wght" 700;
+  white-space: nowrap;
+}
+
+.filterScroll button::after {
+  position: absolute;
+  right: 0.85rem;
+  bottom: -1px;
+  left: 0.85rem;
+  height: 2px;
+  background: transparent;
+  content: "";
+  transition: background-color 0.3s var(--ease-out-expo);
+}
+
+.filterScroll button:hover,
+.filterScroll button:focus-visible,
+.filterScroll .activeFilter {
+  color: #f2f5f2;
+}
+
+.filterScroll .activeFilter::after {
+  background: #23c862;
+}
+
+.filterScroll small {
+  color: #68746c;
+  font-size: 0.58rem;
+  font-weight: 700;
+}
+
+.activeFilter small {
+  color: #7dffb0;
+}
+
+.resultStatus {
+  display: flex;
+  min-width: 11.5rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.1rem;
+  padding: 0 clamp(1.25rem, 4vw, 4.5rem) 0 1.5rem;
+  border-left: 1px solid var(--catalogue-line);
+  color: #98a29b;
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.resultStatus strong {
+  color: #f2f5f2;
+  font-size: 0.9rem;
+}
+
+.resultStatus button {
+  padding: 0.45rem 0;
+  border: 0;
+  border-bottom: 1px solid #7dffb0;
+  background: transparent;
+  color: #7dffb0;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 720;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-left: 1px solid var(--catalogue-line);
+}
+
+.card {
+  min-width: 0;
+  border-right: 1px solid var(--catalogue-line);
+  border-bottom: 1px solid var(--catalogue-line);
+}
+
+.card > a {
+  display: grid;
+  min-height: 39rem;
+  grid-template-rows: auto 1fr;
+  gap: 1.4rem;
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+.imageStage {
+  position: relative;
+  aspect-ratio: 0.92;
+  overflow: hidden;
+  border: 1px solid rgba(125, 255, 176, 0.28);
+  border-radius: 0.8rem;
+  background: #0a0c0b;
+}
+
+.imageStage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    opacity 0.55s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo);
+}
+
+.alternateImage {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+.card > a:hover .imageStage img:first-child,
+.card > a:focus-visible .imageStage img:first-child {
+  opacity: 0;
+}
+
+.card > a:hover .alternateImage,
+.card > a:focus-visible .alternateImage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cardCopy {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardCopy > span {
+  color: #7dffb0;
+  font-size: 0.58rem;
+  font-variation-settings: "wght" 780;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.cardCopy h2 {
+  margin: 0.65rem 0;
+  font-size: clamp(1.15rem, 1.7vw, 1.5rem);
+  font-variation-settings: "wght" 760;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.cardCopy p {
+  margin: 0;
+  color: #98a29b;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.cardCopy strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
+  color: #f2f5f2;
+  font-size: 0.65rem;
+  font-variation-settings: "wght" 780;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.card > a:hover .cardCopy strong,
+.card > a:focus-visible .cardCopy strong {
+  color: #7dffb0;
+}
+
+.emptyState {
+  display: grid;
+  min-height: 32rem;
+  align-content: center;
+  justify-items: start;
+  padding: 4rem clamp(1.25rem, 4vw, 4.5rem);
+  background:
+    radial-gradient(circle at 20% 40%, rgba(35, 200, 98, 0.1), transparent 24rem),
+    #050605;
+}
+
+.emptyState h2 {
+  max-width: 11ch;
+  margin: 0;
+  font-size: clamp(2.8rem, 6vw, 6rem);
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+
+.emptyState p {
+  max-width: 30rem;
+  margin: 1.5rem 0 2rem;
+  color: #98a29b;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.emptyState button {
+  min-height: 3.2rem;
+  padding: 0 1.15rem;
+  border: 1px solid rgba(125, 255, 176, 0.45);
+  border-radius: 0.8rem;
+  background: #0b1710;
+  color: #f2f5f2;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 720;
+}
+
+.support {
+  display: flex;
+  min-height: 11rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem clamp(1.25rem, 4vw, 4.5rem);
+  background: #0b1710;
+}
+
+.support span {
+  font-family: var(--font-brier), Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2.8rem);
+}
+
+.support a {
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #7dffb0;
+  color: #7dffb0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card > a {
+    min-height: 42rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .discovery {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    gap: 2.75rem;
+    padding: 4.5rem 1.25rem 2.5rem;
+  }
+
+  .discoveryCopy h1 {
+    max-width: 8ch;
+    font-size: clamp(3.8rem, 14vw, 6.2rem);
+  }
+
+  .searchBlock {
+    max-width: 36rem;
+  }
+
+  .filterBar {
+    grid-template-columns: 1fr;
+  }
+
+  .filterScroll {
+    min-height: 4.3rem;
+    padding-left: 0.4rem;
+  }
+
+  .resultStatus {
+    min-height: 3.15rem;
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    border-top: 1px solid var(--catalogue-line);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .discovery {
+    padding-top: 3.5rem;
+  }
+
+  .discoveryCopy h1 {
+    font-size: clamp(3.5rem, 17vw, 5rem);
+  }
+
+  .searchField {
+    min-height: 3.85rem;
+  }
+
+  /* Two-up on phones. The 38rem min-height existed to give a single full-width
+     card presence; at half width it would leave each card mostly empty, so let
+     the content set the height and tighten the padding and gap to match the
+     narrower column. */
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Let the link fill the card so the grid's equal row heights reach it. The
+     CTA already carries margin-top:auto, but with the min-height gone it had no
+     free space to push against, so "View product" sat at a different height in
+     each card of a row. */
+  .card {
+    display: grid;
+  }
+
+  .card > a {
+    min-height: 0;
+    gap: 0.85rem;
+    padding: 0.75rem;
+  }
+
+  /* 10.4px, missed by the earlier sweep because this element wraps an icon as
+     well as text and so was not counted as a leaf. */
+  .cardCopy strong {
+    font-size: 0.7rem;
+    padding-top: 1.1rem;
+  }
+
+  .cardCopy h2 {
+    font-size: 1.05rem;
+  }
+
+  .cardCopy p {
+    font-size: 0.78rem;
+  }
+
+  .support {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .searchField,
+  .filterScroll button::after,
+  .imageStage img {
+    transition: none;
+  }
+}
+
+/* Phone legibility and touch targets. The card category eyebrow sits at 9.3px
+   and the sales link is a 21px-tall hit area — under WCAG 2.2 2.5.8's 24px
+   floor. Type is raised to ~11px; the link grows by padding, not font size. */
+@media (max-width: 900px) {
+  .cardCopy > span {
+    font-size: 0.7rem;
+  }
+
+  .support a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+}
