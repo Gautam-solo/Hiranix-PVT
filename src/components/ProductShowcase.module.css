@@ -475,7 +475,12 @@
 @media (max-width: 991px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
+    column-gap: 1.25rem;
+    /* Each name sits directly under its own image, so the space between rows
+       has to clearly beat the space between an image and its name. At a uniform
+       1.25rem they were within a few pixels of each other and every name read
+       as a caption for the product *below* it. */
+    row-gap: 2.9rem;
   }
 
   .column {
@@ -520,7 +525,8 @@
     position: static;
     width: auto;
     min-height: 0;
-    padding: 0.6rem 0.1rem 0;
+    /* Tight to its own image — the row-gap above supplies the separation. */
+    padding: 0.45rem 0.1rem 0;
     justify-content: flex-start;
     font-size: 0.82rem;
     line-height: 1.25;
@@ -592,7 +598,10 @@
   }
 
   .grid {
-    gap: 1.1rem 0.75rem;
+    /* Row gap stays well clear of the image-to-name gap for the same reason as
+       the 991px block above; only the column gap tightens on narrow screens. */
+    column-gap: 0.75rem;
+    row-gap: 2.6rem;
   }
 
   .imageStage {

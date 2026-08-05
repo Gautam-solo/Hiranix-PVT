@@ -305,7 +305,18 @@
 }
 
 .hx-stage {
-  --sw: max(100%, 165.54dvh);
+  /* `max(100%, 165.54dvh)` alone is a cover rule: once the viewport is wider
+     than the plate's 1.6554 ratio, width drives the size, the stage grows
+     taller than the viewport and — being bottom-anchored — crops off the top.
+     The metal junction box sits highest in the composition (its top is at
+     17.34% of the plate), so it is the first thing lost: on a 1512x790 laptop
+     it ended up 77px behind the fixed header, with its top cut off entirely.
+
+     The third term caps the width so the box always clears the 76px header.
+     Solving `wrapTop + wrapHeight - 0.8266 * height >= 84px` for the width,
+     with the wrapper's -1.5% inset folded in, gives 203.3dvh - 168px. Past
+     that the scene letterboxes slightly rather than eating the product. */
+  --sw: min(max(100%, 165.54dvh), calc(203.3dvh - 168px));
   position: absolute;
   bottom: 0;
   left: calc((100% - var(--sw)) * 0.58);

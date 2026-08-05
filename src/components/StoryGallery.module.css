@@ -110,11 +110,11 @@
   position: relative;
   width: 100%;
   height: calc(387.29vh - 23.75vw);
-  color: rgb(
-    calc(249 - var(--story-r)),
-    calc(255 - var(--story-g)),
-    calc(250 - var(--story-b))
-  );
+  /* Set from JS as a flip between cream and near-black, never an interpolation
+     between them — see the --gallery-ink note in StoryGallery.tsx. The short
+     transition keeps the crossover from reading as a hard snap. */
+  color: var(--gallery-ink, #f2f5f2);
+  transition: color 0.22s linear;
 }
 
 .galleryBackground {

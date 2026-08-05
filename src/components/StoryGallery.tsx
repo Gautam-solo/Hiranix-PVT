@@ -230,15 +230,26 @@ export default function StoryGallery() {
       } else {
         colorProgress = 1 - (progress - fadeOutStart) / (1 - fadeOutStart); // 1 → 0 (light → dark)
       }
-      const r = mix(7, 242, colorProgress);
-      const g = mix(10, 245, colorProgress);
-      const b = mix(8, 242, colorProgress);
+      // Smootherstep, not a straight ramp. The stylesheet used to derive the
+      // ink as a literal inversion of this background (`calc(249 - --story-r)`),
+      // so at the midpoint the text and its own background both resolved to the
+      // same grey and every label in the gallery disappeared. Easing steepens
+      // the sweep through those ambiguous mid-greys so it passes quickly...
+      const eased =
+        colorProgress ** 3 * (colorProgress * (colorProgress * 6 - 15) + 10);
+      const r = mix(7, 242, eased);
+      const g = mix(10, 245, eased);
+      const b = mix(8, 242, eased);
       const background = `rgb(${r}, ${g}, ${b})`;
 
       gallery.style.setProperty("--story-r", String(r));
       gallery.style.setProperty("--story-g", String(g));
       gallery.style.setProperty("--story-b", String(b));
       gallery.style.setProperty("--gallery-progress", String(progress));
+      // ...and the ink now flips between cream and near-black at the crossover
+      // instead of interpolating through it, so it can never match the plate
+      // behind it.
+      gallery.style.setProperty("--gallery-ink", eased > 0.5 ? "#0b1710" : "#f2f5f2");
 
       // The traversal and the parallax now run at every width — small screens
       // render the same composition, scaled down by the stylesheet.
