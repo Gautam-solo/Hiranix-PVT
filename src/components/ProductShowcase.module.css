@@ -189,10 +189,19 @@
 }
 
 .grid {
+  /* Even columns are offset downward to stagger the grid. That is a transform,
+     so it reserves no layout space — and .hall is `overflow: clip`, so the last
+     card in every staggered column was being cut off (156px of the Metal
+     Junction Box and CCTV Camera Box). The padding below reserves exactly the
+     offset, and both read the same variable so they cannot drift apart. */
+  --column-stagger: 8.5rem;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: start;
   column-gap: 1.25rem;
+  /* The extra 1.25rem matches the column gap: the staggered column's last card
+     clears its own column box by that much before the offset is applied. */
+  padding-bottom: calc(var(--column-stagger) + 1.25rem);
 }
 
 .column {
@@ -203,7 +212,7 @@
 }
 
 .column:nth-child(even) {
-  transform: translateY(8.5rem);
+  transform: translateY(var(--column-stagger));
 }
 
 .card {
@@ -474,6 +483,12 @@
 
 @media (max-width: 991px) {
   .grid {
+    /* Columns become `display: contents` below, so there is no stagger to
+       reserve room for — collapse the padding that pairs with it. The last
+       row's names still sit in normal flow under their images, so keep a
+       little clearance before .hall's clip boundary. */
+    --column-stagger: 0rem;
+    padding-bottom: 2rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 1.25rem;
     /* Each name sits directly under its own image, so the space between rows
