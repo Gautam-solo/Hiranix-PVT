@@ -1,7 +1,6 @@
 import ProductShowcase from "@/components/ProductShowcase";
 import { HiranixHero } from "@/components/HiranixHero";
 import SocialFooter from "@/components/SocialFooter";
-import StoryGallery from "@/components/StoryGallery";
 
 export default function Home() {
   return (
@@ -11,7 +10,6 @@ export default function Home() {
           <HiranixHero />
         </div>
         <div id="site-content">
-          <StoryGallery />
           <ProductShowcase />
           <SocialFooter />
         </div>
