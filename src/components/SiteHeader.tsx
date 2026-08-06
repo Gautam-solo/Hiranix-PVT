@@ -7,6 +7,11 @@ import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { List } from "@phosphor-icons/react/List";
 import { X } from "@phosphor-icons/react/X";
 import { HiranixLogo } from "@/components/HiranixLogo";
+import {
+  CATALOGUE_A11Y_LABEL,
+  CATALOGUE_SIZE_LABEL,
+  catalogueLinkProps,
+} from "@/data/catalogue";
 
 const NAV = [
   { label: "Home", href: "/" },
@@ -14,8 +19,6 @@ const NAV = [
   { label: "Brand", href: "/brand" },
   { label: "About", href: "/about" },
 ];
-
-const CATALOGUE_PATH = "/Hiranix-Product-Catalogue.pdf";
 
 export function SiteHeader() {
   const pathname = usePathname();
@@ -106,13 +109,15 @@ export function SiteHeader() {
           ))}
         </div>
         <a
-          href={CATALOGUE_PATH}
+          {...catalogueLinkProps}
           className="hx-pill hx-catalogue"
-          download="Hiranix-Product-Catalogue.pdf"
-          aria-label="Download Hiranix product catalogue PDF"
+          aria-label={CATALOGUE_A11Y_LABEL}
         >
           <DownloadSimple className="hx-catalogue-icon" size={20} weight="regular" aria-hidden="true" />
-          <span>Download Catalogue</span>
+          <span>
+            Download Catalogue
+            <small className="hx-catalogue-size">{CATALOGUE_SIZE_LABEL}</small>
+          </span>
         </a>
       </nav>
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { About3 } from "@/components/ui/about-3";
+import { CATALOGUE_SIZE_LABEL } from "@/data/catalogue";
 import { productCategories } from "@/data/products";
 
 export const metadata: Metadata = {
@@ -40,8 +41,7 @@ export default function AboutPage() {
         title: "One range for every fix.",
         description:
           "Review product formats, materials and available selection data in the HIRANIX catalogue.",
-        buttonText: "Download catalogue",
-        buttonUrl: "/Hiranix-Product-Catalogue.pdf",
+        buttonText: `Download catalogue (${CATALOGUE_SIZE_LABEL})`,
       }}
       systemsTitle="A connected product system"
       systems={productCategories.slice(1)}

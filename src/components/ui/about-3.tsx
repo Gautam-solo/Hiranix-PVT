@@ -9,6 +9,7 @@ import {
   WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import { HiranixLogo } from "@/components/HiranixLogo";
+import { CATALOGUE_A11Y_LABEL, catalogueLinkProps } from "@/data/catalogue";
 import styles from "./about-3.module.css";
 
 type Media = {
@@ -30,7 +31,6 @@ type About3Props = {
     title: string;
     description: string;
     buttonText: string;
-    buttonUrl: string;
   };
   systemsTitle: string;
   systems: readonly string[];
@@ -93,8 +93,8 @@ export function About3({
                 <p>{breakout.description}</p>
               </div>
               <a
-                href={breakout.buttonUrl}
-                download="Hiranix-Product-Catalogue.pdf"
+                {...catalogueLinkProps}
+                aria-label={CATALOGUE_A11Y_LABEL}
                 className={styles.outlineButton}
               >
                 {breakout.buttonText}

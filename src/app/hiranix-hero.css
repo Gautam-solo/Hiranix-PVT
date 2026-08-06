@@ -126,6 +126,17 @@
   flex: 0 0 auto;
 }
 
+/* The catalogue is a ~40MB download linked from the header on every page.
+   Showing the weight up front stops an accidental tap costing someone a
+   chunk of their mobile data. Below 900px the label is hidden and the
+   button is icon-only, so the size rides in its aria-label instead. */
+.hx-catalogue-size {
+  margin-left: 0.45rem;
+  opacity: 0.6;
+  font-size: 0.82em;
+  font-variation-settings: "wght" 620;
+}
+
 .hx-menu-shell {
   position: fixed;
   z-index: 100;

@@ -5,6 +5,11 @@
 import Link from "next/link";
 import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { useEffect, useRef, useState } from "react";
+import {
+  CATALOGUE_A11Y_LABEL,
+  CATALOGUE_SIZE_LABEL,
+  catalogueLinkProps,
+} from "@/data/catalogue";
 import styles from "./ProductShowcase.module.css";
 
 type Product = {
@@ -184,11 +189,8 @@ export default function ProductShowcase() {
             </Link>
             <div className={styles.sectionActions}>
               <span>{products.length} product systems</span>
-              <a
-                href="/Hiranix-Product-Catalogue.pdf"
-                download="Hiranix-Product-Catalogue.pdf"
-              >
-                Download catalogue
+              <a {...catalogueLinkProps} aria-label={CATALOGUE_A11Y_LABEL}>
+                Download catalogue ({CATALOGUE_SIZE_LABEL})
                 <DownloadSimple size={17} weight="regular" aria-hidden="true" />
               </a>
             </div>

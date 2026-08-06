@@ -4,6 +4,11 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
 import { ProductGallery } from "@/components/ProductGallery";
 import { SiteFooter } from "@/components/SiteFooter";
+import {
+  CATALOGUE_A11Y_LABEL,
+  CATALOGUE_SIZE_LABEL,
+  catalogueLinkProps,
+} from "@/data/catalogue";
 import { findProductBySlug, productRouteSlugs, products } from "@/data/products";
 import styles from "./ProductDetail.module.css";
 
@@ -99,8 +104,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               Enquire about this product
               <ArrowRight size={17} weight="bold" aria-hidden="true" />
             </a>
-            <a href="/Hiranix-Product-Catalogue.pdf" download="Hiranix-Product-Catalogue.pdf">
-              Catalogue
+            <a {...catalogueLinkProps} aria-label={CATALOGUE_A11Y_LABEL}>
+              Catalogue ({CATALOGUE_SIZE_LABEL})
               <DownloadSimple size={18} weight="regular" aria-hidden="true" />
             </a>
           </div>
