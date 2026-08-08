@@ -1,14 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, DownloadSimple } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { ProductGallery } from "@/components/ProductGallery";
+import RevealOnScroll from "@/components/RevealOnScroll";
 import { SiteFooter } from "@/components/SiteFooter";
-import {
-  CATALOGUE_A11Y_LABEL,
-  CATALOGUE_SIZE_LABEL,
-  catalogueLinkProps,
-} from "@/data/catalogue";
 import { findProductBySlug, productRouteSlugs, products } from "@/data/products";
 import styles from "./ProductDetail.module.css";
 
@@ -104,18 +100,25 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               Enquire about this product
               <ArrowRight size={17} weight="bold" aria-hidden="true" />
             </a>
-            <a {...catalogueLinkProps} aria-label={CATALOGUE_A11Y_LABEL}>
-              Catalogue ({CATALOGUE_SIZE_LABEL})
-              <DownloadSimple size={18} weight="regular" aria-hidden="true" />
-            </a>
           </div>
         </div>
       </section>
 
-      <section className={styles.specifications} aria-labelledby="product-specifications">
+      <section className={styles.useCases} data-reveal>
+        <div>
+          <span>Applications</span>
+          <ul>
+            {product.applications.map((application) => (
+              <li key={application}>{application}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className={styles.tableSection} aria-labelledby="selection-data" data-reveal>
         <div className={styles.sectionHeading}>
-          <span>Product information</span>
-          <h2 id="product-specifications">Technical overview</h2>
+          <span>Selection guide</span>
+          <h2 id="selection-data">Technical data</h2>
         </div>
         <dl className={styles.specList}>
           {product.specs.map((spec) => (
@@ -125,32 +128,6 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             </div>
           ))}
         </dl>
-      </section>
-
-      <section className={styles.useCases}>
-        <div>
-          <span>Applications</span>
-          <ul>
-            {product.applications.map((application) => (
-              <li key={application}>{application}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <span>Product features</span>
-          <ul>
-            {product.features.map((feature) => (
-              <li key={feature}>{feature}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className={styles.tableSection} aria-labelledby="selection-data">
-        <div className={styles.sectionHeading}>
-          <span>Selection guide</span>
-          <h2 id="selection-data">Technical data</h2>
-        </div>
         <div className={styles.tableWrap}>
           <table>
             <thead>
@@ -179,12 +156,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </p>
       </section>
 
-      <Link className={styles.nextProduct} href={`/products/${nextProduct.slug}`}>
+      <Link className={styles.nextProduct} data-reveal href={`/products/${nextProduct.slug}`}>
         <span>Next product</span>
         <strong>{nextProduct.name}</strong>
         <ArrowRight size={34} weight="light" aria-hidden="true" />
       </Link>
       </main>
+      <RevealOnScroll />
       <SiteFooter currentPath="/products" />
     </>
   );

@@ -83,7 +83,14 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
       <div className={styles.gallery}>
         <div className={styles.singleImage}>
           {only && (
-            <Image src={only.src} alt={only.alt} fill priority sizes="(max-width: 1000px) 100vw, 60vw" />
+            <Image
+              src={only.src}
+              alt={only.alt}
+              fill
+              priority
+              quality={90}
+              sizes="(max-width: 1000px) 100vw, 60vw"
+            />
           )}
         </div>
       </div>
@@ -115,6 +122,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               alt={image.alt}
               fill
               priority={index === 0}
+              quality={90}
               sizes="(max-width: 1000px) 100vw, 60vw"
             />
           </div>

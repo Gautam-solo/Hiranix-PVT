@@ -3,13 +3,7 @@
 /* eslint-disable @next/next/no-img-element -- stacked hover images need identical native rendering */
 
 import Link from "next/link";
-import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { useEffect, useRef, useState } from "react";
-import {
-  CATALOGUE_A11Y_LABEL,
-  CATALOGUE_SIZE_LABEL,
-  catalogueLinkProps,
-} from "@/data/catalogue";
 import styles from "./ProductShowcase.module.css";
 
 type Product = {
@@ -28,19 +22,17 @@ const products: Product[] = [
   { name: "Plastic UPVC / CPVC Clamp", base: "/assets/hiranix/products/plastic-upvc-clamp-01.jpg", hover: "/assets/hiranix/products/plastic-cpvc-clamp-01.jpg" },
   { name: "Nylon Cable Tie", base: "/assets/hiranix/products/nylon-cable-tie-01.jpg", hover: "/assets/hiranix/products/nylon-cable-tie-02.jpg" },
   { name: "Open Surface Box", base: "/assets/hiranix/products/open-surface-box-01.jpg", hover: "/assets/hiranix/products/open-surface-box-02.jpg" },
-  { name: "Round / Fan Sheet", base: "/assets/hiranix/products/round-sheet-01.jpg", hover: "/assets/hiranix/products/fan-sheet-01.jpg" },
+  { name: "Round / Fan Sheet", base: "/assets/hiranix/products/round-sheet-01.jpg", hover: "/assets/hiranix/products/round-sheet-02.jpg" },
   { name: "FR PVC Tape", base: "/assets/hiranix/products/fr-pvc-tape-01.jpg", hover: "/assets/hiranix/products/fr-pvc-tape-02.jpg" },
   { name: "Cable Nail Clip", base: "/assets/hiranix/products/cable-nail-clip-01.jpg", hover: "/assets/hiranix/products/cable-nail-clip-02.jpg" },
   { name: "Modular Gang Box", base: "/assets/hiranix/products/modular-gang-box-01.jpg", hover: "/assets/hiranix/products/modular-gang-box-02.jpg" },
   { name: "Metal Junction Box", base: "/assets/hiranix/products/metal-junction-box-01.jpg", hover: "/assets/hiranix/products/metal-junction-box-02.jpg" },
   { name: "Double Nail Clamp", base: "/assets/hiranix/products/double-nail-clamp-01.jpg", hover: "/assets/hiranix/products/double-nail-clamp-02.jpg" },
-  { name: "CCTV Camera Box", base: "/assets/hiranix/products/cctv-camera-box-01.jpg", hover: "/assets/hiranix/products/cctv-camera-box-02.jpg" },
+  { name: "CCTV Camera Box", base: "/assets/hiranix/products/cctv-camera-box-01-v2.jpg", hover: "/assets/hiranix/products/cctv-camera-box-02-v2.jpg" },
 ];
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const [showAlternate, setShowAlternate] = useState(false);
-  const [isHolding, setIsHolding] = useState(false);
-  const alternateIsVisible = showAlternate || isHolding;
   const labelClass =
     product.name.length > 24
       ? styles.labelLong
@@ -51,7 +43,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   return (
     <article
       className={styles.card}
-      data-alternate={alternateIsVisible ? "true" : "false"}
+      data-alternate={showAlternate ? "true" : "false"}
       style={
         {
           "--reveal-delay": `${(index % 4) * 70}ms`,
@@ -68,48 +60,30 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <path d="M9 1H398C402.4 1 406 4.6 406 9V330H263C254 330 249 333 243 340L221 373C216 380 211 382 201 382H9C4.6 382 1 378.4 1 374V9C1 4.6 4.6 1 9 1Z" />
       </svg>
 
-      <div
+      <button
         className={styles.imageStage}
-        role="button"
-        tabIndex={0}
-        aria-pressed={alternateIsVisible}
-        aria-label={`${showAlternate ? "Show primary" : "Show alternate"} view of ${product.name}`}
-        onPointerDown={(event) => {
-          if (event.pointerType === "mouse" && event.button !== 0) return;
-          event.currentTarget.setPointerCapture(event.pointerId);
-          setIsHolding(true);
-        }}
-        onPointerUp={(event) => {
-          if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-            event.currentTarget.releasePointerCapture(event.pointerId);
-          }
-          setIsHolding(false);
-        }}
-        onPointerCancel={() => setIsHolding(false)}
-        onLostPointerCapture={() => setIsHolding(false)}
-        onContextMenu={(event) => event.preventDefault()}
-        onKeyDown={(event) => {
-          if ((event.key !== "Enter" && event.key !== " ") || event.repeat) return;
-          event.preventDefault();
-          setShowAlternate((active) => !active);
-        }}
+        type="button"
+        aria-pressed={showAlternate}
+        aria-label={`${showAlternate ? "Show first" : "Show alternate"} image of ${product.name}`}
+        onClick={() => setShowAlternate((active) => !active)}
       >
         <img
           className={styles.productImage}
           src={product.base}
-          alt={`${product.name}, primary product view`}
+          alt={showAlternate ? "" : product.name}
           loading="lazy"
           decoding="async"
+          aria-hidden={showAlternate}
         />
         <img
           className={`${styles.productImage} ${styles.hoverImage}`}
           src={product.hover}
-          alt=""
+          alt={showAlternate ? `${product.name}, alternate view` : ""}
           loading="lazy"
           decoding="async"
-          aria-hidden="true"
+          aria-hidden={!showAlternate}
         />
-      </div>
+      </button>
 
       <div className={`${styles.label} ${labelClass}`}>
         <span>{product.name}</span>
@@ -189,10 +163,6 @@ export default function ProductShowcase() {
             </Link>
             <div className={styles.sectionActions}>
               <span>{products.length} product systems</span>
-              <a {...catalogueLinkProps} aria-label={CATALOGUE_A11Y_LABEL}>
-                Download catalogue ({CATALOGUE_SIZE_LABEL})
-                <DownloadSimple size={17} weight="regular" aria-hidden="true" />
-              </a>
             </div>
           </nav>
 
@@ -209,8 +179,7 @@ export default function ProductShowcase() {
               className={`${styles.coverReveal} ${styles.coverLime} ${styles.coverDelayed}`}
               data-product-cover
             >
-              Explore the complete HIRANIX range from two product angles. Tap and hold any image
-              to reveal its alternate angle.
+              Explore the complete HIRANIX range.
             </p>
           </div>
 

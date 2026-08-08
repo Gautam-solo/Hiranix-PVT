@@ -5,9 +5,12 @@ import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
 import { FacebookLogo } from "@phosphor-icons/react/FacebookLogo";
 import { InstagramLogo } from "@phosphor-icons/react/InstagramLogo";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
-import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
+
+import CardFanCarousel, {
+  type CardItem,
+} from "@/components/ui/card-fan-carousel";
 
 import styles from "./SocialFooter.module.css";
 
@@ -15,278 +18,86 @@ const factoryImages = [
   {
     src: "/assets/hiranix/factory/injection-moulding-floor.jpg",
     alt: "Long row of HIRANIX injection moulding machines inside the factory",
+    label: "Injection moulding",
   },
   {
     src: "/assets/hiranix/factory/fastener-feeding-line.jpg",
     alt: "Automated fastener feeding and assembly line",
+    label: "Fastener feeding",
   },
   {
     src: "/assets/hiranix/factory/packaging-line.jpg",
     alt: "HIRANIX automated packaging machinery in production",
+    label: "Packaging",
   },
   {
     src: "/assets/hiranix/factory/heat-treatment-line.jpg",
     alt: "Industrial heat treatment line for metal fasteners",
+    label: "Heat treatment",
   },
   {
     src: "/assets/hiranix/factory/fastener-assembly-line.jpg",
     alt: "HIRANIX automated fastener assembly and feeding machinery",
-    fit: "contain",
+    label: "Fastener assembly",
   },
   {
     src: "/assets/hiranix/factory/wire-forming-floor.jpg",
     alt: "Wire forming machines across the HIRANIX production floor",
+    label: "Wire forming",
   },
   {
     src: "/assets/hiranix/factory/finishing-line.jpg",
     alt: "Automated finishing line inside the HIRANIX facility",
+    label: "Finishing",
   },
 ] as const;
 
-/* ─── Fan carousel geometry ─── */
-
-const FAN_POSITIONS = [
-  { rot: -21, scale: 0.7756, x: -30, y: 7.3, zIndex: 1 },
-  { rot: -14, scale: 0.8498, x: -22, y: 4.0, zIndex: 2 },
-  { rot: -7, scale: 0.9346, x: -11, y: 1.3, zIndex: 3 },
-  { rot: 0, scale: 1.0, x: 0, y: 0.0, zIndex: 10 },
-  { rot: 7, scale: 0.9346, x: 11, y: 1.3, zIndex: 3 },
-  { rot: 14, scale: 0.8498, x: 22, y: 4.0, zIndex: 2 },
-  { rot: 21, scale: 0.7756, x: 30, y: 7.3, zIndex: 1 },
-];
-
-/** Scale x-offsets so the fan fits narrower viewports. */
-function getSpreadMultiplier(width: number) {
-  if (width < 480) return 0.30;
-  if (width < 640) return 0.40;
-  if (width < 768) return 0.52;
-  if (width < 1024) return 0.72;
-  return 1.0;
-}
-
-/** Scale y-offsets when the viewport is too short for the ideal layout. */
-function getHeightMultiplier(width: number) {
-  let idealPx: number;
-  if (width < 480) idealPx = 340;
-  else if (width < 768) idealPx = 440;
-  else if (width < 1024) idealPx = 540;
-  else idealPx = 600;
-
-  const available = window.innerHeight * 0.62;
-  return available >= idealPx ? 1 : available / idealPx;
-}
+/** The carousel takes plain image records; the labels stay on the section
+    for the alt text. */
+const factoryCards: CardItem[] = factoryImages.map((image) => ({
+  imgUrl: image.src,
+  alt: image.alt,
+}));
 
 export default function SocialFooter() {
   const socialRef = useRef<HTMLElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const hasEntered = useRef(false);
-  const isAnimating = useRef(false);
 
+  /* The cards are the fan carousel's business now; all this section animates
+     is the wipe off its heading, once, when it first scrolls into view. */
   useEffect(() => {
     const social = socialRef.current;
-    const stage = stageRef.current;
-    if (!social || !stage) return;
+    if (!social) return;
 
-    const cards = Array.from(
-      stage.querySelectorAll<HTMLElement>(`.${styles.socialCard}`),
-    );
     const wipes = Array.from(
       social.querySelectorAll<HTMLElement>("[data-social-wipe]"),
     );
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!wipes.length) return;
 
-    if (!cards.length) return;
-
-    const totalCards = cards.length;
-    const center = Math.floor(totalCards / 2);
-
-    /** Compute GSAP target props for a given fan slot at the current viewport. */
-    const getTarget = (slot: number) => {
-      const pos = FAN_POSITIONS[slot];
-      const mult = getSpreadMultiplier(window.innerWidth);
-      const hMult = getHeightMultiplier(window.innerWidth);
-      return {
-        x: `${pos.x * mult}rem`,
-        y: `${pos.y * hMult}rem`,
-        rotation: pos.rot,
-        scale: pos.scale,
-        opacity: 1,
-        zIndex: pos.zIndex,
-      };
-    };
-
-    /* ── Reduced motion: instant final state ── */
-    if (reducedMotion.matches) {
-      cards.forEach((card, slot) => gsap.set(card, getTarget(slot)));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       wipes.forEach((el) => el.style.setProperty("--wipe-cover", "0"));
-      hasEntered.current = true;
       return;
     }
 
-    /* ── Initial hidden state ── */
-    cards.forEach((card) => {
-      gsap.set(card, {
-        x: 0,
-        y: "12rem",
-        rotation: 0,
-        scale: 0.5,
-        opacity: 0,
-        zIndex: 1,
-      });
-    });
-
-    /* ── Entry animation (IntersectionObserver) ── */
-    const playEntry = () => {
-      if (hasEntered.current) return;
-      hasEntered.current = true;
-      isAnimating.current = true;
-
-      // Reveal heading wipes
-      wipes.forEach((el, i) => {
-        gsap.to(el, {
-          "--wipe-cover": 0,
-          duration: 0.6,
-          delay: 0.1 + i * 0.12,
-          ease: "power2.out",
-        });
-      });
-
-      // Fan cards in with elastic easing
-      let completed = 0;
-      cards.forEach((card, slot) => {
-        gsap.to(card, {
-          ...getTarget(slot),
-          duration: 1.2,
-          ease: "elastic.out(1.05, 0.78)",
-          delay: 0.3 + slot * 0.06,
-          onComplete: () => {
-            if (++completed >= totalCards) isAnimating.current = false;
-          },
-        });
-      });
-    };
-
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          playEntry();
-          observer.disconnect();
-        }
+        if (!entries[0].isIntersecting) return;
+        wipes.forEach((el, index) => {
+          gsap.to(el, {
+            "--wipe-cover": 0,
+            duration: 0.6,
+            delay: 0.1 + index * 0.12,
+            ease: "power2.out",
+          });
+        });
+        observer.disconnect();
       },
       { threshold: 0.12 },
     );
     observer.observe(social);
 
-    /* ── Hover interactions (desktop) ── */
-    let activeSlot: number | null = null;
-    let leaveTimer: ReturnType<typeof setTimeout> | null = null;
-
-    const applyHover = (hoveredSlot: number | null) => {
-      const mult = getSpreadMultiplier(window.innerWidth);
-      const hMult = getHeightMultiplier(window.innerWidth);
-
-      cards.forEach((card, slot) => {
-        const base = FAN_POSITIONS[slot];
-        let targetX = base.x * mult;
-        let targetY = base.y * hMult;
-        let targetRot = base.rot;
-        let targetScale = base.scale;
-        let delay = 0;
-
-        if (hoveredSlot !== null) {
-          const distance = Math.abs(slot - hoveredSlot);
-          delay = distance * 0.02;
-
-          if (slot === hoveredSlot) {
-            // Lift hovered card
-            targetY -= 2.5 * hMult;
-            targetScale *= 1.08;
-          } else {
-            // Push neighbors apart
-            const normalized =
-              center > 0 ? (slot - center) / center : 0;
-            const push =
-              8 *
-              (1 - Math.abs(normalized)) *
-              (1 + 0.2 * Math.max(0, 3 - distance));
-
-            if (slot < hoveredSlot) {
-              targetX -= push * mult;
-              targetRot -= 3 / (distance + 1);
-            } else {
-              targetX += push * mult;
-              targetRot += 3 / (distance + 1);
-            }
-
-            // Lift far-edge cards slightly for depth
-            if (
-              slot === totalCards - 1 &&
-              hoveredSlot < center
-            )
-              targetY -= 1 * hMult;
-            if (slot === 0 && hoveredSlot > center)
-              targetY -= 1 * hMult;
-          }
-        } else {
-          delay = Math.abs(slot - center) * 0.02;
-        }
-
-        gsap.to(card, {
-          x: `${targetX}rem`,
-          y: `${targetY}rem`,
-          rotation: targetRot,
-          scale: targetScale,
-          duration: 0.5,
-          delay,
-          ease: "elastic.out(1, 0.75)",
-          overwrite: "auto",
-        });
-        gsap.set(card, {
-          zIndex: hoveredSlot === slot ? 20 : base.zIndex,
-        });
-      });
-    };
-
-    const enterHandlers = cards.map((el, slot) => {
-      const handler = () => {
-        if (isAnimating.current) return;
-        if (leaveTimer) {
-          clearTimeout(leaveTimer);
-          leaveTimer = null;
-        }
-        if (activeSlot !== slot) {
-          activeSlot = slot;
-          applyHover(slot);
-        }
-      };
-      el.addEventListener("mouseenter", handler);
-      return { el, handler };
-    });
-
-    const onMouseLeave = () => {
-      if (isAnimating.current) return;
-      if (leaveTimer) clearTimeout(leaveTimer);
-      leaveTimer = setTimeout(() => {
-        activeSlot = null;
-        applyHover(null);
-      }, 50);
-    };
-    stage.addEventListener("mouseleave", onMouseLeave);
-
-    const onResize = () => {
-      if (!isAnimating.current && hasEntered.current)
-        applyHover(activeSlot);
-    };
-    window.addEventListener("resize", onResize);
-
     return () => {
       observer.disconnect();
-      enterHandlers.forEach(({ el, handler }) =>
-        el.removeEventListener("mouseenter", handler),
-      );
-      stage.removeEventListener("mouseleave", onMouseLeave);
-      window.removeEventListener("resize", onResize);
-      if (leaveTimer) clearTimeout(leaveTimer);
+      gsap.killTweensOf(wipes);
     };
   }, []);
 
@@ -316,44 +127,11 @@ export default function SocialFooter() {
           </h2>
         </div>
 
-        <div ref={stageRef} className={styles.cardStage}>
-          {factoryImages.map((image) => (
-            <figure
-              className={styles.socialCard}
-              data-social-card
-              tabIndex={0}
-              aria-label={`${image.alt}. Focus for a larger view.`}
-              key={image.src}
-            >
-              <div className={styles.cardFloat}>
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  style={{
-                    objectFit: "fit" in image ? image.fit : "cover",
-                  }}
-                  sizes="(max-width: 479px) 52vw, (max-width: 991px) 22rem, 23rem"
-                />
-              </div>
-            </figure>
-          ))}
-        </div>
-
-        <div className={styles.factoryStatement}>
-          <p className={styles.factoryLead}>
-            From raw material to final inspection, every HIRANIX product moves
-            through an integrated, quality-controlled manufacturing system.
-          </p>
-          <div className={styles.factoryMeta}>
-            <span>Engineered in India</span>
-            <span>Built for dependable performance</span>
-          </div>
-          <Link className={styles.factoryLink} href="/products">
-            <span>Explore products</span>
-            <span aria-hidden="true">↓</span>
-          </Link>
-        </div>
+        <CardFanCarousel
+          className={styles.cardFan}
+          cards={factoryCards}
+          maxVisible={5}
+        />
       </section>
 
       <footer className={styles.footer}>
@@ -409,10 +187,10 @@ export default function SocialFooter() {
                 <FacebookLogo aria-hidden="true" weight="regular" />
               </a>
               <a
-                href="https://www.whatsapp.com/channel/0029VbC3XSB4Y9lsPFDFp028"
+                href="https://wa.me/917984462764"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Open the HIRANIX WhatsApp Channel"
+                aria-label="Chat with HIRANIX on WhatsApp"
               >
                 <WhatsappLogo aria-hidden="true" weight="regular" />
               </a>

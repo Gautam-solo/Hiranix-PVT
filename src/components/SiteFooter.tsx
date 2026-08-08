@@ -42,8 +42,8 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
       Icon: FacebookLogo,
     },
     {
-      href: "https://www.whatsapp.com/channel/0029VbC3XSB4Y9lsPFDFp028",
-      label: "Open the HIRANIX WhatsApp channel",
+      href: "https://wa.me/917984462764",
+      label: "Chat with HIRANIX on WhatsApp",
       Icon: WhatsappLogo,
     },
   ];

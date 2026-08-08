@@ -118,7 +118,7 @@ const organizationJsonLd = {
   sameAs: [
     "https://www.instagram.com/hiranix.in/",
     "https://www.facebook.com/people/Hiranix/61581637497185/",
-    "https://www.whatsapp.com/channel/0029VbC3XSB4Y9lsPFDFp028",
+    "https://wa.me/917984462764",
     "https://hiranix.store/",
   ],
 };
