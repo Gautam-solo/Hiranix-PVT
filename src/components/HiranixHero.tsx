@@ -4,6 +4,8 @@
 
 import { useEffect, useLayoutEffect, useRef } from "react";
 import Link from "next/link";
+import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
+import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -158,7 +160,7 @@ export function HiranixHero() {
         timeline
           .from(".hx-h1 .line > span", { yPercent: 112, stagger: 0.1 }, at)
           .from(".hx-sub", { opacity: 0, y: 26 }, at + 0.35)
-          .from(".hx-cta", { opacity: 0, y: 26 }, at + 0.48);
+          .from(".hx-hero-actions", { opacity: 0, y: 26 }, at + 0.48);
       };
 
       const timeline = gsap.timeline({
@@ -301,13 +303,30 @@ export function HiranixHero() {
             <span className="line"><span className="accent">Every Fix.</span></span>
           </h1>
           <p className="hx-sub">Reliable electrical and hardware solutions built for lasting performance.</p>
-          <Link href="/products" className="hx-pill hx-cta">
-            Explore Products <span aria-hidden="true">→</span>
-          </Link>
+          <div className="hx-hero-actions">
+            <a href="mailto:contact@hiranix.in" className="hx-pill hx-cta hx-cta-primary">
+              Request a Quote
+              <ArrowRight size={18} weight="bold" aria-hidden="true" />
+            </a>
+            <Link href="/products" className="hx-pill hx-cta hx-cta-secondary">
+              Explore Products
+            </Link>
+          </div>
         </div>
 
         <span className="hx-scroll-progress" aria-hidden="true" />
       </section>
+
+      <a
+        className="hx-mobile-quote"
+        href="https://wa.me/917984462764"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Request a quote from HIRANIX on WhatsApp"
+      >
+        <WhatsappLogo size={21} weight="fill" aria-hidden="true" />
+        <span>Get Quote</span>
+      </a>
     </section>
   );
 }

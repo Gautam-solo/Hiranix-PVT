@@ -72,26 +72,51 @@ export default function ProductCatalogue() {
       </section>
 
       <section className={styles.filterBar} aria-label="Filter products by type">
-        <div className={styles.filterScroll}>
-          {productCategories.map((item) => {
-            const count =
-              item === "All"
-                ? products.length
-                : products.filter((product) => product.category === item).length;
-
-            return (
-              <button
-                type="button"
-                key={item}
-                className={category === item ? styles.activeFilter : undefined}
-                aria-pressed={category === item}
-                onClick={() => setCategory(item)}
-              >
-                <span>{item}</span>
-                <small>{count}</small>
+        <div className={styles.mobileSearchBlock}>
+          <label htmlFor="product-search-mobile">Search the range</label>
+          <div className={styles.mobileSearchField}>
+            <MagnifyingGlass size={19} weight="bold" aria-hidden="true" />
+            <input
+              id="product-search-mobile"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Product name or category"
+              autoComplete="off"
+            />
+            {query && (
+              <button type="button" onClick={() => setQuery("")} aria-label="Clear product search">
+                <X size={17} weight="bold" aria-hidden="true" />
               </button>
-            );
-          })}
+            )}
+          </div>
+        </div>
+
+        <div className={styles.filterRail}>
+          <div className={styles.filterScroll}>
+            {productCategories.map((item) => {
+              const count =
+                item === "All"
+                  ? products.length
+                  : products.filter((product) => product.category === item).length;
+
+              return (
+                <button
+                  type="button"
+                  key={item}
+                  className={category === item ? styles.activeFilter : undefined}
+                  aria-pressed={category === item}
+                  onClick={() => setCategory(item)}
+                >
+                  <span>{item}</span>
+                  <small>{count}</small>
+                </button>
+              );
+            })}
+          </div>
+          <span className={styles.filterHint} aria-hidden="true">
+            Swipe <ArrowRight size={14} weight="bold" />
+          </span>
         </div>
 
         <div className={styles.resultStatus} aria-live="polite">
@@ -110,28 +135,28 @@ export default function ProductCatalogue() {
       {visibleProducts.length > 0 ? (
         <section className={styles.grid} aria-label="HIRANIX product catalogue">
           {visibleProducts.map((product) => (
-            <article className={styles.card} key={product.slug}>
-              <Link href={`/products/${product.slug}`} aria-label={`View ${product.name}`}>
-                <div className={styles.imageStage}>
+            <article
+              className={styles.card}
+              key={product.slug}
+            >
+              <div className={styles.imageStage}>
+                <Link
+                  className={styles.imageLink}
+                  href={`/products/${product.slug}`}
+                  aria-label={`View ${product.name}`}
+                >
                   <Image
                     src={product.image}
                     alt={product.name}
                     fill
                     sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 25vw"
                   />
-                  <Image
-                    className={styles.alternateImage}
-                    src={product.alternateImage}
-                    alt=""
-                    fill
-                    sizes="(max-width: 560px) 100vw, (max-width: 1100px) 50vw, 25vw"
-                    aria-hidden="true"
-                  />
-                </div>
+                </Link>
+              </div>
+              <Link className={styles.cardLink} href={`/products/${product.slug}`}>
                 <div className={styles.cardCopy}>
                   <span>{product.category}</span>
                   <h2>{product.name}</h2>
-                  <p>{product.statement}</p>
                   <strong>
                     View Product
                     <ArrowRight size={17} weight="bold" aria-hidden="true" />

@@ -118,22 +118,36 @@
 }
 
 .dot {
-  width: 0.5rem;
-  height: 0.5rem;
+  position: relative;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgba(242, 245, 242, 0.4);
+  background: transparent;
   cursor: pointer;
+}
+
+.dot::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(242, 245, 242, 0.4);
+  content: "";
+  transform: translate(-50%, -50%);
   transition:
     width 0.25s ease,
     background-color 0.25s ease;
 }
 
-.dot:hover {
+.dot:hover::after {
   background: rgba(242, 245, 242, 0.7);
 }
 
-.dot[data-active="true"] {
+.dot[data-active="true"]::after {
   width: 1.4rem;
   background: #7dffb0;
 }

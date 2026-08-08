@@ -566,7 +566,9 @@ const baseProducts = [
     name: "Fan Sheet",
     category: "Installation",
     index: "19",
-    ...images("fan-sheet"),
+    // Same product as the round sheet, shot once — there is no separate
+    // fan-sheet photography.
+    ...images("round-sheet"),
     statement: "A durable insulating sheet for fan mounting and fabrication work.",
     description:
       "A lightweight HDPE and nylon fan sheet designed for insulating, spacing, covering, and fabrication applications. Its moisture resistance, mechanical strength, wear resistance, and dimensional stability support dependable installation in demanding environments.",
@@ -591,6 +593,12 @@ const baseProducts = [
     category: "Enclosures",
     index: "20",
     ...images("cctv-camera-box"),
+    // Re-shot Aug 2026. The image optimizer serves with
+    // `Cache-Control: immutable, max-age=1y`, so replacing a file at the same
+    // URL stays invisible to any browser that already fetched it — new
+    // photography needs a new filename, not just new bytes.
+    image: "/assets/hiranix/products/cctv-camera-box-01-v2.jpg",
+    alternateImage: "/assets/hiranix/products/cctv-camera-box-02-v2.jpg",
     statement: "A protected, professional enclosure for CCTV camera connections.",
     description:
       "A virgin PP protective enclosure for CCTV camera wiring and connections. The box helps shield installation components from dust, rain, heat, and tampering while providing cable-entry and mounting provisions for straightforward service and maintenance.",
@@ -956,7 +964,6 @@ const roundFanSheet: HiranixProduct = {
   ...requireVariant("round-sheet"),
   slug: "round-fan-sheet",
   name: "Round / Fan Sheet",
-  alternateImage: requireVariant("fan-sheet").image,
   statement: "Round and fan-sheet formats for insulation, spacing, and fabrication work.",
   description:
     "A lightweight insulating-sheet family supplied in compact round-sheet and larger fan-sheet formats. The smooth, moisture-resistant material supports electrical insulation, spacing, covering, fan mounting, and general fabrication applications.",

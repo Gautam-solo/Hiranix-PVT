@@ -218,10 +218,10 @@ export function About3({
             <FacebookLogo size={21} aria-hidden="true" />
           </a>
           <a
-            href="https://www.whatsapp.com/channel/0029VbC3XSB4Y9lsPFDFp028"
+            href="https://wa.me/917984462764"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Open the HIRANIX WhatsApp channel"
+            aria-label="Chat with HIRANIX on WhatsApp"
           >
             <WhatsappLogo size={21} aria-hidden="true" />
           </a>

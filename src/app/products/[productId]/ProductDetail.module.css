@@ -131,7 +131,6 @@
   transform: translateY(-2px);
 }
 
-.specifications,
 .tableSection {
   display: grid;
   grid-template-columns: minmax(16rem, 0.7fr) minmax(0, 1.3fr);
@@ -176,7 +175,6 @@
 
 .useCases {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-block: 1px solid rgba(125, 255, 176, 0.2);
   background: #0b1710;
 }
@@ -306,7 +304,6 @@
     padding-block: 4.5rem;
   }
 
-  .specifications,
   .tableSection {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -339,6 +336,86 @@
 @media (prefers-reduced-motion: reduce) {
   .actions a,
   .nextProduct svg {
+    transition: none;
+  }
+}
+
+
+/* ── Motion ─────────────────────────────────────────────────────────────
+   Sections rise into place as they are reached, which gives the long scroll
+   some rhythm instead of dumping every band on screen at once. Driven by
+   RevealOnScroll flipping data-revealed. */
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 1.75rem, 0);
+  transition:
+    opacity 0.85s var(--ease-out-expo),
+    transform 0.85s var(--ease-out-expo);
+  will-change: opacity, transform;
+}
+
+[data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* The specs sit under the section's own heading now, above the table, so they
+   read as the summary of the data rather than a section of their own. */
+.tableSection .specList {
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 701px) {
+  .tableSection {
+    grid-template-rows: auto 1fr;
+  }
+
+  .tableSection .specList {
+    grid-column: 2;
+  }
+
+  .tableSection .tableWrap,
+  .tableSection .dataNote {
+    grid-column: 2;
+  }
+}
+
+/* On a phone the two actions scroll away almost immediately and the rest of
+   the page has no way to act on the product. Pinning them keeps the enquiry
+   one thumb-reach away for the whole scroll. */
+@media (max-width: 700px) {
+  .actions {
+    position: fixed;
+    z-index: 40;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    gap: 0.5rem;
+    padding: 0.7rem var(--page-pad) calc(0.7rem + env(safe-area-inset-bottom));
+    border-top: 1px solid rgba(125, 255, 176, 0.22);
+    background: rgba(5, 6, 5, 0.86);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  /* One action now, so it takes the full bar and keeps its arrow. */
+  .actions a {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  /* Room for the bar, so the last section is never trapped underneath it. */
+  .page {
+    padding-bottom: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
     transition: none;
   }
 }

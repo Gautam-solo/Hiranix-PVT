@@ -11,7 +11,10 @@
   --track-grey: #839187;
   --cream: #e8eee9;
   --gap: 1.25rem;
-  --container-pad: 1.25rem;
+  /* The page gutter. Every top-level section reads this and nothing else, so
+     each one starts on the same vertical line at every width — sections used
+     to invent their own value and drifted up to 36px apart on one screen. */
+  --page-pad: clamp(20px, 3.5vw, 56px);
   --ease-hiranix: cubic-bezier(0.65, 0.05, 0, 1);
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
   --duration: 0.75s;
@@ -40,7 +43,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-mona-sans), Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.25;
   overflow-x: clip;
   transition: background-color 0.8s linear;
@@ -54,6 +57,11 @@ a {
 button {
   color: inherit;
   font: inherit;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--lime-off);
+  outline-offset: 4px;
 }
 
 img {
@@ -116,7 +124,7 @@ img {
      the copy is the only child; anchor it to the bottom as the two-child
      space-between layout used to, and clear the fixed header up top. */
   justify-content: flex-end;
-  padding: calc(76px + clamp(1.25rem, 4vw, 4rem)) clamp(1.25rem, 4vw, 4rem) clamp(1.25rem, 4vw, 4rem);
+  padding: calc(76px + var(--page-pad)) var(--page-pad) var(--page-pad);
   background:
     radial-gradient(circle at 78% 22%, rgba(35, 200, 98, 0.2), transparent 24rem),
     #070a08;
@@ -161,22 +169,6 @@ img {
   padding: 0 1.25rem;
   border: 1px solid rgba(125, 255, 176, 0.5);
   border-radius: 999px;
-}
-
-@media (max-width: 991px) {
-  :root {
-    --container-pad: 1.25rem;
-  }
-}
-
-@media (max-width: 479px) {
-  :root {
-    --container-pad: 1rem;
-  }
-
-  body {
-    font-size: 12px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
