@@ -278,6 +278,18 @@
     opacity 0.75s var(--ease-hiranix);
 }
 
+.card[data-product="concrete-nail"] .productImage {
+  object-fit: cover;
+  object-position: 50% 68%;
+  transform: scale(1.04);
+}
+
+.card[data-product="nylon-cable-tie"] .productImage {
+  object-fit: cover;
+  object-position: 50% 28%;
+  transform: scale(1.02);
+}
+
 .hoverImage {
   opacity: 0;
 }
@@ -292,8 +304,21 @@
   transform: scale(1);
 }
 
+.card[data-product="concrete-nail"][data-alternate="true"] .hoverImage {
+  transform: scale(1.04);
+}
+
+.card[data-product="nylon-cable-tie"][data-alternate="true"] .hoverImage {
+  transform: scale(1.02);
+}
+
 .imageStage:active .productImage {
   transform: scale(0.985);
+}
+
+.card[data-product="concrete-nail"] .imageStage:active .productImage,
+.card[data-product="nylon-cable-tie"] .imageStage:active .productImage {
+  transform: scale(1);
 }
 
 .card:has(.imageStage:focus-visible) .frame path {
@@ -337,6 +362,14 @@
 
   .card:hover .productImage {
     transform: scale(1.025);
+  }
+
+  .card[data-product="concrete-nail"]:hover .productImage {
+    transform: scale(1.08);
+  }
+
+  .card[data-product="nylon-cable-tie"]:hover .productImage {
+    transform: scale(1.06);
   }
 
   .card:hover .frame path {
@@ -552,10 +585,6 @@
        the 991px block above; only the column gap tightens on narrow screens. */
     column-gap: 0.75rem;
     row-gap: 2.6rem;
-  }
-
-  .imageStage {
-    bottom: 9%;
   }
 
   /* Inherits the un-notched layout above; just eases the name for the

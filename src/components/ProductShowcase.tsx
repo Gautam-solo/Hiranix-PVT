@@ -7,28 +7,29 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./ProductShowcase.module.css";
 
 type Product = {
+  id: string;
   name: string;
   base: string;
   hover: string;
 };
 
 const products: Product[] = [
-  { name: "Concrete Nail", base: "/assets/hiranix/products/concrete-nail-01.jpg", hover: "/assets/hiranix/products/concrete-nail-02.jpg" },
-  { name: "MCB Distribution Push Button", base: "/assets/hiranix/products/mcb-distribution-push-button-01.jpg", hover: "/assets/hiranix/products/mcb-distribution-push-button-02.jpg" },
-  { name: "Elite / Magnum Distribution Box", base: "/assets/hiranix/products/db-elite-01.jpg", hover: "/assets/hiranix/products/db-magnum-01.jpg" },
-  { name: "MCB Box", base: "/assets/hiranix/products/mcb-box-01.jpg", hover: "/assets/hiranix/products/mcb-box-02.jpg" },
-  { name: "Wall Plug Gitti", base: "/assets/hiranix/products/wall-plug-gitti-01.jpg", hover: "/assets/hiranix/products/wall-plug-gitti-02.jpg" },
-  { name: "UPVC / CPVC End Plug", base: "/assets/hiranix/products/upvc-end-plug-01.jpg", hover: "/assets/hiranix/products/cpvc-end-plug-01.jpg" },
-  { name: "Plastic UPVC / CPVC Clamp", base: "/assets/hiranix/products/plastic-upvc-clamp-01.jpg", hover: "/assets/hiranix/products/plastic-cpvc-clamp-01.jpg" },
-  { name: "Nylon Cable Tie", base: "/assets/hiranix/products/nylon-cable-tie-01.jpg", hover: "/assets/hiranix/products/nylon-cable-tie-02.jpg" },
-  { name: "Open Surface Box", base: "/assets/hiranix/products/open-surface-box-01.jpg", hover: "/assets/hiranix/products/open-surface-box-02.jpg" },
-  { name: "Round / Fan Sheet", base: "/assets/hiranix/products/round-sheet-01.jpg", hover: "/assets/hiranix/products/round-sheet-02.jpg" },
-  { name: "FR PVC Tape", base: "/assets/hiranix/products/fr-pvc-tape-01.jpg", hover: "/assets/hiranix/products/fr-pvc-tape-02.jpg" },
-  { name: "Cable Nail Clip", base: "/assets/hiranix/products/cable-nail-clip-01.jpg", hover: "/assets/hiranix/products/cable-nail-clip-02.jpg" },
-  { name: "Modular Gang Box", base: "/assets/hiranix/products/modular-gang-box-01.jpg", hover: "/assets/hiranix/products/modular-gang-box-02.jpg" },
-  { name: "Metal Junction Box", base: "/assets/hiranix/products/metal-junction-box-01.jpg", hover: "/assets/hiranix/products/metal-junction-box-02.jpg" },
-  { name: "Double Nail Clamp", base: "/assets/hiranix/products/double-nail-clamp-01.jpg", hover: "/assets/hiranix/products/double-nail-clamp-02.jpg" },
-  { name: "CCTV Camera Box", base: "/assets/hiranix/products/cctv-camera-box-01-v2.jpg", hover: "/assets/hiranix/products/cctv-camera-box-02-v2.jpg" },
+  { id: "concrete-nail", name: "Concrete Nail", base: "/assets/hiranix/products/concrete-nail-01.jpg", hover: "/assets/hiranix/products/concrete-nail-02.jpg" },
+  { id: "mcb-distribution-push-button", name: "MCB Distribution Push Button", base: "/assets/hiranix/products/mcb-distribution-push-button-01.jpg", hover: "/assets/hiranix/products/mcb-distribution-push-button-02.jpg" },
+  { id: "elite-magnum-distribution-box", name: "Elite / Magnum Distribution Box", base: "/assets/hiranix/products/db-elite-01.jpg", hover: "/assets/hiranix/products/db-magnum-01.jpg" },
+  { id: "mcb-box", name: "MCB Box", base: "/assets/hiranix/products/mcb-box-01.jpg", hover: "/assets/hiranix/products/mcb-box-02.jpg" },
+  { id: "wall-plug-gitti", name: "Wall Plug Gitti", base: "/assets/hiranix/products/wall-plug-gitti-01.jpg", hover: "/assets/hiranix/products/wall-plug-gitti-02.jpg" },
+  { id: "upvc-cpvc-end-plug", name: "UPVC / CPVC End Plug", base: "/assets/hiranix/products/upvc-end-plug-01.jpg", hover: "/assets/hiranix/products/cpvc-end-plug-01.jpg" },
+  { id: "plastic-upvc-cpvc-clamp", name: "Plastic UPVC / CPVC Clamp", base: "/assets/hiranix/products/plastic-upvc-clamp-01.jpg", hover: "/assets/hiranix/products/plastic-cpvc-clamp-01.jpg" },
+  { id: "nylon-cable-tie", name: "Nylon Cable Tie", base: "/assets/hiranix/products/nylon-cable-tie-01.jpg", hover: "/assets/hiranix/products/nylon-cable-tie-02.jpg" },
+  { id: "open-surface-box", name: "Open Surface Box", base: "/assets/hiranix/products/open-surface-box-01.jpg", hover: "/assets/hiranix/products/open-surface-box-02.jpg" },
+  { id: "round-fan-sheet", name: "Round / Fan Sheet", base: "/assets/hiranix/products/round-sheet-01.jpg", hover: "/assets/hiranix/products/round-sheet-02.jpg" },
+  { id: "fr-pvc-tape", name: "FR PVC Tape", base: "/assets/hiranix/products/fr-pvc-tape-01.jpg", hover: "/assets/hiranix/products/fr-pvc-tape-02.jpg" },
+  { id: "cable-nail-clip", name: "Cable Nail Clip", base: "/assets/hiranix/products/cable-nail-clip-01.jpg", hover: "/assets/hiranix/products/cable-nail-clip-02.jpg" },
+  { id: "modular-gang-box", name: "Modular Gang Box", base: "/assets/hiranix/products/modular-gang-box-01.jpg", hover: "/assets/hiranix/products/modular-gang-box-02.jpg" },
+  { id: "metal-junction-box", name: "Metal Junction Box", base: "/assets/hiranix/products/metal-junction-box-01.jpg", hover: "/assets/hiranix/products/metal-junction-box-02.jpg" },
+  { id: "double-nail-clamp", name: "Double Nail Clamp", base: "/assets/hiranix/products/double-nail-clamp-01.jpg", hover: "/assets/hiranix/products/double-nail-clamp-02.jpg" },
+  { id: "cctv-camera-box", name: "CCTV Camera Box", base: "/assets/hiranix/products/cctv-camera-box-01-v2.jpg", hover: "/assets/hiranix/products/cctv-camera-box-02-v2.jpg" },
 ];
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
@@ -43,6 +44,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   return (
     <article
       className={styles.card}
+      data-product={product.id}
       data-alternate={showAlternate ? "true" : "false"}
       style={
         {
