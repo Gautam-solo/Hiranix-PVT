@@ -1,9 +1,9 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element -- stacked hover images need identical native rendering */
+/* eslint-disable @next/next/no-img-element -- product photos use their existing native rendering */
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./ProductShowcase.module.css";
 
 type Product = {
@@ -33,7 +33,6 @@ const products: Product[] = [
 ];
 
 function ProductCard({ product, index }: { product: Product; index: number }) {
-  const [showAlternate, setShowAlternate] = useState(false);
   const labelClass =
     product.name.length > 24
       ? styles.labelLong
@@ -45,7 +44,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
     <article
       className={styles.card}
       data-product={product.id}
-      data-alternate={showAlternate ? "true" : "false"}
       style={
         {
           "--reveal-delay": `${(index % 4) * 70}ms`,
@@ -62,30 +60,21 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         <path d="M9 1H398C402.4 1 406 4.6 406 9V330H263C254 330 249 333 243 340L221 373C216 380 211 382 201 382H9C4.6 382 1 378.4 1 374V9C1 4.6 4.6 1 9 1Z" />
       </svg>
 
-      <button
-        className={styles.imageStage}
-        type="button"
-        aria-pressed={showAlternate}
-        aria-label={`${showAlternate ? "Show first" : "Show alternate"} image of ${product.name}`}
-        onClick={() => setShowAlternate((active) => !active)}
-      >
+      <div className={styles.imageStage}>
         <img
           className={styles.productImage}
           src={product.base}
-          alt={showAlternate ? "" : product.name}
+          alt={product.name}
           loading="lazy"
           decoding="async"
-          aria-hidden={showAlternate}
         />
-        <img
-          className={`${styles.productImage} ${styles.hoverImage}`}
-          src={product.hover}
-          alt={showAlternate ? `${product.name}, alternate view` : ""}
-          loading="lazy"
-          decoding="async"
-          aria-hidden={!showAlternate}
-        />
-      </button>
+      </div>
+
+      <Link
+        className={styles.cardLink}
+        href={`/products/${product.id}`}
+        aria-label={`View ${product.name}`}
+      />
 
       <div className={`${styles.label} ${labelClass}`}>
         <span>{product.name}</span>

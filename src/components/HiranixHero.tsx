@@ -3,8 +3,8 @@
 /* eslint-disable @next/next/no-img-element -- Layered alpha cutouts rely on their intrinsic image bounds. */
 
 import { useEffect, useLayoutEffect, useRef } from "react";
-import Link from "next/link";
-import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
+import { AppleLogo } from "@phosphor-icons/react/AppleLogo";
+import { GooglePlayLogo } from "@phosphor-icons/react/GooglePlayLogo";
 import { WhatsappLogo } from "@phosphor-icons/react/WhatsappLogo";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -304,13 +304,26 @@ export function HiranixHero() {
           </h1>
           <p className="hx-sub">Reliable electrical and hardware solutions built for lasting performance.</p>
           <div className="hx-hero-actions">
-            <a href="mailto:contact@hiranix.in" className="hx-pill hx-cta hx-cta-primary">
-              Request a Quote
-              <ArrowRight size={18} weight="bold" aria-hidden="true" />
+            <a
+              href="https://play.google.com/store/apps/details?id=com.hinoveapp&hl=en_IN&pli=1"
+              className="hx-pill hx-cta hx-cta-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download Hiranix from Google Play"
+            >
+              <GooglePlayLogo size={20} weight="fill" aria-hidden="true" />
+              Google Play
             </a>
-            <Link href="/products" className="hx-pill hx-cta hx-cta-secondary">
-              Explore Products
-            </Link>
+            <a
+              href="https://apps.apple.com/in/app/hiranix/id6618135537"
+              className="hx-pill hx-cta hx-cta-secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Download Hiranix from the App Store"
+            >
+              <AppleLogo size={20} weight="fill" aria-hidden="true" />
+              App Store
+            </a>
           </div>
         </div>
 
