@@ -312,22 +312,26 @@ export function HiranixHero() {
           <div className="hx-hero-actions">
             <a
               href="https://play.google.com/store/apps/details?id=com.hinoveapp&hl=en_IN&pli=1"
-              className="hx-pill hx-cta hx-cta-primary"
+              className="hx-pill hx-cta hx-cta-store"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Download Hiranix from Google Play"
             >
-              <GooglePlayLogo size={20} weight="fill" aria-hidden="true" />
+              <span className="hx-store-icon" aria-hidden="true">
+                <GooglePlayLogo className="hx-store-icon-play" weight="fill" />
+              </span>
               Google Play
             </a>
             <a
               href="https://apps.apple.com/in/app/hiranix/id6618135537"
-              className="hx-pill hx-cta hx-cta-secondary"
+              className="hx-pill hx-cta hx-cta-store"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Download Hiranix from the App Store"
             >
-              <AppleLogo size={20} weight="fill" aria-hidden="true" />
+              <span className="hx-store-icon" aria-hidden="true">
+                <AppleLogo className="hx-store-icon-apple" weight="fill" />
+              </span>
               App Store
             </a>
           </div>

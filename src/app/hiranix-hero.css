@@ -554,20 +554,41 @@
   font-size: 16px;
 }
 
-.hx-cta-primary {
-  border-color: var(--hx-green-bright);
-  background: var(--hx-green-bright);
-  color: #07100a;
+.hx-cta-store {
+  border-color: rgba(220, 255, 233, 0.36);
+  background: rgba(5, 6, 5, 0.48);
+  color: var(--hx-ink);
   font-weight: 750;
 }
 
-.hx-cta-primary:hover {
-  border-color: var(--hx-ink);
-  background: var(--hx-ink);
+.hx-store-icon {
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: currentColor;
 }
 
-.hx-cta-secondary {
-  background: rgba(5, 6, 5, 0.48);
+.hx-store-icon svg {
+  display: block;
+}
+
+/* The Apple silhouette fills more of its viewBox than the Play triangle.
+   These optical sizes make both marks read as the same 20px glyph. */
+.hx-store-icon-play {
+  width: 22px;
+  height: 22px;
+}
+
+.hx-store-icon-apple {
+  width: 20px;
+  height: 20px;
+}
+
+.hx-cta-store:hover {
+  border-color: rgba(125, 255, 176, 0.68);
+  background: rgba(35, 200, 98, 0.14);
 }
 
 .hx-mobile-quote {
