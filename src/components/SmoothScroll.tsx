@@ -10,6 +10,9 @@ export function SmoothScroll() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Lenis uses ResizeObserver internally. Browsers without it keep native
+    // scrolling rather than failing the entire client-side application.
+    if (!("ResizeObserver" in window)) return;
 
     const lenis = new Lenis({
       wrapper: document.documentElement,

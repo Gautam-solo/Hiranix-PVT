@@ -1,5 +1,6 @@
 .page {
   --catalogue-line: rgba(125, 255, 176, 0.2);
+  min-height: 100vh;
   min-height: 100svh;
   padding-top: 76px;
   background: #050605;
@@ -69,6 +70,7 @@
 }
 
 .searchField input {
+  min-height: 44px;
   min-width: 0;
   border: 0;
   outline: 0;
@@ -244,11 +246,20 @@
 
 .imageStage {
   position: relative;
+  height: 0;
+  padding-bottom: 108.695%;
   aspect-ratio: 0.92;
   overflow: hidden;
   border: 1px solid rgba(125, 255, 176, 0.28);
   border-radius: 0.8rem;
   background: #0a0c0b;
+}
+
+@supports (aspect-ratio: 1 / 1) {
+  .imageStage {
+    height: auto;
+    padding-bottom: 0;
+  }
 }
 
 .imageLink {
@@ -361,6 +372,9 @@
 }
 
 .support a {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
   padding-bottom: 0.35rem;
   border-bottom: 1px solid #7dffb0;
   color: #7dffb0;
@@ -384,7 +398,7 @@
     min-height: 0;
     grid-template-columns: 1fr;
     gap: 2.75rem;
-    padding: 4.5rem 1.25rem 2.5rem;
+    padding: 4.5rem var(--page-pad) 2.5rem;
   }
 
   .discoveryCopy h1 {
@@ -435,6 +449,7 @@
   }
 
   .mobileSearchField input {
+    min-height: 44px;
     min-width: 0;
     border: 0;
     outline: 0;
@@ -500,6 +515,33 @@
     padding: 0 var(--page-pad);
     border-top: 1px solid var(--catalogue-line);
     border-left: 0;
+  }
+}
+
+@media (max-width: 900px) and (max-height: 520px) and (orientation: landscape) {
+  .discovery {
+    gap: 1.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .filterBar {
+    position: relative;
+    top: auto;
+    box-shadow: none;
+  }
+
+  .mobileSearchBlock {
+    padding-block: 0.45rem;
+  }
+
+  .filterScroll,
+  .filterHint {
+    min-height: 3.25rem;
+  }
+
+  .resultStatus {
+    min-height: 2.75rem;
   }
 }
 

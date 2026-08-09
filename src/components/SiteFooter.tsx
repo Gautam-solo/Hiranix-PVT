@@ -9,7 +9,7 @@ import { HiranixLogo } from "@/components/HiranixLogo";
 import styles from "./SiteFooter.module.css";
 
 const MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=198%2C%20Abhishree%20Estate%2C%20Odhav%2C%20Ahmedabad%20382415";
+  "https://www.google.com/maps/search/?api=1&query=198%2C%20Hirachandni%20Muvadi%2C%20Nr.Ghodasar%20Canal%2C%20Mehmedabad-387110";
 
 /**
  * The shared site footer.
@@ -71,7 +71,7 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
         <address className={styles.contact}>
           <h2>Contact</h2>
           <a href={MAP_URL} target="_blank" rel="noopener noreferrer">
-            198, Abhishree Estate, Odhav, Ahmedabad - 382415
+            198, Hirachandni Muvadi, Nr.Ghodasar Canal, Mehmedabad-387110
             <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
           </a>
           <a href="tel:+917984462764">+91 79844 62764</a>

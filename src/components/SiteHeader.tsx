@@ -76,8 +76,20 @@ export function SiteHeader() {
     const closeOnDesktop = (event: MediaQueryListEvent) => {
       if (event.matches) setIsMenuOpen(false);
     };
-    desktop.addEventListener("change", closeOnDesktop);
-    return () => desktop.removeEventListener("change", closeOnDesktop);
+    const legacyDesktop = desktop as unknown as {
+      addListener: (listener: (event: MediaQueryListEvent) => void) => void;
+      removeListener: (listener: (event: MediaQueryListEvent) => void) => void;
+    };
+
+    if ("addEventListener" in desktop) {
+      desktop.addEventListener("change", closeOnDesktop);
+      return () => desktop.removeEventListener("change", closeOnDesktop);
+    }
+
+    // Safari 13 uses the legacy MediaQueryList listener API. Keeping this
+    // branch lets the drawer close cleanly after a rotation or window resize.
+    legacyDesktop.addListener(closeOnDesktop);
+    return () => legacyDesktop.removeListener(closeOnDesktop);
   }, []);
 
   return (

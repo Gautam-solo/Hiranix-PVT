@@ -103,6 +103,12 @@ export default function ProductShowcase() {
       return;
     }
 
+    if (!("IntersectionObserver" in window)) {
+      cards?.forEach((card) => card.setAttribute("data-visible", "true"));
+      covers.forEach((cover) => cover.setAttribute("data-cover-visible", "true"));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

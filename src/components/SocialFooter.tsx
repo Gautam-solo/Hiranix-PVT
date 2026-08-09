@@ -78,6 +78,11 @@ export default function SocialFooter() {
       return;
     }
 
+    if (!("IntersectionObserver" in window)) {
+      wipes.forEach((el) => el.style.setProperty("--wipe-cover", "0"));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) return;
@@ -147,12 +152,12 @@ export default function SocialFooter() {
           <address className={styles.footerContact}>
             <h3 id="footer-contact-title">Contact Us</h3>
             <a
-              href="https://www.google.com/maps/search/?api=1&query=198%2C%20Abhishree%20Estate%2C%20Odhav%2C%20Ahmedabad%20382415"
+              href="https://www.google.com/maps/search/?api=1&query=198%2C%20Hirachandni%20Muvadi%2C%20Nr.Ghodasar%20Canal%2C%20Mehmedabad-387110"
               target="_blank"
               rel="noopener noreferrer"
             >
               <strong>
-                198, Abhishree Estate, Odhav, Ahmedabad - 382415
+                198, Hirachandni Muvadi, Nr.Ghodasar Canal, Mehmedabad-387110
               </strong>
               <ArrowUpRight aria-hidden="true" weight="bold" />
             </a>

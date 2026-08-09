@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "nylon cable ties",
     "MCB box",
     "junction box",
-    "electrical hardware Ahmedabad",
+    "electrical hardware Mehmedabad",
   ],
   authors: [{ name: "Hiranix India Private Limited", url: siteUrl }],
   creator: "Hiranix India Private Limited",
@@ -109,10 +109,10 @@ const organizationJsonLd = {
   telephone: "+917984462764",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "198, Abhishree Estate, Odhav",
-    addressLocality: "Ahmedabad",
+    streetAddress: "198, Hirachandni Muvadi, Nr.Ghodasar Canal",
+    addressLocality: "Mehmedabad",
     addressRegion: "Gujarat",
-    postalCode: "382415",
+    postalCode: "387110",
     addressCountry: "IN",
   },
   sameAs: [

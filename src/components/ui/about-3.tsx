@@ -45,7 +45,7 @@ type About3Props = {
 };
 
 const mapUrl =
-  "https://www.google.com/maps/search/?api=1&query=198%2C%20Abhishree%20Estate%2C%20Odhav%2C%20Ahmedabad%20382415";
+  "https://www.google.com/maps/search/?api=1&query=198%2C%20Hirachandni%20Muvadi%2C%20Nr.Ghodasar%20Canal%2C%20Mehmedabad-387110";
 
 export function About3({
   title,

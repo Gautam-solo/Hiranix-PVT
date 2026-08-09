@@ -2,6 +2,7 @@
   position: relative;
   z-index: 6;
   width: 100%;
+  overflow: hidden;
   overflow: clip;
   background: #050605;
   color: var(--white);
@@ -23,6 +24,7 @@
 }
 
 .sectionBrand {
+  min-height: 28px;
   display: inline-flex;
   align-items: baseline;
   gap: 0.55rem;
@@ -30,6 +32,12 @@
   font-variation-settings: "wght" 850, "wdth" 102;
   letter-spacing: 0.09em;
   text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .sectionBrand {
+    min-height: 44px;
+  }
 }
 
 .sectionBrand span {
@@ -192,6 +200,8 @@
 .card {
   position: relative;
   width: 100%;
+  height: 0;
+  padding-top: 101.01%;
   aspect-ratio: 406.89 / 411;
   overflow: hidden;
   opacity: 0;
@@ -201,6 +211,13 @@
     transform 0.85s var(--ease-out-expo) var(--reveal-delay, 0ms),
     filter 0.55s var(--ease-out-expo),
     z-index 0s;
+}
+
+@supports (aspect-ratio: 1 / 1) {
+  .card {
+    height: auto;
+    padding-top: 0;
+  }
 }
 
 .card[data-visible="true"] {
@@ -497,6 +514,8 @@
      Below this width, drop the notch: square off the image and give the name a
      full-width band underneath, in normal flow. */
   .card {
+    height: auto;
+    padding-top: 0;
     overflow: visible;
     aspect-ratio: auto;
   }
@@ -509,10 +528,19 @@
     position: relative;
     inset: auto;
     width: 100%;
+    height: 0;
+    padding-bottom: 83.56%;
     aspect-ratio: 406.89 / 340;
     border: 1px solid var(--dark-green-tint-2);
     border-radius: 0.6rem;
     clip-path: none;
+  }
+
+  @supports (aspect-ratio: 1 / 1) {
+    .imageStage {
+      height: auto;
+      padding-bottom: 0;
+    }
   }
 
   .label {

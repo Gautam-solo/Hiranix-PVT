@@ -14,6 +14,7 @@
   /* The page gutter. Every top-level section reads this and nothing else, so
      each one starts on the same vertical line at every width — sections used
      to invent their own value and drifted up to 36px apart on one screen. */
+  --page-pad: 20px;
   --page-pad: clamp(20px, 3.5vw, 56px);
   --ease-hiranix: cubic-bezier(0.65, 0.05, 0, 1);
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
@@ -38,13 +39,14 @@ html::-webkit-scrollbar {
 }
 
 body {
-  min-width: 320px;
+  min-width: 280px;
   margin: 0;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-mona-sans), Arial, sans-serif;
   font-size: 16px;
   line-height: 1.25;
+  overflow-x: hidden;
   overflow-x: clip;
   transition: background-color 0.8s linear;
 }
@@ -235,6 +237,16 @@ img {
   }
 }
 
+/* A compact visual link can still expose a standards-compliant pointer area.
+   Keep desktop rhythm tight at 28px, then raise it to a thumb-friendly 44px
+   in the existing handset rule below. */
+footer nav a,
+footer address a,
+address a,
+footer a[href^="/legal/"] {
+  min-height: 28px;
+}
+
 /* Touch targets on handsets.
    Footer and contact links render 14-20px tall, under WCAG 2.2 Target Size
    (Minimum) 2.5.8's 24px floor and far under a comfortable 44px. The footer is
@@ -295,4 +307,13 @@ img {
    suppress the focus ring it would otherwise draw around the whole page. */
 main:focus {
   outline: none;
+}
+
+/* Compact legacy handsets still exist in field-service fleets. Keep the
+   global rhythm intact, but reclaim enough width for the fixed header and
+   two-column product layouts below the usual 320px baseline. */
+@media (max-width: 319px) {
+  :root {
+    --page-pad: 12px;
+  }
 }

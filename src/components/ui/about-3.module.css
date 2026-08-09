@@ -65,11 +65,20 @@
 
 .secondaryImage {
   min-height: 0;
+  height: 0;
+  padding-bottom: 133.333%;
   aspect-ratio: 3 / 4;
   align-self: end;
   background:
     radial-gradient(circle at 50% 22%, rgba(125, 255, 176, 0.09), transparent 48%),
     #0b100d;
+}
+
+@supports (aspect-ratio: 1 / 1) {
+  .secondaryImage {
+    height: auto;
+    padding-bottom: 0;
+  }
 }
 
 .secondaryImage img {
@@ -564,7 +573,16 @@
 
   .mainImage {
     min-height: 0;
+    height: 0;
+    padding-bottom: 75%;
     aspect-ratio: 4 / 3;
+  }
+
+  @supports (aspect-ratio: 1 / 1) {
+    .mainImage {
+      height: auto;
+      padding-bottom: 0;
+    }
   }
 
   .sideColumn {
@@ -620,6 +638,7 @@
   }
 
   .achievementGrid > div:first-child {
+    min-height: 34vh;
     min-height: 34svh;
     grid-row: auto;
     grid-column: 1 / -1;
@@ -681,7 +700,14 @@
      object-fit: contain, so a landscape frame loses nothing and reclaims
      roughly 170px. */
   .secondaryImage {
+    padding-bottom: 62.5%;
     aspect-ratio: 16 / 10;
+  }
+
+  @supports (aspect-ratio: 1 / 1) {
+    .secondaryImage {
+      padding-bottom: 0;
+    }
   }
 
   .breakoutLogo {

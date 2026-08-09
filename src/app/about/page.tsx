@@ -6,7 +6,7 @@ import { productCategories } from "@/data/products";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Meet Hiranix India Private Limited, an Ahmedabad-based company focused on practical electrical fittings, fasteners, cable management and enclosures.",
+    "Meet Hiranix India Private Limited, a Mehmedabad-based company focused on practical electrical fittings, fasteners, cable management and enclosures.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About HIRANIX",
@@ -56,7 +56,7 @@ export default function AboutPage() {
         { label: "Years of experience", value: "15+" },
       ]}
       contact={{
-        address: "198, Abhishree Estate, Odhav, Ahmedabad - 382415",
+        address: "198, Hirachandni Muvadi, Nr.Ghodasar Canal, Mehmedabad-387110",
         phone: "+91 79844 62764",
         email: "contact@hiranix.in",
       }}

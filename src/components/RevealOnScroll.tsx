@@ -21,6 +21,11 @@ export default function RevealOnScroll() {
       return;
     }
 
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((el) => el.setAttribute("data-revealed", "true"));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {

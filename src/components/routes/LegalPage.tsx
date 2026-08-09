@@ -6,7 +6,7 @@ const updated = "28 July 2026";
 
 const company = {
   name: "Hiranix India Private Limited",
-  address: "198, Abhishree Estate, Odhav, Ahmedabad - 382415, Gujarat, India",
+  address: "198, Hirachandni Muvadi, Nr.Ghodasar Canal, Mehmedabad-387110",
   email: "contact@hiranix.in",
   phone: "+91 79844 62764",
 };
@@ -41,7 +41,7 @@ function ContactBlock() {
     <address className={styles.contact}>
       <strong>{company.name}</strong>
       <a
-        href="https://www.google.com/maps/search/?api=1&query=198%2C%20Abhishree%20Estate%2C%20Odhav%2C%20Ahmedabad%20382415"
+        href="https://www.google.com/maps/search/?api=1&query=198%2C%20Hirachandni%20Muvadi%2C%20Nr.Ghodasar%20Canal%2C%20Mehmedabad-387110"
         target="_blank"
         rel="noopener noreferrer"
       >

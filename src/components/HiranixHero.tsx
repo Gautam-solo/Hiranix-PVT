@@ -128,10 +128,13 @@ export function HiranixHero() {
       frame = window.requestAnimationFrame(snapProductToPedestal);
     };
 
-    const observer = new ResizeObserver(scheduleSnap);
-    observer.observe(stageElement);
-    observer.observe(pedestalElement);
-    observer.observe(productElement);
+    const observer = typeof ResizeObserver === "undefined"
+      ? null
+      : new ResizeObserver(scheduleSnap);
+    observer?.observe(stageElement);
+    observer?.observe(pedestalElement);
+    observer?.observe(productElement);
+    if (!observer) window.addEventListener("resize", scheduleSnap);
 
     if (productImage.complete) {
       measureVisibleBottomFace();
@@ -144,7 +147,8 @@ export function HiranixHero() {
     }).catch(() => undefined);
 
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
+      if (!observer) window.removeEventListener("resize", scheduleSnap);
       productImage.removeEventListener("load", scheduleSnap);
       window.cancelAnimationFrame(frame);
     };
@@ -193,7 +197,7 @@ export function HiranixHero() {
           .to(shadowSelector, { opacity: 0.5, duration: 0.45, ease: "power2.out" }, land + 0.05);
       });
 
-      copyIn(timeline, 0.95);
+      copyIn(timeline, 0.35);
 
       const scrub = gsap.timeline({
         scrollTrigger: {
@@ -229,7 +233,9 @@ export function HiranixHero() {
     const decoded = Promise.all(
       images.map((image) => (image.decode ? image.decode().catch(() => undefined) : Promise.resolve())),
     );
-    const timeout = new Promise((resolve) => window.setTimeout(resolve, 2500));
+    // Do not let slower image decoding hold the value proposition off-screen.
+    // The products may keep decoding, but the copy starts within one second.
+    const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
 
     void Promise.race([decoded, timeout]).then(() => {
       if (cancelled) return;

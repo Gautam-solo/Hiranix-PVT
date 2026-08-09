@@ -24,6 +24,11 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
+    build: {
+      // Keep the client bundle parseable on older field devices while the
+      // responsive CSS continues to enhance newer viewport APIs.
+      target: "safari13",
+    },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,

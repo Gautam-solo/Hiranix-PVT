@@ -59,7 +59,13 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
     const slide = slideRefs.current[index];
     if (!track || !slide) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    track.scrollTo({ left: slide.offsetLeft, behavior: reduceMotion ? "auto" : "smooth" });
+    try {
+      track.scrollTo({ left: slide.offsetLeft, behavior: reduceMotion ? "auto" : "smooth" });
+    } catch {
+      // Old WebKit accepts numeric scrolling only. It still changes the image
+      // and the dots, while current browsers retain the smooth transition.
+      track.scrollLeft = slide.offsetLeft;
+    }
   }, []);
 
   const goTo = useCallback(
