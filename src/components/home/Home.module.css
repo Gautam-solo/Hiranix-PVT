@@ -1,0 +1,356 @@
+/* Every chapter: an open section on the 12-column page, content on the ground. */
+
+.section {
+  padding: var(--section) var(--page-pad);
+}
+
+/* Our products ------------------------------------------------------------- */
+
+.systems {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--s-6) var(--s-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.system {
+  display: grid;
+  gap: var(--s-2);
+  color: var(--c-fg);
+}
+
+.system:focus-visible {
+  outline: 2px solid var(--c-acc);
+  outline-offset: 4px;
+}
+
+.systemPhoto {
+  aspect-ratio: 4 / 5;
+  margin-bottom: var(--s-3);
+}
+
+.systemName {
+  font-size: 1.125rem;
+  font-variation-settings: "wght" 680;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.systemMeta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--c-sub);
+  font-size: var(--type-small);
+}
+
+.systemMeta svg {
+  color: var(--c-acc);
+  transition: transform var(--t-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .system:hover .systemMeta svg {
+    transform: translateX(3px);
+  }
+}
+
+/* World's largest ---------------------------------------------------------- */
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-5);
+  margin: 0;
+}
+
+.facts div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--c-line);
+}
+
+.facts dt {
+  color: var(--c-sub);
+  font-size: var(--type-small);
+}
+
+.facts dd {
+  margin: 0;
+  font-size: var(--type-display-m);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.factory {
+  margin-top: var(--s-9);
+}
+
+.factoryHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
+}
+
+.factoryControls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.factoryControls :global(.btn) {
+  width: 48px;
+  padding: 0;
+}
+
+.factoryNow {
+  margin-right: var(--s-3);
+  color: var(--c-sub);
+  font-size: var(--type-small);
+}
+
+/* Runs to the right edge of the screen, so the next step always shows. */
+.strip {
+  display: flex;
+  gap: var(--s-4);
+  margin: 0 calc(var(--page-pad) * -1) 0 0;
+  padding: 0 var(--page-pad) 0 0;
+  overflow-x: auto;
+  list-style: none;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+}
+
+.strip:focus-visible {
+  outline: 2px solid var(--c-acc);
+  outline-offset: 4px;
+}
+
+.strip li {
+  flex: 0 0 min(44vw, 560px);
+  scroll-snap-align: start;
+}
+
+.strip figure {
+  margin: 0;
+}
+
+.stripPhoto {
+  aspect-ratio: 4 / 3;
+}
+
+.strip figcaption {
+  max-width: 44ch;
+  padding-top: var(--s-3);
+  color: var(--c-sub);
+  font-size: var(--type-small);
+  line-height: 1.5;
+}
+
+.strip figcaption strong {
+  color: var(--c-fg);
+  font-weight: 650;
+}
+
+.stripTrack {
+  height: 1px;
+  margin-top: var(--s-5);
+  background: var(--c-line);
+}
+
+.stripTrack span {
+  display: block;
+  height: 100%;
+  background: var(--c-acc);
+  transform: scaleX(0.08);
+  transform-origin: left;
+}
+
+/* Our brands --------------------------------------------------------------- */
+
+.brands {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-7) var(--s-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brands li {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+}
+
+/* The logos are square artwork with wide margins; a 16:10 frame keeps the
+   whole mark and lets the names lead. */
+.brandLogo {
+  aspect-ratio: 16 / 10;
+  margin-bottom: var(--s-3);
+}
+
+/* Contact ------------------------------------------------------------------ */
+
+/* Details on the left, the factory on a live map on the right. */
+.contact {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s-7) var(--s-8);
+  align-items: stretch;
+}
+
+.contactInfo {
+  display: grid;
+  align-content: start;
+  gap: var(--s-7);
+}
+
+.contactMap {
+  display: grid;
+  min-width: 0;
+}
+
+.contactLead {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
+}
+
+.contactActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-3);
+}
+
+.contactList {
+  margin: 0;
+}
+
+.contactList div {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: var(--s-4);
+  padding: var(--s-5) 0;
+  border-top: 1px solid var(--c-line);
+}
+
+.contactList div:last-child {
+  border-bottom: 1px solid var(--c-line);
+}
+
+.contactList dt {
+  color: var(--c-sub);
+  font-size: var(--type-small);
+}
+
+.contactList dd {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-2);
+  margin: 0;
+  font-size: var(--type-body);
+  line-height: 1.5;
+}
+
+/* Smaller screens ---------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .systems {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--s-6);
+  }
+}
+
+@media (max-width: 900px) {
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* A fixed height, not an aspect ratio: with the map's min-height, a ratio
+     turned that height into a 480px minimum width and stretched the page. */
+  .contactMap {
+    min-width: 0;
+    height: 320px;
+  }
+
+  .brands {
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 520px;
+  }
+
+  .brands li {
+    grid-template-columns: 112px minmax(0, 1fr);
+    column-gap: var(--s-5);
+    align-items: center;
+  }
+
+  .brandLogo {
+    margin-bottom: 0;
+  }
+
+  .factoryNow {
+    display: none;
+  }
+
+  .strip li {
+    flex-basis: 82vw;
+  }
+}
+
+/* On phones the five systems become one swipeable row of equal tiles. */
+@media (max-width: 640px) {
+  .systems {
+    display: flex;
+    gap: var(--s-4);
+    margin-right: calc(var(--page-pad) * -1);
+    padding-right: var(--page-pad);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .systems::-webkit-scrollbar {
+    display: none;
+  }
+
+  .systems li {
+    flex: 0 0 62vw;
+    scroll-snap-align: start;
+  }
+
+  .contactList div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-2);
+  }
+
+  .contactActions,
+  .contactActions :global(.btn) {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .systemMeta svg {
+    transition: none;
+  }
+}

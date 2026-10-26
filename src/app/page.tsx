@@ -1,6 +1,11 @@
-import ProductShowcase from "@/components/ProductShowcase";
 import { HiranixHero } from "@/components/HiranixHero";
-import SocialFooter from "@/components/SocialFooter";
+import { SiteFooter } from "@/components/SiteFooter";
+import {
+  BrandsChapter,
+  ContactChapter,
+  ProductsChapter,
+  ProofChapter,
+} from "@/components/home/Chapters";
 
 export default function Home() {
   return (
@@ -9,11 +14,15 @@ export default function Home() {
         <div className="hx">
           <HiranixHero />
         </div>
-        <div id="site-content">
-          <ProductShowcase />
-          <SocialFooter />
+        {/* Below the hero: products, proof, brands, contact, one colour each. */}
+        <div id="site-content" data-chapters>
+          <ProductsChapter />
+          <ProofChapter />
+          <BrandsChapter />
+          <ContactChapter />
         </div>
       </main>
+      <SiteFooter currentPath="/" />
     </>
   );
 }

@@ -1,0 +1,20 @@
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: var(--s-5) var(--s-8);
+  align-items: end;
+  margin-bottom: var(--s-8);
+}
+
+.side {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-4);
+}
+
+@media (max-width: 900px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    margin-bottom: var(--s-7);
+  }
+}

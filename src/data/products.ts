@@ -95,7 +95,9 @@ const baseProducts = [
     name: "MCB Distribution Push Button",
     category: "Enclosures",
     index: "02",
-    ...images("mcb-distribution-push-button"),
+    // The second photo leads on the product page and in the range; the first follows it.
+    image: "/assets/hiranix/products/mcb-distribution-push-button-02.jpg",
+    alternateImage: "/assets/hiranix/products/mcb-distribution-push-button-01.jpg",
     statement: "Organised circuit distribution with a practical push-button cover.",
     description:
       "An electrical distribution enclosure designed to house miniature circuit breakers and support structured routing of protected circuits in residential, commercial, and light industrial installations.",

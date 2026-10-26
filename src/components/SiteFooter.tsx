@@ -1,15 +1,13 @@
+/* eslint-disable @next/next/no-img-element -- a small static logo, rendered natively like the credit on the studio's other sites */
+
 import Link from "next/link";
 import {
-  ArrowUpRight,
   FacebookLogo,
   InstagramLogo,
+  Storefront,
   WhatsappLogo,
 } from "@phosphor-icons/react/dist/ssr";
-import { HiranixLogo } from "@/components/HiranixLogo";
 import styles from "./SiteFooter.module.css";
-
-const MAP_URL =
-  "https://www.google.com/maps/search/?api=1&query=198%2C%20Hirachandni%20Muvadi%2C%20Nr.Ghodasar%20Canal%2C%20Mehmedabad-387110";
 
 /**
  * The shared site footer.
@@ -26,82 +24,47 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
   const nav = [
     { href: "/", label: "Home" },
     { href: "/products", label: "Products" },
-    { href: "/brand", label: "Brand" },
     { href: "/about", label: "About" },
   ];
 
-  const socials = [
-    {
-      href: "https://www.instagram.com/hiranix.in/",
-      label: "Open HIRANIX on Instagram",
-      Icon: InstagramLogo,
-    },
-    {
-      href: "https://www.facebook.com/people/Hiranix/61581637497185/",
-      label: "Open HIRANIX on Facebook",
-      Icon: FacebookLogo,
-    },
-    {
-      href: "https://wa.me/917984462764",
-      label: "Chat with HIRANIX on WhatsApp",
-      Icon: WhatsappLogo,
-    },
+  const follow = [
+    { href: "https://www.instagram.com/hiranix.in/", name: "Instagram", Icon: InstagramLogo },
+    { href: "https://www.facebook.com/people/Hiranix/61581637497185/", name: "Facebook", Icon: FacebookLogo },
+    { href: "https://wa.me/917984462764", name: "WhatsApp", Icon: WhatsappLogo },
+    { href: "https://hiranix.store/", name: "Online store", Icon: Storefront },
   ];
 
   return (
     <footer className={styles.footer}>
       <div className={styles.top}>
-        <Link href="/" className={styles.wordmark} aria-label="HIRANIX home">
-          <HiranixLogo className={styles.wordmarkImage} />
-        </Link>
-
-        <nav className={styles.nav} aria-label="Footer navigation">
+        <nav className={styles.col} aria-label="Footer navigation">
           <h2>Quick links</h2>
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={currentPath === item.href ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          ))}
+          <ul>
+            {nav.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={currentPath === item.href ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <address className={styles.contact}>
-          <h2>Contact</h2>
-          <a href={MAP_URL} target="_blank" rel="noopener noreferrer">
-            198, Hirachandni Muvadi, Nr.Ghodasar Canal, Mehmedabad-387110
-            <ArrowUpRight size={16} weight="bold" aria-hidden="true" />
-          </a>
-          <a href="tel:+917984462764">+91 79844 62764</a>
-          <a href="mailto:contact@hiranix.in">contact@hiranix.in</a>
-        </address>
-
-        <div className={styles.follow}>
+        <div className={`${styles.col} ${styles.follow}`}>
           <h2>Follow</h2>
-          <div className={styles.socials}>
-            {socials.map(({ href, label, Icon }) => (
-              <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-              >
-                <Icon size={20} aria-hidden="true" />
-              </a>
+          <ul>
+            {follow.map(({ href, name, Icon }) => (
+              <li key={href}>
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  <Icon size={20} weight="regular" aria-hidden="true" />
+                  {name}
+                </a>
+              </li>
             ))}
-          </div>
-          <a
-            className={styles.store}
-            href="https://hiranix.store/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            hiranix.store
-            <ArrowUpRight size={15} weight="bold" aria-hidden="true" />
-          </a>
+          </ul>
         </div>
       </div>
 
@@ -113,6 +76,22 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
           <Link href="/legal/privacy-policy">Privacy Policy</Link>
           <Link href="/legal/terms-conditions">Terms &amp; Conditions</Link>
         </nav>
+        <a
+          className={styles.studio}
+          href="https://thescalestudios.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Website designed by The Scale Studio (opens in a new tab)"
+        >
+          <span>Website by</span>
+          <img
+            src="/assets/hiranix/the-scale-studio-logo.png"
+            alt="The Scale Studio"
+            width={419}
+            height={104}
+            loading="lazy"
+          />
+        </a>
       </div>
     </footer>
   );

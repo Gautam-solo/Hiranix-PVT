@@ -2,8 +2,12 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { EnquiryPanel } from "@/components/enquiry/EnquiryPanel";
+import { EnquiryProvider } from "@/components/enquiry/EnquiryProvider";
+import { ChapterMotion } from "@/components/system/ChapterMotion";
 import "./hiranix-hero.css";
 import "./globals.css";
+import "./system.css";
 
 const siteUrl = "https://hiranix.in";
 
@@ -141,8 +145,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-IN" className={`${monaSans.variable} ${brier.variable}`}>
+    // The inline script below adds `hx-js` before hydration.
+    <html lang="en-IN" className={`${monaSans.variable} ${brier.variable}`} suppressHydrationWarning>
       <body>
+        {/* Before first paint, so reveal targets start hidden only when the
+            script that reveals them can run. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('hx-js')",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
@@ -151,16 +163,20 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <SmoothScroll />
-        <a className="hx-skip-link" href="#main-content">
-          Skip to main content
-        </a>
-        {/* <header> rather than <div>: the site banner had no landmark, so
-            screen-reader users had no way to jump past the nav. */}
-        <header className="hx hx-site-header">
-          <SiteHeader />
-        </header>
-        {children}
+        <EnquiryProvider>
+          <SmoothScroll />
+          <ChapterMotion />
+          <a className="hx-skip-link" href="#main-content">
+            Skip to main content
+          </a>
+          {/* <header> rather than <div>: the site banner had no landmark, so
+              screen-reader users had no way to jump past the nav. */}
+          <header className="hx hx-site-header">
+            <SiteHeader />
+          </header>
+          {children}
+          <EnquiryPanel />
+        </EnquiryProvider>
       </body>
     </html>
   );

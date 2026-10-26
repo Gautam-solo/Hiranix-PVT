@@ -1,0 +1,98 @@
+.map {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+  min-width: 0;
+  min-height: 320px;
+  border-radius: var(--radius);
+  background: var(--hx-frame);
+}
+
+/* Google's light map, turned to the site's dark ground. */
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(1) invert(0.9) contrast(0.92) brightness(0.95);
+  pointer-events: none;
+}
+
+/* The embed centres on the address, so the pin marks the factory. */
+.pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+.pin path {
+  fill: var(--hx-signal);
+}
+
+.pin circle {
+  fill: var(--hx-ink);
+}
+
+/* The whole map is one link; the label and the call sit in its corners. */
+.open {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--s-4);
+  color: var(--hx-white);
+}
+
+.open:focus-visible {
+  outline: 2px solid var(--hx-signal);
+  outline-offset: -4px;
+}
+
+.label,
+.cta {
+  display: inline-flex;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--radius);
+  background: var(--hx-ink);
+  font-size: var(--type-small);
+}
+
+.label {
+  flex-direction: column;
+  gap: 0;
+  color: var(--hx-mist);
+  line-height: 1.4;
+}
+
+.label strong {
+  color: var(--hx-white);
+  font-weight: 650;
+}
+
+.cta {
+  align-self: flex-end;
+  align-items: center;
+  border: 1px solid var(--hx-line-on-dark);
+  transition:
+    background-color var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out);
+}
+
+.open:hover .cta {
+  background: var(--hx-signal);
+  color: var(--hx-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta {
+    transition: none;
+  }
+}

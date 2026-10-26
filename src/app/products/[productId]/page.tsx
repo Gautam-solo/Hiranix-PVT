@@ -1,12 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
-import { ProductGallery } from "@/components/ProductGallery";
-import RevealOnScroll from "@/components/RevealOnScroll";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CaretRight,
+  Check,
+  DownloadSimple,
+  Phone,
+  WhatsappLogo,
+} from "@phosphor-icons/react/dist/ssr";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ContactChapter } from "@/components/home/Chapters";
+import { ProductPhotos } from "@/components/products/ProductPhotos";
+import { AddToEnquiry } from "@/components/enquiry/AddToEnquiry";
+import { ProductBar } from "@/components/products/ProductBar";
+import { ProductNav } from "@/components/products/ProductNav";
+import { ProductSizes } from "@/components/products/ProductSizes";
+import { ProductTile } from "@/components/products/ProductTile";
+import { SectionHead } from "@/components/system/SectionHead";
+import { contact, whatsappHref } from "@/data/company";
+import {
+  CATALOGUE_A11Y_LABEL,
+  CATALOGUE_SIZE_LABEL,
+  catalogueLinkProps,
+} from "@/data/catalogue";
 import { findProductBySlug, productRouteSlugs, products } from "@/data/products";
-import styles from "./ProductDetail.module.css";
+import { categoryHref } from "@/data/systems";
+import styles from "@/components/products/ProductDetail.module.css";
+import gridStyles from "@/components/products/Products.module.css";
 
 type ProductPageProps = {
   params: Promise<{ productId: string }>;
@@ -37,14 +59,21 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { productId } = await params;
-  const resolvedProduct = findProductBySlug(productId);
-  const productIndex = products.findIndex((item) => item.slug === resolvedProduct?.slug);
+  const product = findProductBySlug(productId);
+  if (!product) notFound();
 
-  if (productIndex === -1) notFound();
+  const { technical } = product;
+  const sameSystem = products.filter(
+    (item) => item.category === product.category && item.slug !== product.slug,
+  );
+  // Fill up to four with the next products in the range when a system is small.
+  const start = products.findIndex((item) => item.slug === product.slug);
+  const others = Array.from({ length: products.length - 1 }, (_, i) => products[(start + 1 + i) % products.length])
+    .filter((item) => item.category !== product.category);
+  const related = [...sameSystem, ...others].slice(0, 4);
+  const prev = products[(start - 1 + products.length) % products.length];
+  const next = products[(start + 1) % products.length];
 
-  const product = products[productIndex];
-  const nextProduct = products[(productIndex + 1) % products.length];
-  const technical = product.technical;
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -61,108 +90,153 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
 
   return (
     <>
-      <main id="main-content" tabIndex={-1} className={styles.page}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
       />
+      <main id="main-content" tabIndex={-1} data-chapters>
+        {/* 1. What it is, and how to ask for it. */}
+        <section className={styles.top} data-chapter="graphite" aria-labelledby="product-title">
+          <nav className={styles.crumbs} aria-label="Breadcrumb">
+            <Link className="link" href="/products">Products</Link>
+            <CaretRight size={12} weight="bold" aria-hidden="true" />
+            <Link className="link" href={categoryHref(product.category)}>{product.category}</Link>
+            <CaretRight size={12} weight="bold" aria-hidden="true" />
+            <span aria-current="page">{product.name}</span>
+          </nav>
 
-      <div className={styles.utility}>
-        <Link href="/products">
-          <ArrowLeft size={16} weight="bold" aria-hidden="true" />
-          All products
-        </Link>
-        <span>{product.category}</span>
-      </div>
+          <div className={styles.topGrid}>
+            <ProductPhotos
+              photos={[
+                { src: product.image, alt: product.name, label: "Front view" },
+                { src: product.alternateImage, alt: `${product.name}, second view`, label: "Second view" },
+              ]}
+            />
 
-      <section className={styles.hero}>
-        <div className={styles.media}>
-          <ProductGallery
-            productName={product.name}
-            images={[
-              { src: product.image, alt: product.name },
-              { src: product.alternateImage, alt: `${product.name}, alternate view` },
-            ]}
-          />
-        </div>
+            <div className={styles.summary} data-reveal="rise" style={{ "--i": 1 } as React.CSSProperties}>
+              <p className="t-label">{product.category}</p>
+              <h1 id="product-title" className="t-display-m">{product.name}</h1>
+              <p className={styles.statement}>{product.statement}</p>
 
-        <div className={styles.intro}>
-          <span className={styles.eyebrow}>{product.category}</span>
-          <h1>{product.name}</h1>
-          <p className={styles.statement}>{product.statement}</p>
-          <p className={styles.description}>{product.description}</p>
-          <div className={styles.actions}>
-            <a
-              href={`mailto:contact@hiranix.in?subject=${encodeURIComponent(
-                `Product enquiry: ${product.name}`,
-              )}`}
-            >
-              Enquire about this product
-              <ArrowRight size={17} weight="bold" aria-hidden="true" />
-            </a>
+              <dl className={styles.keyFacts}>
+                {product.specs.slice(0, 3).map((spec) => (
+                  <div key={spec.label}>
+                    <dd>{spec.value}</dd>
+                    <dt>{spec.label}</dt>
+                  </div>
+                ))}
+              </dl>
+
+              <div className={styles.buy} id="product-buy">
+                <a
+                  className="btn btn--primary"
+                  href={whatsappHref(product.name)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
+                  Enquire on WhatsApp
+                </a>
+                <AddToEnquiry slug={product.slug} name={product.name} />
+              </div>
+              <a className={`link ${styles.catalogueLink}`} aria-label={CATALOGUE_A11Y_LABEL} {...catalogueLinkProps}>
+                <DownloadSimple size={16} weight="bold" aria-hidden="true" />
+                Download the catalogue ({CATALOGUE_SIZE_LABEL})
+              </a>
+              <p className={styles.call}>
+                <Phone size={16} weight="bold" aria-hidden="true" />
+                Prefer to call?{" "}
+                <a className="link" href={contact.phoneHref}>{contact.phone}</a>
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className={styles.useCases} data-reveal>
-        <div>
-          <span>Applications</span>
-          <ul>
-            {product.applications.map((application) => (
-              <li key={application}>{application}</li>
+        <ProductNav
+          items={[
+            { id: "overview", label: "Overview" },
+            { id: "sizes", label: "Sizes and packing" },
+            { id: "related", label: "More products" },
+          ]}
+        />
+
+        {/* 2. What it is for. */}
+        <section id="overview" className={styles.section} data-chapter="graphite" aria-labelledby="overview-title">
+          <SectionHead id="overview-title" title="Overview" intro={product.description} />
+          <div className={styles.lists}>
+            <div data-reveal="rise">
+              <h3 className="t-heading">Where it is used</h3>
+              <ul className={styles.list}>
+                {product.applications.map((item) => (
+                  <li key={item}>
+                    <Check size={16} weight="bold" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div data-reveal="rise" style={{ "--i": 1 } as React.CSSProperties}>
+              <h3 className="t-heading">What it offers</h3>
+              <ul className={styles.list}>
+                {product.features.map((item) => (
+                  <li key={item}>
+                    <Check size={16} weight="bold" aria-hidden="true" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Which size, and an enquiry for exactly that size. */}
+        <section id="sizes" className={styles.section} data-chapter="forest" aria-labelledby="sizes-title">
+          <SectionHead
+            id="sizes-title"
+            title="Sizes and packing"
+            intro={`${technical.rows.length} ${technical.rows.length === 1 ? "size" : "sizes"} from the HIRANIX catalogue. Choose one to see its pack and weight, then enquire for it.`}
+          />
+          <ProductSizes
+            slug={product.slug}
+            name={product.name}
+            columns={technical.columns}
+            rows={technical.rows}
+            carton={technical.carton}
+          />
+        </section>
+
+        {/* 4. Where to go next. */}
+        <section id="related" className={styles.section} data-chapter="graphite" aria-labelledby="related-title">
+          <SectionHead
+            id="related-title"
+            title={sameSystem.length ? `More ${product.category.toLowerCase()}` : "More from HIRANIX"}
+            action={
+              <Link className="link" href="/products">
+                View all products
+                <ArrowRight size={16} weight="bold" aria-hidden="true" />
+              </Link>
+            }
+          />
+          <ul className={gridStyles.grid}>
+            {related.map((item, i) => (
+              <ProductTile key={item.slug} product={item} index={i} />
             ))}
           </ul>
-        </div>
-      </section>
+          <div className={styles.stepper}>
+            <Link className="link" href={`/products/${prev.slug}`}>
+              <ArrowLeft size={16} weight="bold" aria-hidden="true" />
+              Previous: {prev.name}
+            </Link>
+            <Link className="link" href={`/products/${next.slug}`}>
+              Next: {next.name}
+              <ArrowRight size={16} weight="bold" aria-hidden="true" />
+            </Link>
+          </div>
+        </section>
 
-      <section className={styles.tableSection} aria-labelledby="selection-data" data-reveal>
-        <div className={styles.sectionHeading}>
-          <span>Selection guide</span>
-          <h2 id="selection-data">Technical data</h2>
-        </div>
-        <dl className={styles.specList}>
-          {product.specs.map((spec) => (
-            <div key={spec.label}>
-              <dt>{spec.label}</dt>
-              <dd>{spec.value}</dd>
-            </div>
-          ))}
-        </dl>
-        <div className={styles.tableWrap}>
-          <table>
-            <thead>
-              <tr>
-                {technical.columns.map((column) => (
-                  <th key={column} scope="col">{column}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {technical.rows.map((row) => (
-                <tr key={row.join("-")}>
-                  {row.map((value, index) => (
-                    <td key={`${value}-${index}`}>{value}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {technical.carton && (
-          <p className={styles.dataNote}>Master carton (L x B x H): {technical.carton}</p>
-        )}
-        <p className={styles.dataNote}>
-          Catalogue weights may vary slightly. Confirm critical specifications with HIRANIX before purchase.
-        </p>
-      </section>
-
-      <Link className={styles.nextProduct} data-reveal href={`/products/${nextProduct.slug}`}>
-        <span>Next product</span>
-        <strong>{nextProduct.name}</strong>
-        <ArrowRight size={34} weight="light" aria-hidden="true" />
-      </Link>
+        <ContactChapter />
       </main>
-      <RevealOnScroll />
+      <ProductBar name={product.name} anchorId="product-buy" />
       <SiteFooter currentPath="/products" />
     </>
   );

@@ -24,12 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
     })),
     {
-      url: "https://hiranix.in/brand",
-      lastModified,
-      changeFrequency: "monthly" as const,
-      priority: 0.7,
-    },
-    {
       url: "https://hiranix.in/about",
       lastModified,
       changeFrequency: "monthly" as const,

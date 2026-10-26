@@ -1,0 +1,394 @@
+/*
+ * HIRANIX design system tokens and shared pieces. MASTER.md is the source;
+ * this file is its code. Everything below the hero reads these.
+ */
+
+:root {
+  /* Palette: the logo's black and signal green, stretched into a family. */
+  --hx-ink: #070a08;
+  --hx-signal: #00f868;
+  --hx-forest: #0a2e1c;
+  --hx-sage: #26372e;
+  --hx-graphite: #121815;
+  --hx-white: #f4f6f3;
+  --hx-mist: #a7b2ab;
+  --hx-line-on-dark: rgba(244, 246, 243, 0.14);
+  --hx-frame: #121513;
+  --radius: 4px;
+
+  /* Type scale */
+  --type-display-xl: clamp(2.75rem, 8.6vw, 8.25rem);
+  --type-display-l: clamp(2.1rem, 6vw, 5.5rem);
+  --type-display-m: clamp(1.55rem, 3.6vw, 3.1rem);
+  --type-heading: clamp(1.4rem, 2.2vw, 2rem);
+  --type-body: 1.0625rem;
+  --type-small: 0.875rem;
+  --type-label: 0.75rem;
+
+  /* Spacing, 8px base */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+  --s-11: 160px;
+  --section: clamp(56px, 8vw, 128px);
+
+  /* Motion: one curve, three speeds */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 240ms;
+  --t-base: 480ms;
+  --t-slow: 720ms;
+  --stagger: 90ms;
+}
+
+/* Chapters ----------------------------------------------------------------- */
+/* The wrapper carries the current chapter; sections are transparent on it, so
+   the whole ground changes colour as one surface. */
+
+[data-chapters],
+[data-chapter="ink"] {
+  --c-bg: var(--hx-ink);
+  --c-fg: var(--hx-white);
+  --c-sub: var(--hx-mist);
+  --c-acc: var(--hx-signal);
+  --c-line: var(--hx-line-on-dark);
+  --c-btn-bg: var(--hx-signal);
+  --c-btn-fg: var(--hx-ink);
+}
+
+[data-chapters][data-current="forest"],
+[data-chapter="forest"] {
+  --c-bg: var(--hx-forest);
+  --c-fg: var(--hx-white);
+  --c-sub: var(--hx-mist);
+  --c-acc: var(--hx-signal);
+  --c-line: var(--hx-line-on-dark);
+  --c-btn-bg: var(--hx-signal);
+  --c-btn-fg: var(--hx-ink);
+}
+
+[data-chapters][data-current="graphite"],
+[data-chapter="graphite"] {
+  --c-bg: var(--hx-graphite);
+  --c-fg: var(--hx-white);
+  --c-sub: var(--hx-mist);
+  --c-acc: var(--hx-signal);
+  --c-line: var(--hx-line-on-dark);
+  --c-btn-bg: var(--hx-signal);
+  --c-btn-fg: var(--hx-ink);
+}
+
+[data-chapters][data-current="sage"],
+[data-chapter="sage"] {
+  --c-bg: var(--hx-sage);
+  --c-fg: var(--hx-white);
+  --c-sub: var(--hx-mist);
+  --c-acc: var(--hx-signal);
+  --c-line: var(--hx-line-on-dark);
+  --c-btn-bg: var(--hx-signal);
+  --c-btn-fg: var(--hx-ink);
+}
+
+/* The chapter's own section keeps its colours from the wrapper, so text never
+   reads one chapter's ink on another chapter's ground mid-change. */
+[data-chapters] [data-chapter] {
+  --c-bg: inherit;
+  --c-fg: inherit;
+  --c-sub: inherit;
+  --c-acc: inherit;
+  --c-line: inherit;
+  --c-btn-bg: inherit;
+  --c-btn-fg: inherit;
+}
+
+[data-chapters] {
+  position: relative;
+  z-index: 6;
+  background: var(--c-bg);
+  color: var(--c-fg);
+  transition:
+    background-color var(--t-slow) var(--ease-io),
+    color var(--t-slow) var(--ease-io);
+}
+
+/* Type --------------------------------------------------------------------- */
+
+.t-display-xl,
+.t-display-l,
+.t-display-m {
+  margin: 0;
+  font-variation-settings: "wdth" 125, "wght" 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.t-display-xl {
+  font-size: var(--type-display-xl);
+  line-height: 0.9;
+}
+
+.t-display-l {
+  font-size: var(--type-display-l);
+  line-height: 0.92;
+}
+
+.t-display-m {
+  font-size: var(--type-display-m);
+  line-height: 0.95;
+}
+
+.t-heading {
+  margin: 0;
+  font-size: var(--type-heading);
+  font-variation-settings: "wdth" 100, "wght" 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.t-body {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--c-sub);
+  font-size: var(--type-body);
+  line-height: 1.55;
+}
+
+.t-label {
+  margin: 0;
+  color: var(--c-sub);
+  font-size: var(--type-label);
+  font-variation-settings: "wdth" 112, "wght" 600;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+/* The company's one claim, set the way the live site sets it: capitals. */
+.t-tagline {
+  color: var(--c-fg);
+  font-variation-settings: "wdth" 112, "wght" 650;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.t-accent {
+  color: var(--c-acc);
+}
+
+/* Buttons and links -------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  padding: 0 var(--s-5);
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-fg);
+  font: inherit;
+  font-size: var(--type-small);
+  font-variation-settings: "wght" 640;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background-color var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out),
+    color var(--t-fast) var(--ease-out),
+    transform var(--t-fast) var(--ease-out);
+}
+
+.btn:hover {
+  border-color: var(--c-acc);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.btn--primary {
+  border-color: var(--c-btn-bg);
+  background: var(--c-btn-bg);
+  color: var(--c-btn-fg);
+}
+
+.btn--primary:hover {
+  border-color: var(--c-fg);
+  background: var(--c-fg);
+  color: var(--c-bg);
+}
+
+.btn:focus-visible,
+.link:focus-visible {
+  outline: 2px solid var(--c-acc);
+  outline-offset: 3px;
+}
+
+.link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-bottom: 3px;
+  color: var(--c-fg);
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+/* A text link is a tap target on a touch screen: give it a 44px hit area. */
+@media (pointer: coarse) {
+  .link {
+    min-height: 44px;
+  }
+}
+
+.link::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--c-acc);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-fast) var(--ease-out);
+}
+
+.link:hover::after,
+.link:focus-visible::after {
+  transform: none;
+}
+
+/* A photograph in a clean rectangular frame; the image fills it whole. */
+.frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  overflow: clip;
+  border-radius: var(--radius);
+  background: var(--hx-frame);
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--t-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover > .frame img,
+  .frame:hover img,
+  [data-zoom]:hover .frame img {
+    transform: scale(1.03);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reveals ------------------------------------------------------------------ */
+/* Hidden only once `.hx-js` proves the script that reveals them can run. */
+
+.hx-js [data-reveal="rise"] {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity var(--t-base) var(--ease-out),
+    transform var(--t-base) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+}
+
+.hx-js [data-reveal="rise"][data-in] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Photographs unveil upward inside their frame, once. The frame itself stays
+   whole (it is what gets observed, and it holds the space as a placeholder). */
+.hx-js [data-reveal="unveil"] img {
+  clip-path: inset(100% 0 0 0);
+  transition:
+    clip-path var(--t-slow) var(--ease-out),
+    transform var(--t-fast) var(--ease-out);
+  transition-delay: calc(var(--i, 0) * var(--stagger)), 0ms;
+}
+
+.hx-js [data-reveal="unveil"][data-in] img {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-chapters] {
+    transition: none;
+  }
+
+  .hx-js [data-reveal="rise"],
+  .hx-js [data-reveal="unveil"] img {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+    transition: none;
+  }
+
+  .btn,
+  .link,
+  .link::after,
+  .frame img {
+    transition: none;
+  }
+}
+
+/* The header's right edge: the catalogue download and the enquiry list. */
+.hx-nav-end {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+}
+
+/* Each page eases in as it mounts, so moving between pages reads as one
+   continuous surface. The home page is left to the hero's own intro. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
+#main-content:not(:has(.hx-top)) {
+  animation: page-in var(--t-base) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #main-content:not(:has(.hx-top)) {
+    animation: none;
+  }
+}

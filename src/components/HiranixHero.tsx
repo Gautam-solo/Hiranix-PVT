@@ -37,21 +37,33 @@ type Drop = {
 // the plate. Re-derive `y` whenever an asset or `w` changes, or the product will
 // float above or sink through the glass.
 //
+// `surface` is where the product's bottom edge meets the pedestal's top face, in
+// plate pixels. It is NOT the face's front rim: the rims slope with the
+// perspective, and a flat-bottomed product is as wide as the face is deep, so a
+// surface taken at the left rim sinks through the right one. Each value below
+// sits 5 to 8 px behind the *highest* front-rim point across the product's width:
+//   metal  front rim 433-435 (left to centre)   -> 426
+//   pvc    top face is edge-on, rim 628-631     -> 629 (unchanged)
+//   plate  front rim 865 left, 857 right        -> 852
+//   nail   front rim 738                        -> 733
+//   clip   front rim 738                        -> 734
+//   tie    front rim 807, tilted 2deg (+-3.2px) -> 802.5
+//
 //                                surface  foot
 const DROPS: Drop[] = [
   // metal is snapped at runtime against .hx-pedestal-metal — see useLayoutEffect.
-  { id: "metal", name: "Metal Junction Box", asset: "/assets/hiranix/hero-products/metal-junction-box-v4.png", x: 48.06, y: 17.339, w: 10.2, sx: 53.92, sy: 43.077, sw: 12.2, fall: 0.68, lift: -300, drift: -20, rot: 0 },
-  //                                                                                      420  250.95
+  { id: "metal", name: "Metal Junction Box", asset: "/assets/hiranix/hero-products/metal-junction-box-v4.webp", x: 48.06, y: 17.954, w: 10.2, sx: 53.92, sy: 43.692, sw: 12.2, fall: 0.68, lift: -300, drift: -20, rot: 0 },
+  //                                                                                      426  250.95
   { id: "pvc", name: "Open Surface Box", x: 28.005, y: 46.487, w: 18.835, sx: 37.42, sy: 65.74, sw: 20.5, fall: 0.62, lift: -210, drift: -60, rot: -7 },
   //                                                    629  175.75
-  { id: "plate", name: "Modular Gang Box", x: 44.548, y: 66.945, w: 18.03, sx: 53.56, sy: 88.72, sw: 19.5, fall: 0.58, lift: -150, drift: 20, rot: 4 },
-  //                                                      862  209.28
+  { id: "plate", name: "Modular Gang Box", x: 44.548, y: 65.92, w: 18.03, sx: 53.56, sy: 87.69, sw: 19.5, fall: 0.58, lift: -150, drift: 20, rot: 4 },
+  //                                                      852  209.28
   { id: "nail", name: "Concrete Nail", asset: "/assets/hiranix/hero-products/concrete-nail-v2.png", x: 72.85, y: 60.169, w: 1.02, sx: 73.36, sy: 75.59, sw: 3.5, fall: 0.5, lift: -360, drift: 34, rot: 2 },
   //                                                                                                        733  146.35
-  { id: "clip", name: "Cable Nail Clip", x: 74.64, y: 66.215, w: 6.444, sx: 77.86, sy: 77.23, sw: 8, fall: 0.5, lift: -250, drift: 62, rot: 7 },
-  //                                                 738   92.41
-  { id: "tie", name: "Nylon Cable Tie", asset: "/assets/hiranix/hero-products/nylon-cable-tie-v2.png", x: 79.8, y: 81.419, w: 11.36, sx: 85.47, sy: 83.15, sw: 10.8, fall: 0.44, lift: -120, drift: 90, rot: 6 },
-  //                                                                                                           805   11.17
+  { id: "clip", name: "Cable Nail Clip", x: 74.64, y: 65.804, w: 6.444, sx: 77.86, sy: 75.79, sw: 8, fall: 0.5, lift: -250, drift: 62, rot: 7 },
+  //                                                 734   92.41
+  { id: "tie", name: "Nylon Cable Tie", asset: "/assets/hiranix/hero-products/nylon-cable-tie-v2.png", x: 79.8, y: 81.162, w: 11.36, sx: 85.47, sy: 82.82, sw: 10.8, fall: 0.44, lift: -120, drift: 90, rot: 6 },
+  //                                                                                                           802.5 11.17
 ];
 
 export function HiranixHero() {
@@ -62,6 +74,7 @@ export function HiranixHero() {
   const metalShadow = useRef<HTMLDivElement>(null);
   const spotlight = useRef<HTMLSpanElement>(null);
   const introTimeline = useRef<gsap.core.Timeline | null>(null);
+  const quote = useRef<HTMLAnchorElement>(null);
 
   useLayoutEffect(() => {
     const stageElement = stage.current;
@@ -226,6 +239,20 @@ export function HiranixHero() {
     };
   }, []);
 
+  // The floating quote button belongs to the hero; below it the page has its own
+  // enquiry buttons, and the floating one only covers text.
+  useEffect(() => {
+    const hero = root.current;
+    const button = quote.current;
+    if (!hero || !button || !("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) button.removeAttribute("data-past");
+      else button.setAttribute("data-past", "");
+    }, { threshold: 0.2 });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     let frame = 0;
     let cancelled = false;
@@ -341,6 +368,7 @@ export function HiranixHero() {
       </section>
 
       <a
+        ref={quote}
         className="hx-mobile-quote"
         href="https://wa.me/917984462764"
         target="_blank"

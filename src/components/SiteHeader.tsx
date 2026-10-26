@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { DownloadSimple } from "@phosphor-icons/react/DownloadSimple";
 import { List } from "@phosphor-icons/react/List";
 import { X } from "@phosphor-icons/react/X";
+import { EnquiryButton } from "@/components/enquiry/EnquiryButton";
 import { HiranixLogo } from "@/components/HiranixLogo";
 import {
   CATALOGUE_A11Y_LABEL,
@@ -16,7 +17,6 @@ import {
 const NAV = [
   { label: "Home", href: "/" },
   { label: "Products", href: "/products" },
-  { label: "Brand", href: "/brand" },
   { label: "About", href: "/about" },
 ];
 
@@ -120,17 +120,20 @@ export function SiteHeader() {
             </Link>
           ))}
         </div>
-        <a
-          {...catalogueLinkProps}
-          className="hx-pill hx-catalogue"
-          aria-label={CATALOGUE_A11Y_LABEL}
-        >
-          <DownloadSimple className="hx-catalogue-icon" size={20} weight="regular" aria-hidden="true" />
-          <span>
-            Download Catalogue
-            <small className="hx-catalogue-size">{CATALOGUE_SIZE_LABEL}</small>
-          </span>
-        </a>
+        <div className="hx-nav-end">
+          <a
+            {...catalogueLinkProps}
+            className="hx-pill hx-catalogue"
+            aria-label={CATALOGUE_A11Y_LABEL}
+          >
+            <DownloadSimple className="hx-catalogue-icon" size={20} weight="regular" aria-hidden="true" />
+            <span>
+              Download Catalogue
+              <small className="hx-catalogue-size">{CATALOGUE_SIZE_LABEL}</small>
+            </span>
+          </a>
+          <EnquiryButton />
+        </div>
       </nav>
 
       <div

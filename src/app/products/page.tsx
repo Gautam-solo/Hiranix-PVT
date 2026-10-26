@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import ProductCatalogue from "@/components/ProductCatalogue";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ContactChapter } from "@/components/home/Chapters";
+import { ProductsIndex } from "@/components/products/ProductsIndex";
 import { products } from "@/data/products";
 
 export const metadata: Metadata = {
@@ -56,7 +57,10 @@ export default function ProductsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
-      <ProductCatalogue />
+      <main id="main-content" tabIndex={-1} data-chapters>
+        <ProductsIndex />
+        <ContactChapter />
+      </main>
       <SiteFooter currentPath="/products" />
     </>
   );

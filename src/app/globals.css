@@ -76,40 +76,6 @@ img {
   color: var(--black);
 }
 
-.font-display {
-  font-family: var(--font-brier), Georgia, serif;
-}
-
-.contour-bg {
-  background-color: var(--white);
-  background-image:
-    radial-gradient(ellipse at 5% 15%, transparent 0 20%, rgba(7, 10, 8, 0.07) 20.3% 20.55%, transparent 20.9%),
-    radial-gradient(ellipse at 90% 40%, transparent 0 26%, rgba(7, 10, 8, 0.07) 26.2% 26.45%, transparent 26.8%),
-    radial-gradient(ellipse at 30% 85%, transparent 0 30%, rgba(7, 10, 8, 0.07) 30.2% 30.45%, transparent 30.8%);
-  background-size: 62rem 46rem, 54rem 42rem, 70rem 52rem;
-}
-
-.lime-button {
-  display: inline-flex;
-  min-height: 3.75rem;
-  align-items: center;
-  justify-content: center;
-  gap: 0.65rem;
-  border: 1px solid var(--lime);
-  border-radius: 0.625rem;
-  background: var(--lime);
-  color: var(--black);
-  padding: 0.9rem 1.15rem;
-  font-variation-settings: "wght" 800, "wdth" 90;
-  text-transform: uppercase;
-  transition: transform 0.45s var(--ease-out-expo), background-color 0.45s var(--ease-out-expo);
-}
-
-.lime-button:hover {
-  background: var(--lime-off);
-  transform: translateY(-2px);
-}
-
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
@@ -181,59 +147,6 @@ img {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-}
-
-.products-loading {
-  display: grid;
-  min-height: 100svh;
-  place-content: center;
-  gap: 1.5rem;
-  background: #f6f5f1;
-  color: #17362a;
-  text-align: center;
-}
-
-.products-loading > span {
-  font-size: 1.5rem;
-  font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-}
-
-.products-loading em {
-  color: #35df77;
-  font-style: normal;
-}
-
-.products-loading > div {
-  width: min(16rem, 70vw);
-  height: 1px;
-  overflow: hidden;
-  background: rgba(22, 139, 76, 0.22);
-}
-
-.products-loading > div::after {
-  display: block;
-  width: 45%;
-  height: 100%;
-  background: #168b4c;
-  content: "";
-  animation: products-loading 1.2s ease-in-out infinite alternate;
-}
-
-.products-loading p {
-  margin: 0;
-  color: rgba(23, 54, 42, 0.52);
-  font-size: 0.68rem;
-  font-weight: 780;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-@keyframes products-loading {
-  to {
-    transform: translateX(125%);
   }
 }
 
