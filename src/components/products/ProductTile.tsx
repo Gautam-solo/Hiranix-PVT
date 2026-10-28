@@ -28,8 +28,23 @@ export function ProductTile({
           sizes="(max-width: 560px) 46vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 23vw"
           priority={index < 2}
         />
+        {/* The second view of the product, shown on hover. */}
+        {product.alternateImage !== product.image && (
+          <Photo
+            className={styles.photoAlt}
+            src={product.alternateImage}
+            alt=""
+            width={1122}
+            height={1402}
+            sizes="(max-width: 900px) 1px, (max-width: 1200px) 31vw, 23vw"
+          />
+        )}
+        <span className={styles.view} aria-hidden="true">View</span>
       </Link>
-      <p className="t-label">{product.category}</p>
+      <p className={`t-mono ${styles.meta}`}>
+        <span className="t-accent">{product.index}</span>
+        <span>{product.category}</span>
+      </p>
       <Heading className={styles.name}>
         <Link href={`/products/${product.slug}`}>{product.name}</Link>
       </Heading>

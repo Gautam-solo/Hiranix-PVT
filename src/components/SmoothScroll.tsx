@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function SmoothScroll() {
   const pathname = usePathname();
@@ -14,11 +16,12 @@ export function SmoothScroll() {
     // scrolling rather than failing the entire client-side application.
     if (!("ResizeObserver" in window)) return;
 
+    gsap.registerPlugin(ScrollTrigger);
     const lenis = new Lenis({
       wrapper: document.documentElement,
       content: document.body,
       infinite: false,
-      lerp: 0.1,
+      lerp: 0.09,
       smoothWheel: true,
       syncTouch: false,
       wheelMultiplier: 1,
@@ -29,15 +32,16 @@ export function SmoothScroll() {
       },
     });
     lenisRef.current = lenis;
-    let frame = 0;
-    const raf = (time: number) => {
-      lenis.raf(time);
-      frame = requestAnimationFrame(raf);
-    };
-    frame = requestAnimationFrame(raf);
+
+    // One clock for both: Lenis moves the page on GSAP's ticker, and every
+    // scroll-linked animation reads the position Lenis just set.
+    lenis.on("scroll", ScrollTrigger.update);
+    const tick = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
-      cancelAnimationFrame(frame);
+      gsap.ticker.remove(tick);
       lenisRef.current = null;
       lenis.destroy();
     };

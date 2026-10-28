@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
-import { AboutFloor, AboutIntro, AboutScale } from "@/components/about/AboutChapters";
+import { AboutApp, AboutIntro, AboutScale } from "@/components/about/AboutChapters";
+import { FactoryStory } from "@/components/home/FactoryStory";
 import { ContactChapter } from "@/components/home/Chapters";
 
 export const metadata: Metadata = {
@@ -28,7 +29,8 @@ export default function AboutPage() {
       <main id="main-content" tabIndex={-1} data-chapters>
         <AboutIntro />
         <AboutScale />
-        <AboutFloor />
+        <FactoryStory />
+        <AboutApp />
         <ContactChapter />
       </main>
       <SiteFooter currentPath="/about" />

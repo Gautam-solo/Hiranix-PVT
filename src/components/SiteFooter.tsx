@@ -10,15 +10,8 @@ import {
 import styles from "./SiteFooter.module.css";
 
 /**
- * The shared site footer.
- *
- * /products, every product detail page and /brand previously rendered no
- * footer at all — 18 of the 22 URLs in the sitemap had no contact details, no
- * navigation and, more importantly, no Privacy Policy or Terms links. This is
- * the single component those pages (and /about, /legal/*) now share.
- *
- * The home page keeps its own richer page-ending composite in SocialFooter,
- * which pairs the footer with the factory gallery and app panel.
+ * The shared site footer: quick links on the left, follow on the right, the
+ * name across the full width, then the legal line and the studio credit.
  */
 export function SiteFooter({ currentPath }: { currentPath?: string }) {
   const nav = [
@@ -67,6 +60,15 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
           </ul>
         </div>
       </div>
+
+      {/* The name, as wide as the page, rising letter by letter. */}
+      <p className={styles.wordmark} aria-hidden="true" data-split>
+        {"HIRANIX".split("").map((letter, i) => (
+          <span className="w" key={i} style={{ "--wi": i } as React.CSSProperties}>
+            <span>{letter}</span>
+          </span>
+        ))}
+      </p>
 
       <div className={styles.bottom}>
         <span>

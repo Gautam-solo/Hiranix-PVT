@@ -27,7 +27,7 @@ export function ProductNav({ items }: { items: Item[] }) {
   }, [items]);
 
   return (
-    <nav className={styles.nav} aria-label="On this page">
+    <nav className={styles.nav} data-chapter="bone" aria-label="On this page">
       {items.map((item) => (
         <a
           key={item.id}

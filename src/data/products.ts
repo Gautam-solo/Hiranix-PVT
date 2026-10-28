@@ -43,9 +43,32 @@ export type HiranixProduct = {
 
 type BaseProduct = Omit<HiranixProduct, "technical">;
 
+/**
+ * Product photos are cut out onto the site's off-white with a soft contact
+ * shadow (public/assets/hiranix/products/studio). A product with only one
+ * view repeats it, and the tiles then skip the hover swap.
+ */
+const studio = (name: string) => `/assets/hiranix/products/studio/${name}.jpg`;
+
+const hasSecondView = new Set([
+  "cable-nail-clip",
+  "cctv-camera-box",
+  "concrete-nail",
+  "double-nail-clamp",
+  "fr-pvc-tape",
+  "mcb-box",
+  "mcb-distribution-push-button",
+  "metal-junction-box",
+  "modular-gang-box",
+  "nylon-cable-tie",
+  "open-surface-box",
+  "round-sheet",
+  "wall-plug-gitti",
+]);
+
 const images = (slug: string) => ({
-  image: `/assets/hiranix/products/${slug}-01.jpg`,
-  alternateImage: `/assets/hiranix/products/${slug}-02.jpg`,
+  image: studio(`${slug}-01`),
+  alternateImage: studio(hasSecondView.has(slug) ? `${slug}-02` : `${slug}-01`),
 });
 
 export const productCategories = [
@@ -96,8 +119,8 @@ const baseProducts = [
     category: "Enclosures",
     index: "02",
     // The second photo leads on the product page and in the range; the first follows it.
-    image: "/assets/hiranix/products/mcb-distribution-push-button-02.jpg",
-    alternateImage: "/assets/hiranix/products/mcb-distribution-push-button-01.jpg",
+    image: studio("mcb-distribution-push-button-02"),
+    alternateImage: studio("mcb-distribution-push-button-01"),
     statement: "Organised circuit distribution with a practical push-button cover.",
     description:
       "An electrical distribution enclosure designed to house miniature circuit breakers and support structured routing of protected circuits in residential, commercial, and light industrial installations.",
@@ -599,8 +622,8 @@ const baseProducts = [
     // `Cache-Control: immutable, max-age=1y`, so replacing a file at the same
     // URL stays invisible to any browser that already fetched it — new
     // photography needs a new filename, not just new bytes.
-    image: "/assets/hiranix/products/cctv-camera-box-01-v2.jpg",
-    alternateImage: "/assets/hiranix/products/cctv-camera-box-02-v2.jpg",
+    image: studio("cctv-camera-box-01-v2"),
+    alternateImage: studio("cctv-camera-box-02-v2"),
     statement: "A protected, professional enclosure for CCTV camera connections.",
     description:
       "A virgin PP protective enclosure for CCTV camera wiring and connections. The box helps shield installation components from dust, rain, heat, and tampering while providing cable-entry and mounting provisions for straightforward service and maintenance.",

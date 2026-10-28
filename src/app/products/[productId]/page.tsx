@@ -19,6 +19,7 @@ import { ProductNav } from "@/components/products/ProductNav";
 import { ProductSizes } from "@/components/products/ProductSizes";
 import { ProductTile } from "@/components/products/ProductTile";
 import { SectionHead } from "@/components/system/SectionHead";
+import { Split } from "@/components/system/Split";
 import { contact, whatsappHref } from "@/data/company";
 import {
   CATALOGUE_A11Y_LABEL,
@@ -96,7 +97,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
       />
       <main id="main-content" tabIndex={-1} data-chapters>
         {/* 1. What it is, and how to ask for it. */}
-        <section className={styles.top} data-chapter="graphite" aria-labelledby="product-title">
+        <section className={styles.top} data-chapter="bone" aria-labelledby="product-title">
           <nav className={styles.crumbs} aria-label="Breadcrumb">
             <Link className="link" href="/products">Products</Link>
             <CaretRight size={12} weight="bold" aria-hidden="true" />
@@ -114,8 +115,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
             />
 
             <div className={styles.summary} data-reveal="rise" style={{ "--i": 1 } as React.CSSProperties}>
-              <p className="t-label">{product.category}</p>
-              <h1 id="product-title" className="t-display-m">{product.name}</h1>
+              <p className="t-mono">
+                <span className="t-accent">{product.index}</span> / {product.category}
+              </p>
+              <Split as="h1" id="product-title" className={`t-display-l ${styles.title}`}>
+                {product.name}
+              </Split>
               <p className={styles.statement}>{product.statement}</p>
 
               <dl className={styles.keyFacts}>
@@ -161,7 +166,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         />
 
         {/* 2. What it is for. */}
-        <section id="overview" className={styles.section} data-chapter="graphite" aria-labelledby="overview-title">
+        <section id="overview" className={styles.section} data-chapter="bone" aria-labelledby="overview-title">
           <SectionHead id="overview-title" title="Overview" intro={product.description} />
           <div className={styles.lists}>
             <div data-reveal="rise">
@@ -190,7 +195,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </section>
 
         {/* 3. Which size, and an enquiry for exactly that size. */}
-        <section id="sizes" className={styles.section} data-chapter="forest" aria-labelledby="sizes-title">
+        <section id="sizes" className={styles.section} data-chapter="ink" aria-labelledby="sizes-title">
           <SectionHead
             id="sizes-title"
             title="Sizes and packing"
@@ -206,7 +211,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         </section>
 
         {/* 4. Where to go next. */}
-        <section id="related" className={styles.section} data-chapter="graphite" aria-labelledby="related-title">
+        <section id="related" className={styles.section} data-chapter="bone" aria-labelledby="related-title">
           <SectionHead
             id="related-title"
             title={sameSystem.length ? `More ${product.category.toLowerCase()}` : "More from HIRANIX"}

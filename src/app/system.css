@@ -1,26 +1,41 @@
 /*
  * HIRANIX design system tokens and shared pieces. MASTER.md is the source;
  * this file is its code. Everything below the hero reads these.
+ *
+ * Three colours only: the hero's black, the hero's green, and a bone white
+ * that sits between them. Each section takes one of the three as its ground.
  */
 
 :root {
-  /* Palette: the logo's black and signal green, stretched into a family. */
-  --hx-ink: #070a08;
-  --hx-signal: #00f868;
-  --hx-forest: #0a2e1c;
-  --hx-sage: #26372e;
-  --hx-graphite: #121815;
-  --hx-white: #f4f6f3;
-  --hx-mist: #a7b2ab;
-  --hx-line-on-dark: rgba(244, 246, 243, 0.14);
-  --hx-frame: #121513;
-  --radius: 4px;
+  /* Palette */
+  --hx-ink: #050605;
+  --hx-ink-2: #0c0f0d;
+  --hx-green: #23c862;
+  --hx-green-glow: #01ff69;
+  --hx-green-deep: #0d6b34;
+  --hx-bone: #eceee9;
+  --hx-bone-2: #e1e4de;
+  --hx-white: #f2f5f2;
+  --hx-mist: #9aa49d;
+  --hx-stone: #4b534e;
 
-  /* Type scale */
-  --type-display-xl: clamp(2.75rem, 8.6vw, 8.25rem);
-  --type-display-l: clamp(2.1rem, 6vw, 5.5rem);
-  --type-display-m: clamp(1.55rem, 3.6vw, 3.1rem);
-  --type-heading: clamp(1.4rem, 2.2vw, 2rem);
+  /* Older names, kept so every component reads the new palette. */
+  --hx-signal: var(--hx-green);
+  --hx-forest: var(--hx-ink-2);
+  --hx-sage: var(--hx-ink-2);
+  --hx-graphite: var(--hx-ink-2);
+  --hx-line-on-dark: rgba(242, 245, 242, 0.14);
+  --hx-frame: #111412;
+  --radius: 2px;
+
+  /* Type */
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --type-mega: clamp(3.4rem, 13.4vw, 15rem);
+  --type-display-xl: clamp(2.9rem, 9vw, 9.5rem);
+  --type-display-l: clamp(2.3rem, 6.2vw, 6rem);
+  --type-display-m: clamp(1.75rem, 3.8vw, 3.4rem);
+  --type-statement: clamp(1.6rem, 3.4vw, 3.3rem);
+  --type-heading: clamp(1.35rem, 2vw, 1.9rem);
   --type-body: 1.0625rem;
   --type-small: 0.875rem;
   --type-label: 0.75rem;
@@ -37,112 +52,120 @@
   --s-9: 96px;
   --s-10: 128px;
   --s-11: 160px;
-  --section: clamp(56px, 8vw, 128px);
+  --section: clamp(80px, 11vw, 176px);
 
-  /* Motion: one curve, three speeds */
+  /* Motion: one curve family, three speeds */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
-  --t-fast: 240ms;
-  --t-base: 480ms;
-  --t-slow: 720ms;
-  --stagger: 90ms;
+  --t-fast: 280ms;
+  --t-base: 640ms;
+  --t-slow: 1100ms;
+  --stagger: 70ms;
 }
 
-/* Chapters ----------------------------------------------------------------- */
-/* The wrapper carries the current chapter; sections are transparent on it, so
-   the whole ground changes colour as one surface. */
+/* Grounds ------------------------------------------------------------------ */
+/* A section names its ground; the role colours inside follow from it. */
 
 [data-chapters],
-[data-chapter="ink"] {
+[data-chapter="ink"],
+[data-chapter="graphite"],
+[data-chapter="forest"],
+[data-chapter="sage"] {
   --c-bg: var(--hx-ink);
   --c-fg: var(--hx-white);
   --c-sub: var(--hx-mist);
-  --c-acc: var(--hx-signal);
+  --c-acc: var(--hx-green);
   --c-line: var(--hx-line-on-dark);
-  --c-btn-bg: var(--hx-signal);
+  --c-btn-bg: var(--hx-green);
   --c-btn-fg: var(--hx-ink);
+  --c-btn-hover: var(--hx-white);
+  --c-frame: var(--hx-frame);
 }
 
-[data-chapters][data-current="forest"],
-[data-chapter="forest"] {
-  --c-bg: var(--hx-forest);
-  --c-fg: var(--hx-white);
-  --c-sub: var(--hx-mist);
-  --c-acc: var(--hx-signal);
-  --c-line: var(--hx-line-on-dark);
-  --c-btn-bg: var(--hx-signal);
-  --c-btn-fg: var(--hx-ink);
+[data-chapter="bone"] {
+  --c-bg: var(--hx-bone);
+  --c-fg: var(--hx-ink);
+  --c-sub: var(--hx-stone);
+  --c-acc: var(--hx-green-deep);
+  --c-line: rgba(5, 6, 5, 0.16);
+  --c-btn-bg: var(--hx-ink);
+  --c-btn-fg: var(--hx-bone);
+  --c-btn-hover: var(--hx-green);
+  --c-frame: #1a1d1b;
 }
 
-[data-chapters][data-current="graphite"],
-[data-chapter="graphite"] {
-  --c-bg: var(--hx-graphite);
-  --c-fg: var(--hx-white);
-  --c-sub: var(--hx-mist);
-  --c-acc: var(--hx-signal);
-  --c-line: var(--hx-line-on-dark);
-  --c-btn-bg: var(--hx-signal);
-  --c-btn-fg: var(--hx-ink);
+[data-chapter="green"] {
+  --c-bg: var(--hx-green);
+  --c-fg: var(--hx-ink);
+  --c-sub: rgba(5, 6, 5, 0.72);
+  --c-acc: var(--hx-ink);
+  --c-line: rgba(5, 6, 5, 0.22);
+  --c-btn-bg: var(--hx-ink);
+  --c-btn-fg: var(--hx-green);
+  --c-btn-hover: var(--hx-white);
+  --c-frame: var(--hx-ink);
 }
 
-[data-chapters][data-current="sage"],
-[data-chapter="sage"] {
-  --c-bg: var(--hx-sage);
-  --c-fg: var(--hx-white);
-  --c-sub: var(--hx-mist);
-  --c-acc: var(--hx-signal);
-  --c-line: var(--hx-line-on-dark);
-  --c-btn-bg: var(--hx-signal);
-  --c-btn-fg: var(--hx-ink);
-}
-
-/* The chapter's own section keeps its colours from the wrapper, so text never
-   reads one chapter's ink on another chapter's ground mid-change. */
-[data-chapters] [data-chapter] {
-  --c-bg: inherit;
-  --c-fg: inherit;
-  --c-sub: inherit;
-  --c-acc: inherit;
-  --c-line: inherit;
-  --c-btn-bg: inherit;
-  --c-btn-fg: inherit;
+[data-chapter] {
+  position: relative;
+  background: var(--c-bg);
+  color: var(--c-fg);
 }
 
 [data-chapters] {
   position: relative;
   z-index: 6;
-  background: var(--c-bg);
-  color: var(--c-fg);
-  transition:
-    background-color var(--t-slow) var(--ease-io),
-    color var(--t-slow) var(--ease-io);
+  background: var(--hx-ink);
 }
 
 /* Type --------------------------------------------------------------------- */
 
+.t-mega,
 .t-display-xl,
 .t-display-l,
 .t-display-m {
   margin: 0;
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  text-wrap: balance;
+}
+
+.t-mega {
+  font-size: var(--type-mega);
+  line-height: 0.84;
+  letter-spacing: -0.035em;
 }
 
 .t-display-xl {
   font-size: var(--type-display-xl);
-  line-height: 0.9;
+  line-height: 0.88;
 }
 
 .t-display-l {
   font-size: var(--type-display-l);
-  line-height: 0.92;
+  line-height: 0.9;
 }
 
 .t-display-m {
   font-size: var(--type-display-m);
   line-height: 0.95;
+  text-wrap: balance;
+}
+
+/* The quiet half of a two-voice headline: narrow and light. */
+.t-thin {
+  font-variation-settings: "wdth" 75, "wght" 300;
+  letter-spacing: -0.01em;
+}
+
+.t-statement {
+  margin: 0;
+  font-size: var(--type-statement);
+  font-variation-settings: "wdth" 100, "wght" 560;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: pretty;
 }
 
 .t-heading {
@@ -161,13 +184,16 @@
   line-height: 1.55;
 }
 
+/* Small technical labels: indexes, counts, captions. */
+.t-mono,
 .t-label {
   margin: 0;
   color: var(--c-sub);
+  font-family: var(--font-mono);
   font-size: var(--type-label);
-  font-variation-settings: "wdth" 112, "wght" 600;
-  letter-spacing: 0.14em;
-  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
   text-transform: uppercase;
 }
 
@@ -187,11 +213,13 @@
 /* Buttons and links -------------------------------------------------------- */
 
 .btn {
+  position: relative;
   display: inline-flex;
-  min-height: 48px;
+  min-height: 52px;
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
+  overflow: hidden;
   padding: 0 var(--s-5);
   border: 1px solid var(--c-line);
   border-radius: 999px;
@@ -200,21 +228,40 @@
   font: inherit;
   font-size: var(--type-small);
   font-variation-settings: "wght" 640;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   cursor: pointer;
+  isolation: isolate;
   transition:
-    background-color var(--t-fast) var(--ease-out),
     border-color var(--t-fast) var(--ease-out),
     color var(--t-fast) var(--ease-out),
     transform var(--t-fast) var(--ease-out);
 }
 
-.btn:hover {
-  border-color: var(--c-acc);
+/* The fill rises from below on hover, like a level filling. */
+.btn::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--c-fg);
+  content: "";
+  transform: translate3d(0, 101%, 0);
+  transition: transform 520ms var(--ease-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    border-color: var(--c-fg);
+    color: var(--c-bg);
+  }
+
+  .btn:hover::before {
+    transform: none;
+  }
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: scale(0.97);
 }
 
 .btn:disabled,
@@ -229,10 +276,15 @@
   color: var(--c-btn-fg);
 }
 
-.btn--primary:hover {
-  border-color: var(--c-fg);
-  background: var(--c-fg);
-  color: var(--c-bg);
+.btn--primary::before {
+  background: var(--c-btn-hover);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn--primary:hover {
+    border-color: var(--c-btn-hover);
+    color: var(--hx-ink);
+  }
 }
 
 .btn:focus-visible,
@@ -264,16 +316,36 @@
   bottom: 0;
   left: 0;
   height: 1px;
-  background: var(--c-acc);
+  background: currentColor;
   content: "";
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--t-fast) var(--ease-out);
+  transform: scaleX(1);
+  transform-origin: right;
+  transition: transform 520ms var(--ease-expo);
 }
 
-.link:hover::after,
-.link:focus-visible::after {
-  transform: none;
+@media (hover: hover) and (pointer: fine) {
+  .link:hover::after {
+    animation: link-run 720ms var(--ease-expo);
+  }
+}
+
+@keyframes link-run {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  46% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
 }
 
 /* A photograph in a clean rectangular frame; the image fills it whole. */
@@ -283,7 +355,7 @@
   overflow: hidden;
   overflow: clip;
   border-radius: var(--radius);
-  background: var(--hx-frame);
+  background: var(--c-frame, var(--hx-frame));
 }
 
 .frame img {
@@ -291,15 +363,28 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--t-fast) var(--ease-out);
+  transition: transform 900ms var(--ease-expo);
 }
 
 @media (hover: hover) and (pointer: fine) {
   a:hover > .frame img,
   .frame:hover img,
   [data-zoom]:hover .frame img {
-    transform: scale(1.03);
+    transform: scale(1.045);
   }
+}
+
+/* Parallax: the photo is a little taller than its frame and drifts inside it
+   as the page scrolls (driven by Motion). */
+[data-parallax] {
+  overflow: hidden;
+  overflow: clip;
+}
+
+[data-parallax] img {
+  height: 118% !important;
+  margin-top: -9%;
+  will-change: transform;
 }
 
 .sr-only {
@@ -319,10 +404,10 @@
 
 .hx-js [data-reveal="rise"] {
   opacity: 0;
-  transform: translate3d(0, 24px, 0);
+  transform: translate3d(0, 32px, 0);
   transition:
     opacity var(--t-base) var(--ease-out),
-    transform var(--t-base) var(--ease-out);
+    transform var(--t-slow) var(--ease-expo);
   transition-delay: calc(var(--i, 0) * var(--stagger));
 }
 
@@ -331,27 +416,69 @@
   transform: none;
 }
 
-/* Photographs unveil upward inside their frame, once. The frame itself stays
-   whole (it is what gets observed, and it holds the space as a placeholder). */
+/* Photographs open from the bottom edge inside their frame, once. */
 .hx-js [data-reveal="unveil"] img {
   clip-path: inset(100% 0 0 0);
+  transform: scale(1.14);
   transition:
-    clip-path var(--t-slow) var(--ease-out),
-    transform var(--t-fast) var(--ease-out);
-  transition-delay: calc(var(--i, 0) * var(--stagger)), 0ms;
+    clip-path var(--t-slow) var(--ease-expo),
+    transform 1500ms var(--ease-expo);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
 }
 
 .hx-js [data-reveal="unveil"][data-in] img {
   clip-path: inset(0 0 0 0);
+  transform: none;
+}
+
+/* Split headings: every word rises out of its own mask. Split renders the
+   words; Motion marks the heading in view. */
+.w {
+  display: inline-block;
+  text-indent: 0;
+  overflow: hidden;
+  overflow: clip;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+  vertical-align: top;
+}
+
+.w > span {
+  display: inline-block;
+}
+
+.hx-js [data-split] .w > span {
+  transform: translate3d(0, 108%, 0);
+  transition: transform var(--t-slow) var(--ease-expo);
+  transition-delay: calc(var(--wi, 0) * 45ms + var(--d, 0ms));
+}
+
+.hx-js [data-split][data-in] .w > span {
+  transform: none;
+}
+
+/* Scroll-filled statements: words start faint and fill as you read. */
+.hx-js [data-words] .w > span {
+  opacity: 0.16;
+}
+
+/* A drawn rule: grows from the left on entry. */
+.hx-js [data-rule] {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1200ms var(--ease-expo);
+}
+
+.hx-js [data-rule][data-in] {
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-chapters] {
-    transition: none;
-  }
-
   .hx-js [data-reveal="rise"],
-  .hx-js [data-reveal="unveil"] img {
+  .hx-js [data-reveal="unveil"] img,
+  .hx-js [data-split] .w > span,
+  .hx-js [data-words] .w > span,
+  .hx-js [data-rule] {
     opacity: 1;
     clip-path: none;
     transform: none;
@@ -359,11 +486,44 @@
   }
 
   .btn,
+  .btn::before,
   .link,
   .link::after,
   .frame img {
     transition: none;
+    animation: none;
   }
+
+  [data-parallax] img {
+    height: 100% !important;
+    margin-top: 0;
+  }
+}
+
+/* Section scaffolding ------------------------------------------------------ */
+
+/* The small index row that opens a section: "(02)   Our products   5 systems". */
+.hx-index {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-6);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.hx-index > * {
+  margin: 0;
+}
+
+/* The header slides away while reading down (Motion sets data-away). */
+.hx.hx-site-header {
+  transition: transform 700ms var(--ease-expo);
+}
+
+.hx.hx-site-header[data-away] {
+  transform: translate3d(0, -100%, 0);
 }
 
 /* The header's right edge: the catalogue download and the enquiry list. */
@@ -379,7 +539,7 @@
 @keyframes page-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 8px, 0);
+    transform: translate3d(0, 12px, 0);
   }
 }
 
@@ -387,8 +547,32 @@
   animation: page-in var(--t-base) var(--ease-out) both;
 }
 
+/* A green curtain lifts off every page as it arrives. */
+.hx-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--hx-green);
+  pointer-events: none;
+  transform-origin: top;
+  animation: curtain-up 900ms var(--ease-expo) 80ms both;
+}
+
+@keyframes curtain-up {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   #main-content:not(:has(.hx-top)) {
     animation: none;
+  }
+
+  .hx-curtain {
+    display: none;
   }
 }

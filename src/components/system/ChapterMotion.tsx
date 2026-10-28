@@ -2,14 +2,21 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
  * The one motion engine below the hero. Sections only describe what they want:
  *
- *   data-chapters                  the surface whose ground changes colour
- *   data-chapter="forest"          the chapter a section belongs to
  *   data-reveal="rise"|"unveil"    reveal once on entry (stagger with --i)
+ *   data-split                     words rise out of their masks once (Split)
+ *   data-words                     words fill as the reader scrolls (Split)
+ *   data-rule                      a hairline draws itself in
+ *   data-parallax="0.12"           the photo inside drifts as the page scrolls
  *   data-count="15"                count up from zero once, on entry
+ *
+ * Entry reveals are CSS transitions switched on by an observer; everything
+ * tied to the scroll position runs on GSAP ScrollTrigger.
  */
 export function ChapterMotion() {
   const pathname = usePathname();
@@ -19,36 +26,22 @@ export function ChapterMotion() {
     const observers: IntersectionObserver[] = [];
     const frames: number[] = [];
 
-    // A chapter takes the ground when it crosses the middle of the screen.
-    document.querySelectorAll<HTMLElement>("[data-chapters]").forEach((surface) => {
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              surface.dataset.current = (entry.target as HTMLElement).dataset.chapter;
-            }
-          });
-        },
-        { rootMargin: "-50% 0px -50% 0px" },
-      );
-      surface.querySelectorAll("[data-chapter]").forEach((chapter) => io.observe(chapter));
-      observers.push(io);
-    });
-
     const countUp = (el: HTMLElement) => {
       const to = Number(el.dataset.count);
       if (!Number.isFinite(to)) return;
       const start = performance.now();
       const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / 1200);
-        el.textContent = String(Math.round(to * (1 - (1 - t) ** 3)));
+        const t = Math.min(1, (now - start) / 1600);
+        el.textContent = String(Math.round(to * (1 - (1 - t) ** 4)));
         if (t < 1) frames.push(requestAnimationFrame(tick));
       };
       frames.push(requestAnimationFrame(tick));
     };
 
     const targets = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]:not([data-in]), [data-count]"),
+      document.querySelectorAll<HTMLElement>(
+        "[data-reveal]:not([data-in]), [data-split]:not([data-in]), [data-rule]:not([data-in]), [data-count]",
+      ),
     );
     if (reduce || !("IntersectionObserver" in window)) {
       targets.forEach((el) => el.setAttribute("data-in", ""));
@@ -63,15 +56,73 @@ export function ChapterMotion() {
             io.unobserve(el);
           });
         },
-        { rootMargin: "0px 0px -12%", threshold: 0.1 },
+        { rootMargin: "0px 0px -10%", threshold: 0.05 },
       );
       targets.forEach((el) => io.observe(el));
       observers.push(io);
     }
 
+    if (reduce) {
+      return () => observers.forEach((io) => io.disconnect());
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+    const context = gsap.context(() => {
+      // Statements fill word by word across the stretch they are read in.
+      gsap.utils.toArray<HTMLElement>("[data-words]").forEach((el) => {
+        gsap.to(el.querySelectorAll(".w > span"), {
+          opacity: 1,
+          ease: "none",
+          stagger: 0.08,
+          scrollTrigger: { trigger: el, start: "top 82%", end: "bottom 42%", scrub: 0.6 },
+        });
+      });
+
+      // Photos drift inside their frames, slower than the page.
+      gsap.utils.toArray<HTMLElement>("[data-parallax]").forEach((frame) => {
+        const img = frame.querySelector("img");
+        if (!img) return;
+        const amount = Number(frame.dataset.parallax) || 0.08;
+        gsap.fromTo(
+          img,
+          { yPercent: -amount * 100 },
+          {
+            yPercent: amount * 100,
+            ease: "none",
+            scrollTrigger: { trigger: frame, start: "top bottom", end: "bottom top", scrub: true },
+          },
+        );
+      });
+    });
+
+    // The header steps out of the way while reading down, and returns on the
+    // way back up.
+    const header = document.querySelector<HTMLElement>(".hx-site-header");
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (header) {
+        const menuOpen = document.querySelector(".hx-menu-shell.is-open");
+        if (!menuOpen && y > 480 && y > last + 4) header.setAttribute("data-away", "");
+        else if (menuOpen || y < 480 || y < last - 4) header.removeAttribute("data-away");
+      }
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Late images and fonts change the page height; measure again once.
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const settle = window.setTimeout(refresh, 900);
+
     return () => {
       observers.forEach((io) => io.disconnect());
       frames.forEach((frame) => cancelAnimationFrame(frame));
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(settle);
+      header?.removeAttribute("data-away");
+      context.revert();
     };
   }, [pathname]);
 

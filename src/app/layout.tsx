@@ -5,6 +5,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { EnquiryPanel } from "@/components/enquiry/EnquiryPanel";
 import { EnquiryProvider } from "@/components/enquiry/EnquiryProvider";
 import { ChapterMotion } from "@/components/system/ChapterMotion";
+import { PageCurtain } from "@/components/system/PageCurtain";
 import "./hiranix-hero.css";
 import "./globals.css";
 import "./system.css";
@@ -166,6 +167,7 @@ export default function RootLayout({
         <EnquiryProvider>
           <SmoothScroll />
           <ChapterMotion />
+          <PageCurtain />
           <a className="hx-skip-link" href="#main-content">
             Skip to main content
           </a>

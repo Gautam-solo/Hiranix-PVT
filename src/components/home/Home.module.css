@@ -1,262 +1,560 @@
-/* Every chapter: an open section on the 12-column page, content on the ground. */
+/* Claim band ---------------------------------------------------------------- */
 
-.section {
+.marquee {
+  overflow: hidden;
+  overflow: clip;
+  padding: clamp(14px, 2vw, 30px) 0;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marqueeRun {
+  display: flex;
+  flex: none;
+}
+
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding-right: 0.4em;
+  font-size: clamp(2.2rem, 6.4vw, 7rem);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marqueeMark {
+  width: 0.62em;
+  height: 0.62em;
+  flex: none;
+  fill: currentColor;
+}
+
+/* Intro ------------------------------------------------------------------- */
+
+.intro {
   padding: var(--section) var(--page-pad);
 }
 
-/* Our products ------------------------------------------------------------- */
+.statement {
+  max-width: 30ch;
+  margin-top: clamp(48px, 7vw, 112px);
+  text-indent: 16%;
+}
 
-.systems {
+.introGrid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--s-6) var(--s-5);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--s-8) clamp(32px, 6vw, 112px);
+  align-items: end;
+  margin-top: clamp(72px, 10vw, 160px);
+}
+
+.introPhoto {
   margin: 0;
-  padding: 0;
-  list-style: none;
 }
 
-.system {
-  display: grid;
-  gap: var(--s-2);
-  color: var(--c-fg);
-}
-
-.system:focus-visible {
-  outline: 2px solid var(--c-acc);
-  outline-offset: 4px;
-}
-
-.systemPhoto {
+.introPhoto :global(.frame) {
   aspect-ratio: 4 / 5;
-  margin-bottom: var(--s-3);
+  max-height: 82vh;
 }
 
-.systemName {
-  font-size: 1.125rem;
-  font-variation-settings: "wght" 680;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
+.introPhoto figcaption {
+  padding-top: var(--s-3);
 }
-
-.systemMeta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  color: var(--c-sub);
-  font-size: var(--type-small);
-}
-
-.systemMeta svg {
-  color: var(--c-acc);
-  transition: transform var(--t-fast) var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .system:hover .systemMeta svg {
-    transform: translateX(3px);
-  }
-}
-
-/* World's largest ---------------------------------------------------------- */
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--s-5);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-8) var(--s-6);
   margin: 0;
 }
 
-.facts div {
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
+.facts > div {
+  display: grid;
   gap: var(--s-3);
   padding-top: var(--s-4);
   border-top: 1px solid var(--c-line);
 }
 
-.facts dt {
-  color: var(--c-sub);
-  font-size: var(--type-small);
-}
-
 .facts dd {
   margin: 0;
-  font-size: var(--type-display-m);
+  font-size: clamp(3rem, 7vw, 7.5rem);
   font-variation-settings: "wdth" 125, "wght" 800;
   font-variant-numeric: tabular-nums;
-  line-height: 1;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  text-transform: uppercase;
 }
 
-.factory {
-  margin-top: var(--s-9);
+.facts .factWord {
+  font-size: clamp(1.8rem, 3.5vw, 3.8rem);
 }
 
-.factoryHead {
+/* Product rail --------------------------------------------------------------- */
+
+.rail {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+}
+
+.railTrack {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  width: max-content;
+  height: 100vh;
+  height: 100svh;
+  will-change: transform;
+}
+
+.railIntro {
+  position: relative;
+  display: flex;
+  width: min(56vw, 900px);
+  flex: none;
+  flex-direction: column;
   justify-content: space-between;
-  gap: var(--s-4);
-  margin-bottom: var(--s-5);
+  gap: var(--s-6);
+  padding: var(--s-9) var(--page-pad) var(--s-9);
 }
 
-.factoryControls {
-  display: flex;
+.railIntroFoot {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
+  max-width: 34ch;
+}
+
+.railTitle {
+  font-size: clamp(3rem, 8.2vw, 9rem);
+}
+
+.railHint {
+  display: inline-flex;
   align-items: center;
   gap: var(--s-2);
 }
 
-.factoryControls :global(.btn) {
-  width: 48px;
-  padding: 0;
+.panel {
+  display: grid;
+  width: min(78vw, 1240px);
+  flex: none;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 72px);
+  align-items: end;
+  padding: var(--s-9) var(--page-pad) var(--s-9);
+  border-left: 1px solid var(--c-line);
 }
 
-.factoryNow {
-  margin-right: var(--s-3);
-  color: var(--c-sub);
-  font-size: var(--type-small);
+.panelPhoto {
+  width: 100%;
+  height: calc(100svh - 2 * var(--s-9));
+  max-height: 760px;
 }
 
-/* Runs to the right edge of the screen, so the next step always shows. */
-.strip {
-  display: flex;
-  gap: var(--s-4);
-  margin: 0 calc(var(--page-pad) * -1) 0 0;
-  padding: 0 var(--page-pad) 0 0;
-  overflow-x: auto;
-  list-style: none;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  overscroll-behavior-x: contain;
+.panelPhoto img {
+  width: 116% !important;
+  max-width: none;
+  margin-left: -8%;
 }
 
-.strip::-webkit-scrollbar {
-  display: none;
+.panelText {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
 }
 
-.strip:focus-visible {
-  outline: 2px solid var(--c-acc);
-  outline-offset: 4px;
+.panelIndex {
+  font-size: 0.875rem;
 }
 
-.strip li {
-  flex: 0 0 min(44vw, 560px);
-  scroll-snap-align: start;
+.panelName {
+  font-size: clamp(2rem, 3.9vw, 4.4rem);
+  overflow-wrap: anywhere;
 }
 
-.strip figure {
+.panelName a {
+  display: block;
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+.panelName a:hover {
+  color: var(--c-acc);
+}
+
+.panelList {
+  display: grid;
+  width: 100%;
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.stripPhoto {
-  aspect-ratio: 4 / 3;
+.panelList li {
+  border-top: 1px solid var(--c-line);
 }
 
-.strip figcaption {
-  max-width: 44ch;
-  padding-top: var(--s-3);
-  color: var(--c-sub);
+.panelList li:last-child {
+  border-bottom: 1px solid var(--c-line);
+}
+
+.panelList a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
   font-size: var(--type-small);
-  line-height: 1.5;
+  font-variation-settings: "wght" 560;
+  transition:
+    color var(--t-fast) var(--ease-out),
+    padding var(--t-base) var(--ease-expo);
 }
 
-.strip figcaption strong {
-  color: var(--c-fg);
-  font-weight: 650;
+.panelList a:hover {
+  padding-left: var(--s-3);
+  color: var(--c-acc);
 }
 
-.stripTrack {
+.railEnd {
+  display: grid;
+  width: min(44vw, 680px);
+  flex: none;
+  place-items: center;
+  padding: var(--s-9) var(--page-pad);
+  border-left: 1px solid var(--c-line);
+}
+
+.railEndLink {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
+}
+
+.railEndArrow {
+  display: grid;
+  width: clamp(96px, 9vw, 140px);
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--hx-green);
+  color: var(--hx-ink);
+  transition: transform var(--t-base) var(--ease-expo);
+}
+
+.railEndLink:hover .railEndArrow {
+  transform: rotate(-45deg) scale(1.08);
+}
+
+.railProgress {
+  position: absolute;
+  right: var(--page-pad);
+  bottom: var(--s-6);
+  left: var(--page-pad);
   height: 1px;
-  margin-top: var(--s-5);
   background: var(--c-line);
 }
 
-.stripTrack span {
+.railProgress span {
   display: block;
   height: 100%;
-  background: var(--c-acc);
-  transform: scaleX(0.08);
+  background: var(--hx-green);
+  transform: scaleX(0);
   transform-origin: left;
 }
 
-/* Our brands --------------------------------------------------------------- */
+/* Factory -------------------------------------------------------------------- */
 
-.brands {
+.opener {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  overflow: clip;
+}
+
+.openerFrame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.openerFrame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.openerFrame::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(5, 6, 5, 0.86) 0%, rgba(5, 6, 5, 0.25) 55%, rgba(5, 6, 5, 0.1) 100%);
+  content: "";
+}
+
+.openerText {
+  position: absolute;
+  right: var(--page-pad);
+  bottom: var(--s-8);
+  left: var(--page-pad);
+  z-index: 2;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--s-7) var(--s-6);
+  gap: var(--s-5);
+  color: var(--hx-white);
+}
+
+.openerCopy {
+  max-width: 44ch;
+  color: rgba(242, 245, 242, 0.82);
+}
+
+.stages {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(32px, 7vw, 128px);
+  padding: var(--section) var(--page-pad);
+}
+
+.stagesPhoto {
+  position: sticky;
+  top: 12vh;
+  height: 76vh;
+}
+
+.stagesFrame {
+  position: absolute !important;
+  inset: 0 0 40px 0;
+  opacity: 0;
+  transform: scale(1.05);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 1200ms var(--ease-expo);
+}
+
+.stagesFrame[data-on] {
+  z-index: 1;
+  opacity: 1;
+  transform: none;
+}
+
+.stagesCount {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size: 0.875rem;
+}
+
+.stagesList {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.brands li {
+.stagesList li {
+  display: flex;
+  min-height: 64vh;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-4);
+  border-top: 1px solid var(--c-line);
+  opacity: 0.24;
+  transition: opacity 600ms var(--ease-out);
+}
+
+.stagesList li[data-on] {
+  opacity: 1;
+}
+
+.stageNo {
+  color: var(--c-acc);
+}
+
+.stageInline {
+  display: none !important;
+}
+
+/* Brands ---------------------------------------------------------------------- */
+
+.brands {
+  padding: var(--section) var(--page-pad);
+}
+
+.brandsHead {
   display: grid;
-  align-content: start;
-  gap: var(--s-3);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 28ch);
+  gap: var(--s-5) var(--s-8);
+  align-items: end;
+  margin: clamp(48px, 6vw, 96px) 0 var(--s-8);
 }
 
-/* The logos are square artwork with wide margins; a 16:10 frame keeps the
-   whole mark and lets the names lead. */
-.brandLogo {
-  aspect-ratio: 16 / 10;
-  margin-bottom: var(--s-3);
+.brandWrap {
+  position: relative;
 }
 
-/* Contact ------------------------------------------------------------------ */
+.brandList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 
-/* Details on the left, the factory on a live map on the right. */
+.brandList li {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(40px, 6vw, 96px) minmax(0, 1fr) auto;
+  gap: var(--s-4);
+  align-items: center;
+  padding: clamp(16px, 2vw, 28px) 0;
+  border-top: 1px solid var(--c-line);
+  isolation: isolate;
+}
+
+.brandList li:last-child {
+  border-bottom: 1px solid var(--c-line);
+}
+
+/* A green fill rises behind the row under the pointer. */
+.brandList li::before {
+  position: absolute;
+  inset: 0 calc(-1 * var(--page-pad));
+  z-index: -1;
+  background: var(--hx-green);
+  content: "";
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 640ms var(--ease-expo);
+}
+
+.brandName {
+  margin: 0;
+  font-size: clamp(2.3rem, 8.4vw, 9.5rem);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+  text-transform: uppercase;
+  transition: transform 700ms var(--ease-expo);
+}
+
+.brandMark {
+  width: clamp(56px, 6vw, 88px);
+  aspect-ratio: 1;
+}
+
+.brandPreview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  width: clamp(200px, 18vw, 280px);
+  aspect-ratio: 1;
+  margin: calc(clamp(200px, 18vw, 280px) / -2) 0 0 calc(clamp(200px, 18vw, 280px) / -2);
+  pointer-events: none;
+  opacity: 0;
+  scale: 0.6;
+  transition:
+    opacity 300ms var(--ease-out),
+    scale 600ms var(--ease-expo);
+}
+
+.brandPreview[data-on] {
+  opacity: 1;
+  scale: 1;
+}
+
+.brandPreview :global(.frame) {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.brandPreview :global(.frame)[data-on] {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .brandList li:hover::before {
+    transform: none;
+  }
+
+  .brandList li:hover .brandName {
+    transform: translate3d(2vw, 0, 0);
+  }
+
+  .brandMark {
+    visibility: hidden;
+  }
+
+  .brandPreview {
+    display: block;
+  }
+}
+
+/* Contact --------------------------------------------------------------------- */
+
 .contact {
+  padding: var(--section) var(--page-pad) var(--s-9);
+}
+
+.contactTitle {
+  margin: clamp(48px, 6vw, 96px) 0 clamp(56px, 8vw, 128px);
+}
+
+.contactBody {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: var(--s-7) var(--s-8);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+  gap: var(--s-8) clamp(32px, 6vw, 112px);
   align-items: stretch;
-}
-
-.contactInfo {
-  display: grid;
-  align-content: start;
-  gap: var(--s-7);
-}
-
-.contactMap {
-  display: grid;
-  min-width: 0;
 }
 
 .contactLead {
   display: grid;
-  justify-items: start;
-  gap: var(--s-5);
+  align-content: start;
+  gap: var(--s-6);
+}
+
+.contactNote {
+  max-width: 34ch;
+  margin: 0;
+  font-size: clamp(1.2rem, 1.8vw, 1.6rem);
+  font-variation-settings: "wght" 560;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
 
 .contactActions {
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-3);
-  margin-top: var(--s-3);
 }
 
 .contactList {
-  margin: 0;
+  margin: var(--s-4) 0 0;
 }
 
-.contactList div {
+.contactList > div {
   display: grid;
   grid-template-columns: 120px minmax(0, 1fr);
   gap: var(--s-4);
-  padding: var(--s-5) 0;
+  align-items: baseline;
+  padding: var(--s-4) 0;
   border-top: 1px solid var(--c-line);
 }
 
-.contactList div:last-child {
+.contactList > div:last-child {
   border-bottom: 1px solid var(--c-line);
 }
 
 .contactList dt {
   color: var(--c-sub);
-  font-size: var(--type-small);
 }
 
 .contactList dd {
@@ -264,93 +562,162 @@
   justify-items: start;
   gap: var(--s-2);
   margin: 0;
-  font-size: var(--type-body);
-  line-height: 1.5;
+  font-size: 1.125rem;
+  font-variation-settings: "wght" 620;
 }
 
-/* Smaller screens ---------------------------------------------------------- */
+.contactList dd > a:not(:global(.link)) {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: var(--s-2);
+  overflow-wrap: anywhere;
+}
 
-@media (max-width: 1100px) {
-  .systems {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.address {
+  max-width: 36ch;
+  font-size: 1rem;
+  font-variation-settings: "wght" 480;
+  line-height: 1.45;
+}
+
+.contactMap {
+  min-height: 380px;
+}
+
+.contactMap > * {
+  height: 100%;
+}
+
+/* Phones and tablets ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .introGrid,
+  .brandsHead,
+  .contactBody {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .statement {
+    text-indent: 0;
+  }
+
+  .introPhoto :global(.frame) {
+    max-height: none;
   }
 
   .facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    row-gap: var(--s-6);
+    gap: var(--s-6) var(--s-4);
   }
-}
 
-@media (max-width: 900px) {
-  .contact {
+  /* The rail becomes a plain stack. */
+  .railTrack {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+
+  .railIntro,
+  .panel,
+  .railEnd {
+    width: 100%;
+    border-left: 0;
+  }
+
+  .railIntro {
+    padding: var(--section) var(--page-pad) var(--s-7);
+  }
+
+  .railHint,
+  .railProgress {
+    display: none;
+  }
+
+  .panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+    padding: var(--s-7) var(--page-pad);
+    border-top: 1px solid var(--c-line);
+  }
+
+  .panelPhoto {
+    height: auto;
+    aspect-ratio: 4 / 5;
+    max-height: none;
+  }
+
+  .panelPhoto img {
+    width: 100% !important;
+    margin-left: 0;
+  }
+
+  .railEnd {
+    justify-items: start;
+    padding: var(--s-7) var(--page-pad) var(--section);
+    border-top: 1px solid var(--c-line);
+  }
+
+  .stages {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  /* A fixed height, not an aspect ratio: with the map's min-height, a ratio
-     turned that height into a 480px minimum width and stretched the page. */
+  .stagesPhoto {
+    display: none;
+  }
+
+  .stagesList li {
+    min-height: 0;
+    padding: var(--s-6) 0 var(--s-7);
+    opacity: 1;
+  }
+
+  .stageInline {
+    display: block !important;
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--s-3);
+  }
+
   .contactMap {
-    min-width: 0;
-    height: 320px;
-  }
-
-  .brands {
-    grid-template-columns: minmax(0, 1fr);
-    max-width: 520px;
-  }
-
-  .brands li {
-    grid-template-columns: 112px minmax(0, 1fr);
-    column-gap: var(--s-5);
-    align-items: center;
-  }
-
-  .brandLogo {
-    margin-bottom: 0;
-  }
-
-  .factoryNow {
-    display: none;
-  }
-
-  .strip li {
-    flex-basis: 82vw;
+    min-height: 320px;
   }
 }
 
-/* On phones the five systems become one swipeable row of equal tiles. */
-@media (max-width: 640px) {
-  .systems {
-    display: flex;
-    gap: var(--s-4);
-    margin-right: calc(var(--page-pad) * -1);
-    padding-right: var(--page-pad);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+@media (max-width: 560px) {
+  .facts {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 
-  .systems::-webkit-scrollbar {
-    display: none;
+  .facts dd {
+    font-size: clamp(2.4rem, 13vw, 3.4rem);
   }
 
-  .systems li {
-    flex: 0 0 62vw;
-    scroll-snap-align: start;
+  .facts .factWord {
+    font-size: clamp(1.2rem, 5.2vw, 2.2rem);
   }
 
-  .contactList div {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--s-2);
+  .brandList li {
+    grid-template-columns: 28px minmax(0, 1fr) auto;
   }
 
   .contactActions,
   .contactActions :global(.btn) {
     width: 100%;
   }
+
+  .contactList > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .systemMeta svg {
+  .stagesFrame,
+  .stagesList li,
+  .brandList li::before,
+  .brandName,
+  .brandPreview,
+  .panelList a,
+  .railEndArrow {
     transition: none;
   }
 }
