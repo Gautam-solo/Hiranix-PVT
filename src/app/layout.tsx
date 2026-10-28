@@ -5,6 +5,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { EnquiryPanel } from "@/components/enquiry/EnquiryPanel";
 import { EnquiryProvider } from "@/components/enquiry/EnquiryProvider";
 import { ChapterMotion } from "@/components/system/ChapterMotion";
+import { Intro } from "@/components/system/Intro";
 import { PageCurtain } from "@/components/system/PageCurtain";
 import "./hiranix-hero.css";
 import "./globals.css";
@@ -153,7 +154,8 @@ export default function RootLayout({
             script that reveals them can run. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('hx-js')",
+            __html:
+              "var d=document.documentElement;d.classList.add('hx-js');document.addEventListener('DOMContentLoaded',function(){var h=innerHeight;document.querySelectorAll('[data-reveal],[data-split],[data-rule]').forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h*0.92&&r.bottom>0)e.setAttribute('data-in','')})});try{if(location.pathname==='/'&&!sessionStorage.getItem('hx-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('hx-intro-on')}catch(e){}",
           }}
         />
         <script
@@ -168,6 +170,7 @@ export default function RootLayout({
           <SmoothScroll />
           <ChapterMotion />
           <PageCurtain />
+          <Intro />
           <a className="hx-skip-link" href="#main-content">
             Skip to main content
           </a>

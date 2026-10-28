@@ -30,6 +30,13 @@ export function SystemsRail() {
     if (!root || !rail || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    // On a phone the rail is a native swipe; its progress line follows it.
+    const onSwipe = () => {
+      const max = rail.scrollWidth - rail.clientWidth;
+      if (bar.current && max > 0) bar.current.style.transform = `scaleX(${rail.scrollLeft / max})`;
+    };
+    rail.addEventListener("scroll", onSwipe, { passive: true });
+
     const mm = gsap.matchMedia();
     mm.add("(min-width: 901px)", () => {
       const distance = () => rail.scrollWidth - window.innerWidth;
@@ -69,7 +76,10 @@ export function SystemsRail() {
       });
     });
 
-    return () => mm.revert();
+    return () => {
+      rail.removeEventListener("scroll", onSwipe);
+      mm.revert();
+    };
   }, []);
 
   return (
@@ -94,7 +104,8 @@ export function SystemsRail() {
             </Link>
           </div>
           <p className={`t-mono ${styles.railHint}`} aria-hidden="true">
-            Scroll <ArrowRight size={12} weight="bold" />
+            <span className={styles.hintDesktop}>Scroll</span>
+            <span className={styles.hintTouch}>Swipe</span> <ArrowRight size={12} weight="bold" />
           </p>
         </div>
 

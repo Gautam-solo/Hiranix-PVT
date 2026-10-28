@@ -392,3 +392,11 @@
 :global(html:has(.hx-site-header:not([data-away]))) .bar {
   top: 76px;
 }
+
+@media (pointer: coarse) {
+  .name a {
+    display: inline-block;
+    padding: 11px 0;
+    margin: -11px 0;
+  }
+}

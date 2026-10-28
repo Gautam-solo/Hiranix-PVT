@@ -538,7 +538,6 @@
    continuous surface. The home page is left to the hero's own intro. */
 @keyframes page-in {
   from {
-    opacity: 0;
     transform: translate3d(0, 12px, 0);
   }
 }
@@ -574,5 +573,129 @@
 
   .hx-curtain {
     display: none;
+  }
+}
+
+/* Opening moment ------------------------------------------------------------ */
+/* In the server HTML, hidden unless the layout's inline script marks the visit
+   (home page, first time this visit, motion allowed). */
+
+.hx-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--page-pad);
+  background: var(--hx-ink);
+  color: var(--hx-white);
+}
+
+html.hx-intro-on .hx-intro {
+  display: flex;
+  /* If the script never finishes, the overlay still gets out of the way. */
+  animation: intro-failsafe 0.01s linear 6s forwards;
+}
+
+@keyframes intro-failsafe {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+html.hx-intro-on {
+  overflow: hidden;
+}
+
+.hx-intro-word {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  font-size: min(19vw, 22rem);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.hx-intro-letter {
+  display: inline-block;
+  overflow: hidden;
+  overflow: clip;
+  padding: 0.04em 0.01em;
+}
+
+.hx-intro-letter > span {
+  display: inline-block;
+  visibility: hidden;
+}
+
+.hx-intro-letter:last-child {
+  color: var(--hx-green);
+}
+
+.hx-intro-foot {
+  position: absolute;
+  right: var(--page-pad);
+  bottom: calc(var(--page-pad) + 12px);
+  left: var(--page-pad);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--type-label);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hx-mist);
+}
+
+.hx-intro-count {
+  color: var(--hx-white);
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-variant-numeric: tabular-nums;
+}
+
+.hx-intro-track {
+  position: absolute;
+  right: var(--page-pad);
+  bottom: var(--page-pad);
+  left: var(--page-pad);
+  height: 2px;
+  background: var(--hx-line-on-dark);
+}
+
+.hx-intro-bar {
+  display: block;
+  height: 100%;
+  background: var(--hx-green);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.hx-intro-on .hx-intro {
+    display: none;
+  }
+
+  html.hx-intro-on {
+    overflow: auto;
+  }
+}
+
+/* Touch has no hover: a press fills the button the same way. */
+@media (hover: none) {
+  .btn:active {
+    border-color: var(--c-fg);
+    color: var(--c-bg);
+  }
+
+  .btn:active::before {
+    transform: none;
+  }
+
+  .btn--primary:active {
+    border-color: var(--c-btn-hover);
+    color: var(--hx-ink);
   }
 }

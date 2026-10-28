@@ -20,6 +20,7 @@ import { ProductSizes } from "@/components/products/ProductSizes";
 import { ProductTile } from "@/components/products/ProductTile";
 import { SectionHead } from "@/components/system/SectionHead";
 import { Split } from "@/components/system/Split";
+import { ProductStory } from "@/components/products/ProductStory";
 import { contact, whatsappHref } from "@/data/company";
 import {
   CATALOGUE_A11Y_LABEL,
@@ -165,34 +166,8 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
           ]}
         />
 
-        {/* 2. What it is for. */}
-        <section id="overview" className={styles.section} data-chapter="bone" aria-labelledby="overview-title">
-          <SectionHead id="overview-title" title="Overview" intro={product.description} />
-          <div className={styles.lists}>
-            <div data-reveal="rise">
-              <h3 className="t-heading">Where it is used</h3>
-              <ul className={styles.list}>
-                {product.applications.map((item) => (
-                  <li key={item}>
-                    <Check size={16} weight="bold" aria-hidden="true" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div data-reveal="rise" style={{ "--i": 1 } as React.CSSProperties}>
-              <h3 className="t-heading">What it offers</h3>
-              <ul className={styles.list}>
-                {product.features.map((item) => (
-                  <li key={item}>
-                    <Check size={16} weight="bold" aria-hidden="true" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
+        {/* 2. What it is for: the product held still while its story scrolls. */}
+        <ProductStory product={product} />
 
         {/* 3. Which size, and an enquiry for exactly that size. */}
         <section id="sizes" className={styles.section} data-chapter="ink" aria-labelledby="sizes-title">

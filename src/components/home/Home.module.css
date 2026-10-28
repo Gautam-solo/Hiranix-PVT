@@ -421,7 +421,8 @@
   border-bottom: 1px solid var(--c-line);
 }
 
-/* A green fill rises behind the row under the pointer. */
+/* A green fill rises behind the row under the pointer (or, on touch, the row
+   crossing the middle of the screen). */
 .brandList li::before {
   position: absolute;
   inset: 0 calc(-1 * var(--page-pad));
@@ -610,34 +611,56 @@
     gap: var(--s-6) var(--s-4);
   }
 
-  /* The rail becomes a plain stack. */
+  /* On a phone the rail is a swipe: one system per screen, snapping into place. */
   .railTrack {
     width: 100%;
     height: auto;
-    flex-direction: column;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: var(--s-8);
+  }
+
+  .railTrack::-webkit-scrollbar {
+    display: none;
   }
 
   .railIntro,
   .panel,
   .railEnd {
-    width: 100%;
+    width: 86vw;
+    scroll-snap-align: start;
+    scroll-margin-left: var(--page-pad);
     border-left: 0;
   }
 
+  .railIntro:first-child {
+    margin-left: 0;
+  }
+
   .railIntro {
+    justify-content: flex-start;
+    gap: var(--s-6);
     padding: var(--section) var(--page-pad) var(--s-7);
   }
 
-  .railHint,
+  .railHint {
+    display: inline-flex;
+  }
+
   .railProgress {
-    display: none;
+    right: var(--page-pad);
+    bottom: var(--s-6);
+    left: var(--page-pad);
   }
 
   .panel {
     grid-template-columns: minmax(0, 1fr);
+    align-content: start;
     gap: var(--s-5);
-    padding: var(--s-7) var(--page-pad);
-    border-top: 1px solid var(--c-line);
+    padding: var(--section) var(--s-4) var(--s-7);
   }
 
   .panelPhoto {
@@ -652,9 +675,8 @@
   }
 
   .railEnd {
-    justify-items: start;
-    padding: var(--s-7) var(--page-pad) var(--section);
-    border-top: 1px solid var(--c-line);
+    place-items: start;
+    padding: var(--section) var(--page-pad) var(--s-7);
   }
 
   .stages {
@@ -719,5 +741,33 @@
   .panelList a,
   .railEndArrow {
     transition: none;
+  }
+}
+
+.hintTouch {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .hintDesktop {
+    display: none;
+  }
+
+  .hintTouch {
+    display: inline;
+  }
+}
+
+.brandList li[data-active]::before {
+  transform: none;
+}
+
+.brandList li[data-active] .brandName {
+  transform: translate3d(3vw, 0, 0);
+}
+
+@media (pointer: coarse) {
+  .panelName a {
+    min-height: 44px;
   }
 }

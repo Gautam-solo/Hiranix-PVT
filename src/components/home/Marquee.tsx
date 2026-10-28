@@ -20,6 +20,7 @@ function Mark() {
  */
 export function Marquee({ text }: { text: string }) {
   const track = useRef<HTMLDivElement>(null);
+  const band = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const el = track.current;
@@ -40,7 +41,21 @@ export function Marquee({ text }: { text: string }) {
       },
     });
 
+    // The hero hands over to the band: the green wipes in from the left as the
+    // band arrives, with the claim fading up behind it.
+    const wrap = band.current;
+    const arrive = wrap
+      ? gsap
+          .timeline({
+            scrollTrigger: { trigger: wrap, start: "top 98%", end: "top 40%", scrub: 0.6 },
+          })
+          .fromTo(wrap, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", ease: "none" }, 0)
+          .fromTo(el, { opacity: 0.2 }, { opacity: 1, ease: "none" }, 0)
+      : null;
+
     return () => {
+      arrive?.scrollTrigger?.kill();
+      arrive?.kill();
       trigger.kill();
       loop.kill();
     };
@@ -58,7 +73,7 @@ export function Marquee({ text }: { text: string }) {
   );
 
   return (
-    <section className={styles.marquee} data-chapter="green" aria-label={text}>
+    <section ref={band} className={styles.marquee} data-chapter="green" aria-label={text}>
       <div ref={track} className={styles.marqueeTrack} aria-hidden="true">
         <div className={styles.marqueeRun}>{run}</div>
         <div className={styles.marqueeRun}>{run}</div>

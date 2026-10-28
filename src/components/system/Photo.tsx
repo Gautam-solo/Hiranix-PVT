@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- this is the site's own responsive image: it builds the srcset the optimizer needs */
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, Ref } from "react";
 
 /**
  * Widths the image optimizer accepts in production (vinext's device and image
@@ -25,6 +25,7 @@ type PhotoProps = {
   priority?: boolean;
   className?: string;
   style?: CSSProperties;
+  ref?: Ref<HTMLImageElement>;
   "data-current"?: string;
   "aria-hidden"?: boolean;
 };

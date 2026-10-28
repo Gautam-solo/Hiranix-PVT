@@ -32,11 +32,31 @@ export function BrandsList() {
     return () => root.removeEventListener("pointermove", move);
   }, []);
 
+  // On a touch screen there is no hover: the row crossing the middle of the
+  // screen takes the green fill instead.
+  const [centred, setCentred] = useState<number | null>(null);
+  useEffect(() => {
+    const root = list.current;
+    if (!root || window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const rows = Array.from(root.querySelectorAll<HTMLElement>("li"));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setCentred(rows.indexOf(entry.target as HTMLElement));
+          else if (rows.indexOf(entry.target as HTMLElement) === centred) setCentred(null);
+        });
+      },
+      { rootMargin: "-42% 0px -42% 0px" },
+    );
+    rows.forEach((row) => io.observe(row));
+    return () => io.disconnect();
+  }, [centred]);
+
   return (
     <div ref={list} className={styles.brandWrap} onPointerLeave={() => setHovered(null)}>
       <ul className={styles.brandList}>
         {brands.map((brand, i) => (
-          <li key={brand.name} onPointerEnter={() => setHovered(i)}>
+          <li key={brand.name} data-active={centred === i ? "" : undefined} onPointerEnter={() => setHovered(i)}>
             <span className={`t-mono ${styles.brandNo}`}>{pad(i + 1)}</span>
             <h3 className={styles.brandName}>{brand.name}</h3>
             <span className={`frame ${styles.brandMark}`}>

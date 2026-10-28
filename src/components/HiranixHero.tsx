@@ -264,10 +264,20 @@ export function HiranixHero() {
     // The products may keep decoding, but the copy starts within one second.
     const timeout = new Promise((resolve) => window.setTimeout(resolve, 900));
 
-    void Promise.race([decoded, timeout]).then(() => {
-      if (cancelled) return;
-      frame = window.requestAnimationFrame(() => introTimeline.current?.play(0));
-    });
+    // When the opening screen is up, the hero's own intro waits for it to lift.
+    const afterIntro = () =>
+      new Promise<void>((resolve) => {
+        if (!document.documentElement.classList.contains("hx-intro-on")) return resolve();
+        window.addEventListener("hx:intro-done", () => resolve(), { once: true });
+        window.setTimeout(resolve, 7000);
+      });
+
+    void Promise.race([decoded, timeout])
+      .then(afterIntro)
+      .then(() => {
+        if (cancelled) return;
+        frame = window.requestAnimationFrame(() => introTimeline.current?.play(0));
+      });
 
     return () => {
       cancelled = true;
