@@ -34,9 +34,9 @@ export function SiteHeader() {
 
     const previousOverflow = document.body.style.overflow;
     const trigger = menuButton.current;
-    const firstLink = drawer.current?.querySelector<HTMLAnchorElement>("a");
     document.body.style.overflow = "hidden";
-    firstLink?.focus();
+    // Focus the dialog itself, so no link shows a focus box on open; Tab still enters the first link.
+    drawer.current?.focus({ preventScroll: true });
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -154,6 +154,7 @@ export function SiteHeader() {
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
+          tabIndex={-1}
           inert={!isMenuOpen}
         >
           <div className="hx-menu-head">
