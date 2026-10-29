@@ -141,8 +141,10 @@ function PrivacyContent() {
 
       <h2>Cookies and information stored on your device</h2>
       <p>
-        This website does not set cookies and does not use advertising or analytics
-        trackers. Two small items are kept in your own browser, never sent to us: the
+        This website does not set cookies and does not use advertising trackers. Our
+        hosting provider, Cloudflare, adds Cloudflare Web Analytics, a privacy-focused
+        visit counter that works without cookies and without building a profile of you.
+        Two small items are kept in your own browser, never sent to us: the
         enquiry list you build with &ldquo;Add to enquiry list&rdquo; (product names,
         sizes and quantities you chose), and a note that the opening animation has
         already played during your visit. You can remove them at any time by clearing

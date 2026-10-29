@@ -3,16 +3,17 @@ import type { NextConfig } from "next";
 /**
  * What the pages may load. The site is self-contained: its own scripts, fonts
  * and images. The one outside thing it loads is the Google Maps embed on the
- * contact section. Inline scripts and styles stay allowed because the framework
- * and the layout's first-paint script are inline.
+ * contact section, plus Cloudflare's own visit counter. Inline scripts and styles
+ * stay allowed because the framework and the layout's first-paint script are inline.
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  // Cloudflare adds its own cookie-free visit counter (Web Analytics) to pages.
+  "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  "connect-src 'self' https://cloudflareinsights.com",
   "frame-src https://www.google.com",
   "manifest-src 'self'",
   "worker-src 'self' blob:",
