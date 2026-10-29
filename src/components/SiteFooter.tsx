@@ -71,13 +71,14 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
       </p>
 
       <div className={styles.bottom}>
-        <span>
-          © {new Date().getFullYear()} Hiranix India Private Limited
-        </span>
+        <span>© {new Date().getFullYear()} Hiranix India Private Limited</span>
         <nav aria-label="Legal">
           <Link href="/legal/privacy-policy">Privacy Policy</Link>
           <Link href="/legal/terms-conditions">Terms &amp; Conditions</Link>
         </nav>
+      </div>
+
+      <div className={styles.credit}>
         <a
           className={styles.studio}
           href="https://thescalestudios.com"

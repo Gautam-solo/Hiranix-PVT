@@ -62,12 +62,15 @@ async function run(width, start, hops) {
   ws.addEventListener("message", (event) => {
     const msg = JSON.parse(event.data);
     if (msg.id && pending.has(msg.id)) { pending.get(msg.id)(msg.result); pending.delete(msg.id); }
+    if (msg.method === "Log.entryAdded" && /Content Security Policy|Refused to|Mixed Content/i.test(msg.params.entry.text)) {
+      errors.push(`security policy: ${msg.params.entry.text.slice(0, 160)}`);
+    }
     if (msg.method === "Runtime.exceptionThrown") errors.push(msg.params.exceptionDetails.exception?.description?.slice(0, 200) ?? "exception");
   });
   const send = (method, params = {}) => new Promise((resolve) => { const i = ++id; pending.set(i, resolve); ws.send(JSON.stringify({ id: i, method, params })); });
   const ev = async (expression) => (await send("Runtime.evaluate", { expression, returnByValue: true, awaitPromise: true })).result.value;
   await send("Emulation.setDeviceMetricsOverride", { width, height: 900, deviceScaleFactor: 1, mobile: width < 700 });
-  await send("Page.enable"); await send("Runtime.enable");
+  await send("Page.enable"); await send("Runtime.enable"); await send("Log.enable");
 
   const health = () => ev(`(() => {
     const bad = document.body.innerText.match(/Failed to execute|Application error|RUNTIME ERROR|removeChild|insertBefore/);
@@ -96,7 +99,12 @@ async function run(width, start, hops) {
     if (!h.main || !h.heading || !h.footer) failures.push(`${label}: page is blank or incomplete (${JSON.stringify(h)})`);
     if (h.bad) failures.push(`${label}: error on the page (${h.bad})`);
   }
-  const real = errors.filter((e) => !/manifest|favicon|net::ERR/.test(e));
+  // Page metadata points at https://hiranix.in, so testing from localhost trips
+  // the policy on the site's own icon; that is not a real violation.
+  const ownHost = BASE.startsWith("https://hiranix.in") ? null : "https://hiranix.in/";
+  const real = errors.filter(
+    (e) => !/manifest|favicon|net::ERR/.test(e) && !(ownHost && e.includes(ownHost)),
+  );
   if (real.length) failures.push(`${width}px ${start}: uncaught errors: ${real.slice(0, 2).join(" | ")}`);
   ws.close();
   chrome.kill();

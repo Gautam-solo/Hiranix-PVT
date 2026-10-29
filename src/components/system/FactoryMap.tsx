@@ -14,7 +14,8 @@ export function FactoryMap() {
         src={contact.mapEmbed}
         title="Map of the HIRANIX factory in Mehmedabad, Gujarat"
         loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
+        referrerPolicy="strict-origin-when-cross-origin"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
         tabIndex={-1}
         aria-hidden="true"
       />

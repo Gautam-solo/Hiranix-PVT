@@ -12,14 +12,14 @@
 .titleSmall {
   font-size: clamp(1.4rem, 4.2vw, 4.4rem);
   font-variation-settings: "wdth" 75, "wght" 300;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
   line-height: 1;
 }
 
 .titleBig {
   display: block;
-  font-size: 17.4vw;
-  letter-spacing: -0.045em;
+  font-size: 17vw;
+  letter-spacing: -0.01em;
   line-height: 0.86;
   text-transform: uppercase;
   white-space: nowrap;
@@ -124,7 +124,7 @@
 .promiseText {
   font-size: clamp(1.8rem, 5.4vw, 6rem);
   font-variation-settings: "wdth" 120, "wght" 780;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
   line-height: 0.95;
   text-transform: uppercase;
   transition: transform 700ms var(--ease-expo);
@@ -199,7 +199,7 @@
   margin: clamp(40px, 6vw, 96px) 0 0;
   font-size: clamp(2rem, 6.4vw, 7.2rem);
   font-variation-settings: "wdth" 105, "wght" 640;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.005em;
   line-height: 0.98;
 }
 
@@ -238,7 +238,7 @@
 .verbWord {
   font-size: clamp(3rem, 10.6vw, 13rem);
   font-variation-settings: "wdth" 125, "wght" 820;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.005em;
   line-height: 0.86;
   text-transform: uppercase;
   color: transparent;

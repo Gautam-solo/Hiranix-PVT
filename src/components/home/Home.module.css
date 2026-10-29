@@ -24,7 +24,7 @@
   padding-right: 0.4em;
   font-size: clamp(2.2rem, 6.4vw, 7rem);
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
@@ -52,7 +52,7 @@
   margin: clamp(40px, 6vw, 96px) 0 clamp(40px, 5.5vw, 88px);
   font-size: clamp(3rem, 11.6vw, 13.5rem);
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.005em;
   line-height: 0.88;
   text-transform: uppercase;
 }
@@ -65,7 +65,7 @@
 
 .tagThin {
   font-variation-settings: "wdth" 75, "wght" 300;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
 }
 
 .tagMid {
@@ -106,7 +106,7 @@
   font-size: clamp(7rem, 24.5vw, 28rem);
   font-variation-settings: "wdth" 125, "wght" 800;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.03em;
   line-height: 0.8;
   background-position: 50% 30%;
   background-size: cover;
@@ -167,7 +167,7 @@
   font-size: clamp(2.2rem, 4.2vw, 4.6rem);
   font-variation-settings: "wdth" 125, "wght" 800;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.005em;
   line-height: 0.85;
   text-transform: uppercase;
 }
@@ -516,7 +516,7 @@
   margin: 0;
   font-size: clamp(2.3rem, 8.4vw, 9.5rem);
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.005em;
   line-height: 0.88;
   text-transform: uppercase;
   transition: transform 700ms var(--ease-expo);
@@ -605,7 +605,7 @@
   margin: 0;
   font-size: clamp(1.2rem, 1.8vw, 1.6rem);
   font-variation-settings: "wght" 560;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
   line-height: 1.25;
 }
 
@@ -718,6 +718,12 @@
 
   .railHint {
     display: inline-flex;
+  }
+
+  /* The product links sit under each system on a wide screen; on a phone the
+     system's own link is enough, which keeps each slide clean. */
+  .panelList {
+    display: none;
   }
 
   .railProgress {

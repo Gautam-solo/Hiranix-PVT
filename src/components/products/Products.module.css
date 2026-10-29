@@ -4,7 +4,7 @@
 
 .title {
   margin: clamp(32px, 5vw, 80px) 0 var(--s-6);
-  font-size: clamp(3.4rem, 15.5vw, 17rem);
+  font-size: clamp(2.4rem, 14.6vw, 16rem);
   white-space: nowrap;
 }
 
@@ -241,7 +241,7 @@
   margin: var(--s-3) 0 0;
   font-size: clamp(1.15rem, 1.5vw, 1.45rem);
   font-variation-settings: "wdth" 110, "wght" 720;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
   line-height: 1.15;
 }
 

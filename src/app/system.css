@@ -127,14 +127,14 @@
 .t-display-m {
   margin: 0;
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.005em;
   text-transform: uppercase;
 }
 
 .t-mega {
   font-size: var(--type-mega);
   line-height: 0.84;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.01em;
 }
 
 .t-display-xl {
@@ -172,7 +172,7 @@
   margin: 0;
   font-size: var(--type-heading);
   font-variation-settings: "wdth" 100, "wght" 700;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.01em;
   line-height: 1.1;
 }
 
@@ -617,7 +617,7 @@ html.hx-intro-on {
   margin: 0;
   font-size: min(19vw, 22rem);
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.005em;
   line-height: 0.9;
 }
 

@@ -61,6 +61,12 @@ const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
+    // Plain HTTP never serves the site: send the visitor to the same page over HTTPS.
+    if (url.protocol === "http:" && !["localhost", "127.0.0.1"].includes(url.hostname)) {
+      url.protocol = "https:";
+      return Response.redirect(url.toString(), 308);
+    }
+
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       return handleImageOptimization(

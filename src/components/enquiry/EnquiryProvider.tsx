@@ -29,6 +29,29 @@ const EnquiryContext = createContext<EnquiryContextValue | null>(null);
 
 export const itemId = (slug: string, size: string) => `${slug}|${size}`;
 
+const text = (value: unknown, max: number): string | null =>
+  typeof value === "string" && value.length <= max ? value : null;
+
+/**
+ * Anything read back from storage is treated as untrusted (another script or a
+ * person can edit it): only well-formed, bounded entries come through.
+ */
+function sanitize(saved: unknown): EnquiryItem[] {
+  if (!Array.isArray(saved)) return [];
+  const clean: EnquiryItem[] = [];
+  for (const raw of saved.slice(0, 60)) {
+    if (!raw || typeof raw !== "object") continue;
+    const entry = raw as Record<string, unknown>;
+    const slug = text(entry.slug, 80);
+    const name = text(entry.name, 120);
+    const size = text(entry.size, 60);
+    const qty = text(entry.qty, 40);
+    if (!slug || !/^[a-z0-9-]+$/.test(slug) || !name || size === null || qty === null) continue;
+    clean.push({ slug, name, size, qty, id: itemId(slug, size) });
+  }
+  return clean;
+}
+
 /**
  * The visitor's enquiry list. It lives in this browser's localStorage, so it
  * survives navigation and a refresh, and nothing is sent anywhere until they
@@ -43,8 +66,7 @@ export function EnquiryProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
       try {
-        const saved = JSON.parse(window.localStorage.getItem(KEY) ?? "[]");
-        if (Array.isArray(saved)) setItems(saved.filter((item) => item && typeof item.id === "string"));
+        setItems(sanitize(JSON.parse(window.localStorage.getItem(KEY) ?? "[]")));
       } catch {
         /* private mode or a corrupted value: start with an empty list */
       }
@@ -75,7 +97,8 @@ export function EnquiryProvider({ children }: { children: React.ReactNode }) {
       has: (id) => items.some((entry) => entry.id === id),
       add,
       remove: (id) => setItems((current) => current.filter((entry) => entry.id !== id)),
-      setQty: (id, qty) => setItems((current) => current.map((entry) => (entry.id === id ? { ...entry, qty } : entry))),
+      setQty: (id, qty) =>
+        setItems((current) => current.map((entry) => (entry.id === id ? { ...entry, qty: qty.slice(0, 40) } : entry))),
       clear: () => setItems([]),
       open: () => setIsOpen(true),
       close: () => setIsOpen(false),

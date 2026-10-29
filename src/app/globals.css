@@ -117,7 +117,7 @@ img {
   margin: 1.25rem 0;
   font-size: clamp(3.5rem, 10vw, 8.5rem);
   font-weight: 850;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.03em;
   line-height: 0.84;
 }
 

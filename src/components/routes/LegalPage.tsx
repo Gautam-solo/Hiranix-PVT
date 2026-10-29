@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HiranixLogo } from "@/components/HiranixLogo";
 import styles from "./LegalPage.module.css";
 
-const updated = "28 July 2026";
+const updated = "29 October 2026";
 
 const company = {
   name: "Hiranix India Private Limited",
@@ -139,10 +139,37 @@ function PrivacyContent() {
         an on-site payment form.
       </p>
 
+      <h2>Cookies and information stored on your device</h2>
+      <p>
+        This website does not set cookies and does not use advertising or analytics
+        trackers. Two small items are kept in your own browser, never sent to us: the
+        enquiry list you build with &ldquo;Add to enquiry list&rdquo; (product names,
+        sizes and quantities you chose), and a note that the opening animation has
+        already played during your visit. You can remove them at any time by clearing
+        this site&rsquo;s data in your browser.
+      </p>
+
+      <h2>Sending an enquiry</h2>
+      <p>
+        The enquiry list is only sent when you choose to send it, by tapping the
+        WhatsApp or email button. The message then travels through your own WhatsApp
+        or email application and is subject to that service&rsquo;s privacy policy.
+        Nothing is submitted to us from the website itself.
+      </p>
+
+      <h2>Embedded map</h2>
+      <p>
+        The contact section shows a Google Maps map of our factory. When that map
+        loads, Google receives technical information from your browser, such as your
+        IP address, and may handle it under Google&rsquo;s own privacy policy. The map
+        is the only third-party content this website loads automatically.
+      </p>
+
       <h2>Links to other services</h2>
       <p>
-        Instagram, Facebook, WhatsApp, Google Maps and hiranix.store are external
-        services. When you follow those links, their privacy policies apply.
+        Instagram, Facebook, WhatsApp, Google Maps, the Google Play and Apple App
+        Stores, and hiranix.store are external services. When you follow those links,
+        their privacy policies apply.
       </p>
 
       <h2>Retention and security</h2>

@@ -97,9 +97,9 @@
   margin: 0;
   padding: 0 var(--page-pad);
   color: var(--hx-green);
-  font-size: 21.6vw;
+  font-size: 19.4vw;
   font-variation-settings: "wdth" 125, "wght" 800;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.005em;
   line-height: 0.78;
   text-align: center;
   white-space: nowrap;
@@ -142,29 +142,48 @@
   color: var(--hx-green);
 }
 
-/* Designer credit: quiet until hovered, as on the studio's other sites. */
-.bottom a.studio {
-  gap: 0.7rem;
-  min-height: 44px;
-  opacity: 0.72;
+/* Designer credit: its own centred row, large enough to read, still quiet
+   until hovered. */
+.credit {
+  display: flex;
+  justify-content: center;
+  padding: var(--s-5) var(--page-pad) calc(var(--s-6) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--hx-line-on-dark);
+}
+
+.bottom a.studio,
+.credit a.studio {
+  display: inline-flex;
+  min-height: 56px;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--hx-mist);
+  font-size: 1rem;
+  opacity: 0.85;
   transition: opacity var(--t-fast) ease;
 }
 
 .studio img {
   width: auto;
-  height: 26px;
-  padding-bottom: 3px;
+  height: 42px;
+  padding-bottom: 4px;
   background: linear-gradient(#d9a441, #d9a441) left bottom / 0 1px no-repeat;
   transition: background-size 0.4s var(--ease-expo);
 }
 
-.bottom a.studio:hover {
-  color: rgba(242, 245, 242, 0.7);
+.credit a.studio:hover {
+  color: var(--hx-white);
   opacity: 1;
 }
 
 .studio:hover img {
   background-size: 100% 1px;
+}
+
+.studio:focus-visible {
+  outline: 2px solid var(--hx-green);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 @media (max-width: 700px) {
@@ -174,7 +193,17 @@
 
   .bottom {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    gap: var(--s-1);
+    text-align: center;
+  }
+
+  .bottom nav {
+    justify-content: center;
+  }
+
+  .studio img {
+    height: 38px;
   }
 
   .bottom a {
