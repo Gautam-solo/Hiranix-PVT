@@ -40,7 +40,7 @@ export function Promises() {
   return (
     <section className={styles.promises} data-chapter="bone" aria-labelledby="promises-title">
       <div className="hx-index">
-        <p className="t-mono">(03) What we stand behind</p>
+        <p className="t-mono">(04) What we stand behind</p>
         <p className="t-mono">Four lines</p>
       </div>
       <Split id="promises-title" className={`t-display-xl ${styles.promisesTitle}`}>

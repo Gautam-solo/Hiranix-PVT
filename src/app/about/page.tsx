@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
-import { AboutApp, AboutIntro } from "@/components/about/AboutChapters";
-import { MakingOf } from "@/components/about/MakingOf";
+import { AboutApp, AboutIntro, AboutManifesto } from "@/components/about/AboutChapters";
+import { Verbs } from "@/components/about/Verbs";
 import { Promises } from "@/components/about/Promises";
 import { ContactChapter } from "@/components/home/Chapters";
 
@@ -29,7 +29,8 @@ export default function AboutPage() {
     <>
       <main id="main-content" tabIndex={-1} data-chapters>
         <AboutIntro />
-        <MakingOf />
+        <AboutManifesto />
+        <Verbs />
         <Promises />
         <AboutApp />
         <ContactChapter />
