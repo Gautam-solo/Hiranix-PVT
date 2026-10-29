@@ -11,8 +11,8 @@ export function HiranixLogo({ className, priority = false }: HiranixLogoProps) {
       className={className}
       src="/assets/hiranix/hiranix-logo.png"
       alt="HIRANIX"
-      width={219}
-      height={87}
+      width={880}
+      height={136}
       priority={priority}
       unoptimized
     />

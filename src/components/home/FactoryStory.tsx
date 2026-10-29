@@ -17,6 +17,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
  */
 export function FactoryStory({ index = "(03)" }: { index?: string }) {
   const opener = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -46,6 +47,25 @@ export function FactoryStory({ index = "(03)" }: { index?: string }) {
     return () => context.revert();
   }, []);
 
+  // The pinned photographs sit stacked and invisible until their stage, so the
+  // browser would otherwise wait to load them. Load them as the section nears.
+  useEffect(() => {
+    const section = root.current;
+    if (!section || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries[0].isIntersecting) return;
+        section.querySelectorAll<HTMLImageElement>("[data-stage-photo] img").forEach((img) => {
+          img.loading = "eager";
+        });
+        io.disconnect();
+      },
+      { rootMargin: "1200px 0px" },
+    );
+    io.observe(section);
+    return () => io.disconnect();
+  }, []);
+
   useEffect(() => {
     const steps = document.querySelectorAll<HTMLElement>("[data-stage]");
     const io = new IntersectionObserver(
@@ -54,14 +74,20 @@ export function FactoryStory({ index = "(03)" }: { index?: string }) {
           if (entry.isIntersecting) setActive(Number((entry.target as HTMLElement).dataset.stage));
         });
       },
-      { rootMargin: "-45% 0px -45% 0px" },
+      // On a phone the photo is pinned in the upper part of the screen, so the
+      // stage being read is the one in the lower part.
+      {
+        rootMargin: window.matchMedia("(max-width: 900px)").matches
+          ? "-58% 0px -28% 0px"
+          : "-45% 0px -45% 0px",
+      },
     );
     steps.forEach((step) => io.observe(step));
     return () => io.disconnect();
   }, []);
 
   return (
-    <section className={styles.factory} data-chapter="ink" aria-labelledby="factory-title">
+    <section ref={root} className={styles.factory} data-chapter="ink" aria-labelledby="factory-title">
       <div ref={opener} className={styles.opener}>
         <div className={styles.openerFrame} data-open>
           <Photo
@@ -87,14 +113,14 @@ export function FactoryStory({ index = "(03)" }: { index?: string }) {
       </div>
 
       <div className={styles.stages}>
-        <div className={styles.stagesPhoto} aria-hidden="true">
+        <div className={styles.stagesPhoto} data-stage-photo aria-hidden="true">
           {factory.map((stage, i) => (
             <span
               key={stage.title}
               className={`frame ${styles.stagesFrame}`}
               data-on={i === active ? "" : undefined}
             >
-              <Photo src={stage.src} alt="" width={1086} height={1448} sizes="(max-width: 900px) 1px, 40vw" />
+              <Photo src={stage.src} alt="" width={1086} height={1448} sizes="(max-width: 900px) 100vw, 40vw" />
             </span>
           ))}
           <p className={`t-mono ${styles.stagesCount}`}>
@@ -105,15 +131,6 @@ export function FactoryStory({ index = "(03)" }: { index?: string }) {
         <ol className={styles.stagesList}>
           {factory.map((stage, i) => (
             <li key={stage.title} data-stage={i} data-on={i === active ? "" : undefined}>
-              <span className={`frame ${styles.stageInline}`} data-reveal="unveil">
-                <Photo
-                  src={stage.src}
-                  alt={stage.alt}
-                  width={1086}
-                  height={1448}
-                  sizes="(max-width: 900px) 92vw, 1px"
-                />
-              </span>
               <p className={`t-mono ${styles.stageNo}`}>Stage {pad(i + 1)}</p>
               <h3 className="t-display-m">{stage.title}</h3>
               <p className="t-body">{stage.copy}</p>

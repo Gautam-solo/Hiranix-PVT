@@ -456,10 +456,6 @@
   color: var(--c-acc);
 }
 
-.stageInline {
-  display: none !important;
-}
-
 /* Brands ---------------------------------------------------------------------- */
 
 .brands {
@@ -755,24 +751,50 @@
     padding: var(--section) var(--page-pad) var(--s-7);
   }
 
+  /* Factory stages on a phone: the photograph stays pinned under the header and
+     changes with the stage, while the words scroll beneath it. */
+  .opener {
+    height: 72vh;
+    height: 72svh;
+    min-height: 460px;
+  }
+
   .stages {
     grid-template-columns: minmax(0, 1fr);
+    padding-top: 0;
+    padding-bottom: var(--s-8);
   }
 
   .stagesPhoto {
-    display: none;
+    top: 76px;
+    z-index: 2;
+    height: calc(34svh + 34px);
+    margin: 0 calc(-1 * var(--page-pad));
+    background: var(--hx-ink);
+    border-bottom: 1px solid var(--c-line);
+  }
+
+  .stagesFrame {
+    inset: var(--s-3) var(--page-pad) 34px var(--page-pad);
+  }
+
+  .stagesCount {
+    bottom: var(--s-2);
+    left: var(--page-pad);
+  }
+
+  :global(html:has(.hx-site-header[data-away])) .stagesPhoto {
+    top: 0;
   }
 
   .stagesList li {
-    min-height: 0;
-    padding: var(--s-6) 0 var(--s-7);
-    opacity: 1;
+    min-height: 34svh;
+    padding: var(--s-6) 0;
+    opacity: 0.32;
   }
 
-  .stageInline {
-    display: block !important;
-    aspect-ratio: 4 / 3;
-    margin-bottom: var(--s-3);
+  .stagesList li[data-on] {
+    opacity: 1;
   }
 
   .contactMap {

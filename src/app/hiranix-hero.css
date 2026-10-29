@@ -61,7 +61,7 @@
 }
 
 .hx-logo-image {
-  width: clamp(126px, 9.5vw, 150px);
+  width: clamp(140px, 11.5vw, 178px);
   height: auto;
   object-fit: contain;
 }
@@ -224,7 +224,7 @@
 }
 
 .hx-menu-logo-image {
-  width: 132px;
+  width: 150px;
   height: auto;
   object-fit: contain;
 }
@@ -653,7 +653,7 @@
   }
 
   .hx-logo-image {
-    width: 124px;
+    width: 112px;
   }
 
   .hx-links {
@@ -834,7 +834,7 @@
   }
 
   .hx-logo-image {
-    width: 104px;
+    width: 100px;
   }
 
   .hx-menu-trigger,
@@ -983,5 +983,23 @@
     background-color: #101a14;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+}
+
+/* Very small phones: the logo takes the space between the menu and the two
+   icon buttons instead of the exact centre, so it can never run into them. */
+@media (max-width: 360px) {
+  .hx-nav {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .hx-logo {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 340px) {
+  .hx-logo-image {
+    width: 88px;
   }
 }
