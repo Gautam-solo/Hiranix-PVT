@@ -174,39 +174,6 @@
 
 /* Uses and features --------------------------------------------------------- */
 
-.lists {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-7) var(--s-8);
-}
-
-.list {
-  margin: var(--s-4) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.list li {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-3);
-  padding: var(--s-3) 0;
-  border-top: 1px solid var(--c-line);
-  color: var(--c-fg);
-  font-size: var(--type-body);
-  line-height: 1.5;
-}
-
-.list li:last-child {
-  border-bottom: 1px solid var(--c-line);
-}
-
-.list svg {
-  flex: none;
-  color: var(--c-acc);
-  transform: translateY(2px);
-}
-
 /* Sizes and packing --------------------------------------------------------- */
 
 .tableWrap {
@@ -273,11 +240,7 @@
 
 @media (max-width: 900px) {
   .topGrid,
-  .lists {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .photos {
+    .photos {
     position: static;
   }
 
@@ -672,13 +635,11 @@
   display: inline-flex;
   gap: var(--s-2);
   align-items: baseline;
-  opacity: 0.4;
-  transition: opacity var(--t-base) var(--ease-out);
+  transition: color var(--t-base) var(--ease-out);
 }
 
 .storySteps li[data-on] {
   color: var(--c-fg);
-  opacity: 1;
 }
 
 .storySteps li[data-on] .t-mono {
@@ -783,10 +744,6 @@
     display: grid;
     gap: var(--s-1);
     font-size: 0.75rem;
-  }
-
-  .storySteps li {
-    opacity: 0.45;
   }
 
   :global(html:has(.hx-site-header[data-away])) .storyStage {

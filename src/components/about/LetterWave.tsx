@@ -75,7 +75,7 @@ export function LetterWave({ text, accentFrom, className }: Props) {
   }, []);
 
   return (
-    <span ref={line} className={`${styles.wave} ${className ?? ""}`} data-split="">
+    <span ref={line} className={`${styles.wave} ${className ?? ""}`} data-split="" data-atf="">
       <span className="sr-only">{text}</span>
       <span aria-hidden="true">
         {letters.map((letter, i) =>

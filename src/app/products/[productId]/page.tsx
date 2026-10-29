@@ -5,7 +5,6 @@ import {
   ArrowLeft,
   ArrowRight,
   CaretRight,
-  Check,
   DownloadSimple,
   Phone,
   WhatsappLogo,
@@ -23,7 +22,6 @@ import { Split } from "@/components/system/Split";
 import { ProductStory } from "@/components/products/ProductStory";
 import { contact, whatsappHref } from "@/data/company";
 import {
-  CATALOGUE_A11Y_LABEL,
   CATALOGUE_SIZE_LABEL,
   catalogueLinkProps,
 } from "@/data/catalogue";
@@ -115,11 +113,11 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               ]}
             />
 
-            <div className={styles.summary} data-reveal="rise" style={{ "--i": 1 } as React.CSSProperties}>
+            <div className={styles.summary} data-reveal="rise" data-atf="" style={{ "--i": 1 } as React.CSSProperties}>
               <p className="t-mono">
                 <span className="t-accent">{product.index}</span> / {product.category}
               </p>
-              <Split as="h1" id="product-title" className={`t-display-l ${styles.title}`}>
+              <Split as="h1" id="product-title" atf className={`t-display-l ${styles.title}`}>
                 {product.name}
               </Split>
               <p className={styles.statement}>{product.statement}</p>
@@ -145,7 +143,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                 </a>
                 <AddToEnquiry slug={product.slug} name={product.name} />
               </div>
-              <a className={`link ${styles.catalogueLink}`} aria-label={CATALOGUE_A11Y_LABEL} {...catalogueLinkProps}>
+              <a className={`link ${styles.catalogueLink}`} {...catalogueLinkProps}>
                 <DownloadSimple size={16} weight="bold" aria-hidden="true" />
                 Download the catalogue ({CATALOGUE_SIZE_LABEL})
               </a>

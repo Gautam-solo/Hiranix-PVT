@@ -84,7 +84,7 @@ export function SiteFooter({ currentPath }: { currentPath?: string }) {
           href="https://thescalestudios.com"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Website designed by The Scale Studio (opens in a new tab)"
+          aria-label="Website by The Scale Studio (opens in a new tab)"
         >
           <span>Website by</span>
           <img

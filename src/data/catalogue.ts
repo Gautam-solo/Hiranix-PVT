@@ -43,5 +43,9 @@ export const catalogueLinkProps = isExternal
       download: CATALOGUE_FILENAME,
     } as const);
 
-/** For `aria-label` / screen readers, so the size is announced too. */
-export const CATALOGUE_A11Y_LABEL = `Download the HIRANIX product catalogue PDF, ${CATALOGUE_SIZE_LABEL}`;
+/**
+ * For the header button, whose visible text is "Download Catalogue 23 MB" (and
+ * only an icon on phones). It starts with the visible words, as accessibility
+ * rules require, and adds the file type.
+ */
+export const CATALOGUE_A11Y_LABEL = `Download Catalogue ${CATALOGUE_SIZE_LABEL} (PDF)`;

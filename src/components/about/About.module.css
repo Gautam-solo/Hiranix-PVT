@@ -154,34 +154,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .making {
-    height: auto;
-    grid-template-rows: auto auto;
-  }
-
-  .makingStage {
-    height: 70vh;
-  }
-
-  .makingLive {
-    display: none;
-  }
-
-  .makingList {
-    display: grid;
-    gap: var(--s-4);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .makingList li {
-    display: grid;
-    gap: var(--s-1);
-    padding-top: var(--s-3);
-    border-top: 1px solid var(--c-line);
-  }
-
   .promiseList li::before,
   .promiseText {
     transition: none;

@@ -11,7 +11,7 @@ export function ProductPhotos({ photos }: { photos: PhotoItem[] }) {
   const [current, setCurrent] = useState(0);
 
   return (
-    <div className={styles.photos} data-reveal="rise">
+    <div className={styles.photos} data-reveal="rise" data-atf="">
       <div className={`frame ${styles.mainPhoto}`}>
         {photos.map((photo, i) => (
           <Photo

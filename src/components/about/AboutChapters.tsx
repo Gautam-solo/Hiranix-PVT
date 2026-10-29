@@ -15,10 +15,10 @@ export function AboutIntro() {
         <p className="t-mono">Hiranix India Private Limited</p>
       </div>
       <h1 id="about-title" className={styles.title}>
-        <span className={styles.titleSmall} data-reveal="rise">Small parts.</span>
+        <span className={styles.titleSmall} data-reveal="rise" data-atf="">Small parts.</span>
         <LetterWave text="BIG SITES." accentFrom={4} className={styles.titleBig} />
       </h1>
-      <p className={`t-mono ${styles.titleHint}`} data-reveal="rise">
+      <p className={`t-mono ${styles.titleHint}`} data-reveal="rise" data-atf="">
         Move over the words
       </p>
     </section>

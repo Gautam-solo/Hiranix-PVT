@@ -2,7 +2,8 @@ import type { MetadataRoute } from "next";
 import { products } from "@/data/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date("2026-07-29");
+  // The date of the build, so search engines see the real last update.
+  const lastModified = new Date();
 
   return [
     {

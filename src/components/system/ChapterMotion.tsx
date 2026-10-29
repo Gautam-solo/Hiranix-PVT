@@ -42,7 +42,7 @@ export function ChapterMotion() {
 
     const targets = Array.from(
       document.querySelectorAll<HTMLElement>(
-        "[data-reveal]:not([data-in]), [data-split]:not([data-in]), [data-rule]:not([data-in]), [data-count]",
+        "[data-reveal]:not([data-in]):not([data-atf]), [data-split]:not([data-in]):not([data-atf]), [data-rule]:not([data-in]), [data-count]",
       ),
     );
     if (reduce || !("IntersectionObserver" in window)) {

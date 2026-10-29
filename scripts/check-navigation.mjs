@@ -34,6 +34,8 @@ const tours = [
   ["/", ["/products", "/about", "/", "/products", "/products/concrete-nail", "/products", "/about", "/"]],
   ["/about", ["/products", "/products/cable-nail-clip", "/about", "/"]],
   ["/products/db-elite", ["/products", "/"]],
+  // The browser's own back and forward buttons, including after a long scroll.
+  ["/", ["/products", "/about", ":back", ":back", ":forward", "/products/concrete-nail", ":back", ":back"]],
 ];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -65,6 +67,10 @@ async function run(width, start, hops) {
     if (msg.method === "Log.entryAdded" && /Content Security Policy|Refused to|Mixed Content/i.test(msg.params.entry.text)) {
       errors.push(`security policy: ${msg.params.entry.text.slice(0, 160)}`);
     }
+    if (msg.method === "Runtime.consoleAPICalled" && (msg.params.type === "error" || msg.params.type === "warning")) {
+      const text = msg.params.args.map((a) => a.value ?? a.description ?? "").join(" ").slice(0, 220);
+      errors.push(`console.${msg.params.type}: ${text}`);
+    }
     if (msg.method === "Runtime.exceptionThrown") errors.push(msg.params.exceptionDetails.exception?.description?.slice(0, 200) ?? "exception");
   });
   const send = (method, params = {}) => new Promise((resolve) => { const i = ++id; pending.set(i, resolve); ws.send(JSON.stringify({ id: i, method, params })); });
@@ -83,7 +89,22 @@ async function run(width, start, hops) {
   const first = JSON.parse(await health());
   if (!first.main || !first.heading) failures.push(`${width}px fresh load ${start}: page is blank`);
 
+  const stack = [start];
+  let cursor = 0;
   for (const href of hops) {
+    if (href.startsWith(":")) {
+      await ev(`window.scrollTo(0, 900)`);
+      await sleep(300);
+      await ev(href === ":back" ? "history.back()" : "history.forward()");
+      cursor += href === ":back" ? -1 : 1;
+      await sleep(2200);
+      const h = JSON.parse(await health());
+      const label = `${width}px ${start} ${href}`;
+      if (h.path !== stack[cursor]) failures.push(`${label}: landed on ${h.path}, expected ${stack[cursor]}`);
+      if (!h.main || !h.heading || !h.footer) failures.push(`${label}: page is blank or incomplete`);
+      if (h.bad) failures.push(`${label}: error on the page (${h.bad})`);
+      continue;
+    }
     const clicked = await ev(`(() => { const a = [...document.querySelectorAll('a[href="${href}"]')].find((a) => a.getClientRects().length); if (!a) return false; a.click(); return true; })()`);
     if (!clicked) {
       // The mobile menu hides the main links; open it, then follow the link.
@@ -96,6 +117,9 @@ async function run(width, start, hops) {
     const h = JSON.parse(await health());
     const label = `${width}px ${start} -> ${href}`;
     if (h.path !== href) failures.push(`${label}: stayed on ${h.path}`);
+    stack.length = cursor + 1;
+    stack.push(href);
+    cursor += 1;
     if (!h.main || !h.heading || !h.footer) failures.push(`${label}: page is blank or incomplete (${JSON.stringify(h)})`);
     if (h.bad) failures.push(`${label}: error on the page (${h.bad})`);
   }

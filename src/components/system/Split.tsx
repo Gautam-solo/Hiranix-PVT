@@ -6,7 +6,7 @@ import { Children, cloneElement, isValidElement, type ReactElement, type ReactNo
  * DOM after hydration. Elements inside keep their own markup: an accent span
  * is split too, word by word.
  */
-export function splitWords(node: ReactNode, counter = { i: 0 }): ReactNode {
+function splitWords(node: ReactNode, counter = { i: 0 }): ReactNode {
   return Children.map(node, (child) => {
     if (typeof child === "string" || typeof child === "number") {
       const parts = String(child).split(/(\s+)/);
@@ -39,14 +39,17 @@ type SplitProps = {
   delay?: number;
   className?: string;
   id?: string;
+  /** On the first screen: animates by CSS alone, with no script or hydration involved. */
+  atf?: boolean;
 };
 
-export function Split({ as: Tag = "h2", children, mode = "rise", delay, className, id }: SplitProps) {
+export function Split({ as: Tag = "h2", children, mode = "rise", delay, className, id, atf }: SplitProps) {
   const label = textOf(children);
   return (
     <Tag
       id={id}
       className={className}
+      data-atf={atf ? "" : undefined}
       data-split={mode === "rise" ? "" : undefined}
       data-words={mode === "fill" ? "" : undefined}
       style={delay ? ({ "--d": `${delay}ms` } as React.CSSProperties) : undefined}

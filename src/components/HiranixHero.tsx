@@ -383,7 +383,7 @@ export function HiranixHero() {
         href="https://wa.me/917984462764"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Request a quote from HIRANIX on WhatsApp"
+        aria-label="Get Quote from HIRANIX on WhatsApp"
       >
         <WhatsappLogo size={21} weight="fill" aria-hidden="true" />
         <span>Get Quote</span>

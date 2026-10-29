@@ -19,10 +19,7 @@
 /out/
 
 # production
-# `build/` holds the sites Vite plugin imported by vite.config.ts, so ignore
-# build output but keep that source file tracked.
-/build/*
-!/build/sites-vite-plugin.ts
+/build
 /dist
 /.wrangler
 
@@ -45,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local tool config
+/.claude/

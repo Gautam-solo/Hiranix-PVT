@@ -459,7 +459,8 @@
 
 /* Scroll-filled statements: words start faint and fill as you read. */
 .hx-js [data-words] .w > span {
-  opacity: 0.16;
+  /* Faint until read, but never below readable contrast. */
+  opacity: 0.6;
 }
 
 /* A drawn rule: grows from the left on entry. */
@@ -473,7 +474,43 @@
   transform: none;
 }
 
+/* First screen: the same entrances, played by CSS alone the moment the page
+   paints. Nothing here touches the DOM before React hydrates, so server and
+   client always agree. */
+@keyframes hx-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 32px, 0);
+  }
+}
+
+@keyframes hx-word {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+}
+
+.hx-js [data-atf][data-reveal="rise"] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  animation: hx-rise var(--t-slow) var(--ease-expo) backwards;
+  animation-delay: calc(var(--i, 0) * var(--stagger) + 120ms);
+}
+
+.hx-js [data-atf][data-split] .w > span {
+  transform: none;
+  transition: none;
+  animation: hx-word var(--t-slow) var(--ease-expo) backwards;
+  animation-delay: calc(var(--wi, 0) * 45ms + var(--d, 0ms) + 120ms);
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hx-js [data-atf][data-reveal="rise"],
+  .hx-js [data-atf][data-split] .w > span {
+    animation: none;
+  }
+
   .hx-js [data-reveal="rise"],
   .hx-js [data-reveal="unveil"] img,
   .hx-js [data-split] .w > span,

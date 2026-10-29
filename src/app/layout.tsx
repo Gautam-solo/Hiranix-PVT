@@ -155,7 +155,7 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "var d=document.documentElement;d.classList.add('hx-js');document.addEventListener('DOMContentLoaded',function(){var h=innerHeight;document.querySelectorAll('[data-reveal],[data-split],[data-rule]').forEach(function(e){var r=e.getBoundingClientRect();if(r.top<h*0.92&&r.bottom>0)e.setAttribute('data-in','')})});try{if(location.pathname==='/'&&!sessionStorage.getItem('hx-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('hx-intro-on')}catch(e){}",
+              "var d=document.documentElement;d.classList.add('hx-js');try{if(location.pathname==='/'&&!sessionStorage.getItem('hx-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('hx-intro-on')}catch(e){}",
           }}
         />
         <script

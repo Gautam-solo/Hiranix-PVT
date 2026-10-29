@@ -42,7 +42,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    // "/" is listed on its own: the catch-all pattern does not match the home page here.
+    return [
+      { source: "/", headers: securityHeaders },
+      { source: "/:path*", headers: securityHeaders },
+    ];
   },
   turbopack: {
     root: process.cwd(),

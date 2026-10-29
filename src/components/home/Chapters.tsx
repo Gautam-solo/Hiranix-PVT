@@ -7,7 +7,6 @@ import { BrandsList } from "@/components/home/BrandsList";
 import { contact, whatsappHref } from "@/data/company";
 import { products } from "@/data/products";
 import {
-  CATALOGUE_A11Y_LABEL,
   CATALOGUE_SIZE_LABEL,
   catalogueLinkProps,
 } from "@/data/catalogue";
@@ -138,7 +137,7 @@ export function ContactChapter({ index = "(05)" }: { index?: string }) {
               <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
               Enquire on WhatsApp
             </a>
-            <a className="btn" aria-label={CATALOGUE_A11Y_LABEL} {...catalogueLinkProps}>
+            <a className="btn" {...catalogueLinkProps}>
               <DownloadSimple size={16} weight="bold" aria-hidden="true" />
               Catalogue ({CATALOGUE_SIZE_LABEL})
             </a>

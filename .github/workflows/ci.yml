@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # Lint, type-check and the content tests.
+      - run: npm run check
+
+      # Known vulnerabilities in what ships to visitors.
+      - run: npm audit --omit=dev --audit-level=high
+
+      - run: npm run build
+
+      # Start the production build and test it the way a visitor uses it.
+      - name: Smoke and click-through tests
+        run: |
+          npx vinext start --port 3100 &
+          npx --yes wait-on http://localhost:3100 --timeout 60000
+          npm run smoke
+          npm run check:nav
+        env:
+          BASE: http://localhost:3100

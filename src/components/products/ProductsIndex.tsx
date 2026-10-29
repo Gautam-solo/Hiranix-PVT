@@ -54,15 +54,15 @@ export function ProductsIndex() {
             {productCategories.length - 1} systems / {products.length} products
           </p>
         </div>
-        <Split as="h1" id="products-title" className={`t-mega ${styles.title}`}>
+        <Split as="h1" id="products-title" atf className={`t-mega ${styles.title}`}>
           Products
         </Split>
         <div className={styles.head}>
-          <p className="t-tagline" data-reveal="rise">
+          <p className="t-tagline" data-reveal="rise" data-atf="">
             World&rsquo;s largest manufacturer of cable nail clips
           </p>
 
-          <div className={styles.search} data-reveal="rise" style={{ "--i": 1 } as React.CSSProperties}>
+          <div className={styles.search} data-reveal="rise" data-atf="" style={{ "--i": 1 } as React.CSSProperties}>
             <label htmlFor="product-search" className="t-mono">Search the range</label>
             <div className={styles.searchField}>
               <MagnifyingGlass size={20} weight="bold" aria-hidden="true" />
