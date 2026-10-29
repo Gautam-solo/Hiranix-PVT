@@ -543,7 +543,9 @@
 }
 
 #main-content:not(:has(.hx-top)) {
-  animation: page-in var(--t-base) var(--ease-out) both;
+  /* Backwards only: a transform left on the page after the animation would
+     become the containing block of every pinned (position: fixed) section. */
+  animation: page-in var(--t-base) var(--ease-out) backwards;
 }
 
 /* A green curtain lifts off every page as it arrives. */

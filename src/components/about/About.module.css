@@ -115,3 +115,245 @@
     width: 100%;
   }
 }
+
+/* From wire to clip: pinned while the scroll builds one product. ---------------- */
+
+.makingWrap {
+  display: block;
+}
+
+.making {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(24px, 5vw, 96px);
+  align-items: center;
+  height: 100vh;
+  height: 100svh;
+  padding: calc(76px + var(--s-5)) var(--page-pad) var(--s-6);
+  border-top: 1px solid var(--c-line);
+}
+
+.makingStage {
+  position: relative;
+  display: grid;
+  height: 100%;
+  min-height: 0;
+  place-items: center;
+}
+
+.makingStage::before {
+  position: absolute;
+  inset: 8% 4%;
+  background: var(--hx-green);
+  content: "";
+}
+
+.makingClip,
+.makingPacked,
+.makingGlow {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
+.makingClip,
+.makingPacked {
+  max-height: 86%;
+  width: auto;
+  filter: drop-shadow(0 18px 26px rgba(5, 6, 5, 0.35));
+}
+
+.makingClip {
+  height: 74%;
+  will-change: clip-path;
+}
+
+.makingPacked {
+  max-width: 82%;
+  opacity: 0;
+}
+
+.makingShadow {
+  position: absolute;
+  bottom: 16%;
+  width: 34%;
+  height: 4%;
+  border-radius: 50%;
+  background: rgba(5, 6, 5, 0.5);
+  filter: blur(14px);
+  opacity: 0;
+}
+
+.makingGlow {
+  position: absolute;
+  height: 74%;
+  aspect-ratio: 739 / 1130;
+  background: radial-gradient(40% 18% at 17% 22%, rgba(255, 140, 40, 0.9), transparent 70%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.makingText {
+  display: grid;
+  align-content: center;
+  gap: var(--s-5);
+  min-width: 0;
+}
+
+.makingTitle {
+  margin: 0;
+  font-size: clamp(2.4rem, 5.6vw, 6rem);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.makingLive {
+  display: grid;
+  gap: var(--s-3);
+  min-height: 11.5rem;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-line);
+}
+
+.makingName {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 3rem);
+  font-variation-settings: "wdth" 115, "wght" 760;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.makingList {
+  display: none;
+}
+
+.makingTrack {
+  display: block;
+  height: 1px;
+  background: var(--c-line);
+}
+
+.makingTrack span {
+  display: block;
+  height: 100%;
+  background: var(--hx-green);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* Promises ------------------------------------------------------------------------ */
+
+.promises {
+  padding: var(--section) var(--page-pad);
+}
+
+.promisesTitle {
+  margin: clamp(40px, 5vw, 80px) 0 var(--s-7);
+}
+
+.promiseList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.promiseList li {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(32px, 5vw, 80px) minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: baseline;
+  padding: clamp(14px, 2vw, 28px) 0;
+  border-top: 1px solid var(--c-line);
+  isolation: isolate;
+}
+
+.promiseList li:last-child {
+  border-bottom: 1px solid var(--c-line);
+}
+
+.promiseList li::before {
+  position: absolute;
+  inset: 0 calc(-1 * var(--page-pad));
+  z-index: -1;
+  background: var(--hx-green);
+  content: "";
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 640ms var(--ease-expo);
+}
+
+.promiseList li[data-active]::before {
+  transform: none;
+}
+
+.promiseText {
+  font-size: clamp(1.8rem, 5.4vw, 6rem);
+  font-variation-settings: "wdth" 120, "wght" 780;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  transition: transform 700ms var(--ease-expo);
+}
+
+.promiseList li[data-active] .promiseText {
+  transform: translate3d(1.5vw, 0, 0);
+}
+
+@media (max-width: 900px) {
+  .making {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 46%) auto;
+    gap: var(--s-4);
+    align-items: start;
+    padding-top: calc(76px + var(--s-3));
+  }
+
+  .makingTitle {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  .makingLive {
+    min-height: 9.5rem;
+    padding-top: var(--s-3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .making {
+    height: auto;
+    grid-template-rows: auto auto;
+  }
+
+  .makingStage {
+    height: 70vh;
+  }
+
+  .makingLive {
+    display: none;
+  }
+
+  .makingList {
+    display: grid;
+    gap: var(--s-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .makingList li {
+    display: grid;
+    gap: var(--s-1);
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--c-line);
+  }
+
+  .promiseList li::before,
+  .promiseText {
+    transition: none;
+  }
+}
