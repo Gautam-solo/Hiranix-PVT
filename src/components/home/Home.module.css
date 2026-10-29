@@ -444,7 +444,7 @@
   justify-content: center;
   gap: var(--s-4);
   border-top: 1px solid var(--c-line);
-  opacity: 0.24;
+  opacity: 0.75;
   transition: opacity 600ms var(--ease-out);
 }
 
@@ -790,7 +790,7 @@
   .stagesList li {
     min-height: 34svh;
     padding: var(--s-6) 0;
-    opacity: 0.32;
+    opacity: 0.75;
   }
 
   .stagesList li[data-on] {

@@ -42,7 +42,7 @@ export function Marquee({ text }: { text: string }) {
     });
 
     // The hero hands over to the band: the green wipes in from the left as the
-    // band arrives, with the claim fading up behind it.
+    // band arrives, 
     const wrap = band.current;
     const arrive = wrap
       ? gsap
@@ -50,7 +50,6 @@ export function Marquee({ text }: { text: string }) {
             scrollTrigger: { trigger: wrap, start: "top 98%", end: "top 40%", scrub: 0.6 },
           })
           .fromTo(wrap, { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", ease: "none" }, 0)
-          .fromTo(el, { opacity: 0.2 }, { opacity: 1, ease: "none" }, 0)
       : null;
 
     return () => {
