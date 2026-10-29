@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 const LETTERS = "HIRANIX".split("");
@@ -14,14 +14,18 @@ const LETTERS = "HIRANIX".split("");
  */
 export function Intro() {
   const root = useRef<HTMLDivElement>(null);
+  // The overlay is removed by React (never with el.remove()): code that deletes
+  // a React-owned node by hand makes the next insert next to it throw, which
+  // blanked the page on the first link click.
+  const [gone, setGone] = useState(false);
 
   useEffect(() => {
     const el = root.current;
     const html = document.documentElement;
     if (!el) return;
     if (!html.classList.contains("hx-intro-on")) {
-      el.remove();
-      return;
+      const frame = window.requestAnimationFrame(() => setGone(true));
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const counter = el.querySelector<HTMLElement>("[data-counter]");
@@ -33,7 +37,7 @@ export function Intro() {
       } catch {}
       html.classList.remove("hx-intro-on");
       window.dispatchEvent(new Event("hx:intro-done"));
-      el.remove();
+      setGone(true);
     };
 
     const tl = gsap.timeline({ onComplete: done });
@@ -63,6 +67,8 @@ export function Intro() {
       tl.kill();
     };
   }, []);
+
+  if (gone) return null;
 
   return (
     <div ref={root} className="hx-intro" aria-hidden="true">

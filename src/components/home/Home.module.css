@@ -40,41 +40,119 @@
 /* Intro ------------------------------------------------------------------- */
 
 .intro {
+  overflow: hidden;
+  overflow: clip;
   padding: var(--section) var(--page-pad);
 }
 
-.statement {
-  max-width: 30ch;
-  margin-top: clamp(48px, 7vw, 112px);
-  text-indent: 16%;
+/* The line, three rows set huge; the rows drift in opposite directions as you
+   scroll (Motion), so the sentence slides itself into place. */
+.tagline {
+  display: grid;
+  margin: clamp(40px, 6vw, 96px) 0 clamp(40px, 5.5vw, 88px);
+  font-size: clamp(3rem, 11.6vw, 13.5rem);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-transform: uppercase;
 }
 
-.introGrid {
+.tagLine {
+  display: block;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.tagThin {
+  font-variation-settings: "wdth" 75, "wght" 300;
+  letter-spacing: -0.02em;
+}
+
+.tagMid {
+  text-align: right;
+}
+
+/* "every fix." in black on the hero's own green, which sweeps in behind it. */
+.tagGreen {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+  padding: 0 0.1em;
+  justify-self: start;
+}
+
+.mark {
+  position: absolute;
+  inset: 0.08em 0 0.02em;
+  z-index: -1;
+  background: var(--hx-green);
+}
+
+.experience {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: var(--s-8) clamp(32px, 6vw, 112px);
   align-items: end;
-  margin-top: clamp(72px, 10vw, 160px);
 }
 
-.introPhoto {
+.expNumberWrap {
+  display: grid;
+}
+
+/* The factory floor shows through the numerals and pans as you scroll. */
+.expNumber {
   margin: 0;
+  color: var(--c-acc);
+  font-size: clamp(7rem, 24.5vw, 28rem);
+  font-variation-settings: "wdth" 125, "wght" 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  background-position: 50% 30%;
+  background-size: cover;
 }
 
-.introPhoto :global(.frame) {
-  aspect-ratio: 4 / 5;
-  max-height: 82vh;
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .expNumber {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
 }
 
-.introPhoto figcaption {
-  padding-top: var(--s-3);
+.expRule {
+  display: block;
+  height: 2px;
+  margin: var(--s-4) 0 var(--s-3);
+  background: var(--c-fg);
+}
+
+.expLabel {
+  color: var(--c-fg);
+}
+
+.expText {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-5);
+  align-self: center;
+}
+
+.expKinds {
+  color: var(--c-fg);
+}
+
+.statement {
+  max-width: 24ch;
+  font-size: clamp(1.35rem, 2.5vw, 2.5rem);
 }
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--s-8) var(--s-6);
-  margin: 0;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-6);
+  margin: clamp(48px, 6vw, 96px) 0 0;
 }
 
 .facts > div {
@@ -86,7 +164,7 @@
 
 .facts dd {
   margin: 0;
-  font-size: clamp(3rem, 7vw, 7.5rem);
+  font-size: clamp(2.2rem, 4.2vw, 4.6rem);
   font-variation-settings: "wdth" 125, "wght" 800;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
@@ -95,7 +173,7 @@
 }
 
 .facts .factWord {
-  font-size: clamp(1.8rem, 3.5vw, 3.8rem);
+  font-size: clamp(2.2rem, 4.2vw, 4.6rem);
 }
 
 /* Product rail --------------------------------------------------------------- */
@@ -593,18 +671,10 @@
 /* Phones and tablets ------------------------------------------------------------ */
 
 @media (max-width: 900px) {
-  .introGrid,
+  .experience,
   .brandsHead,
   .contactBody {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .statement {
-    text-indent: 0;
-  }
-
-  .introPhoto :global(.frame) {
-    max-height: none;
   }
 
   .facts {
@@ -705,6 +775,14 @@
 }
 
 @media (max-width: 560px) {
+  .tagline {
+    font-size: 13.4vw;
+  }
+
+  .expNumber {
+    font-size: 44vw;
+  }
+
   .facts {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
@@ -714,7 +792,8 @@
   }
 
   .facts .factWord {
-    font-size: clamp(1.2rem, 5.2vw, 2.2rem);
+    font-size: clamp(2.2rem, 11.4vw, 3.4rem);
+    grid-column: 1 / -1;
   }
 
   .brandList li {
@@ -770,4 +849,8 @@
   .panelName a {
     min-height: 44px;
   }
+}
+
+.railWrap {
+  display: block;
 }

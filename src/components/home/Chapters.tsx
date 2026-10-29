@@ -1,6 +1,6 @@
+import Link from "next/link";
 import type { CSSProperties } from "react";
-import { ArrowUpRight, DownloadSimple, EnvelopeSimple, Phone, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
-import { Photo } from "@/components/system/Photo";
+import { ArrowRight, ArrowUpRight, DownloadSimple, EnvelopeSimple, Phone, WhatsappLogo } from "@phosphor-icons/react/dist/ssr";
 import { Split } from "@/components/system/Split";
 import { FactoryMap } from "@/components/system/FactoryMap";
 import { BrandsList } from "@/components/home/BrandsList";
@@ -15,14 +15,17 @@ import styles from "./Home.module.css";
 
 const order = (i: number) => ({ "--i": i }) as CSSProperties;
 
-/** Who HIRANIX is, in one sentence you read into focus, and the figures behind it. */
+/**
+ * The company's line, set huge and drifting against the scroll, then fifteen
+ * years of making things, with the factory floor showing through the numerals.
+ */
 export function IntroChapter() {
   const facts = [
-    { value: 15, suffix: "+", label: "Years of manufacturing" },
     { value: 5, label: "Product systems" },
     { value: products.length, label: "Products in the range" },
-    { text: "Worldwide", label: "Deliveries" },
+    { text: "Worldwide", label: "Deliveries from one factory" },
   ];
+  const floor = encodeURIComponent("/assets/hiranix/factory/wire-forming-floor.jpg");
 
   return (
     <section className={styles.intro} data-chapter="bone" aria-labelledby="intro-title">
@@ -31,44 +34,60 @@ export function IntroChapter() {
         <p className="t-mono">Mehmedabad, Gujarat, India</p>
       </div>
 
-      <h2 id="intro-title" className="sr-only">About HIRANIX</h2>
-      <Split as="p" mode="fill" className={`t-statement ${styles.statement}`}>
-        We make the small parts every electrical installation depends on. Cable clips, boxes,
-        nails and clamps, made in our own factory and trusted on sites across India and overseas.
-      </Split>
+      <h2 id="intro-title" className={styles.tagline}>
+        <span className={styles.tagLine} data-drift="1">
+          <Split as="span" className={styles.tagThin}>The perfect</Split>
+        </span>
+        <span className={`${styles.tagLine} ${styles.tagMid}`} data-drift="-1">
+          <Split as="span" delay={120}>choice for</Split>
+        </span>
+        <span className={`${styles.tagLine} ${styles.tagGreen}`} data-drift="1">
+          <span className={styles.mark} data-rule aria-hidden="true" />
+          <Split as="span" delay={240}>every fix.</Split>
+        </span>
+      </h2>
 
-      <div className={styles.introGrid}>
-        <figure className={styles.introPhoto}>
-          <span className="frame" data-parallax="0.1" data-reveal="unveil">
-            <Photo
-              src="/assets/hiranix/factory/wire-forming-floor.jpg"
-              alt="Wire forming machines on the HIRANIX production floor"
-              width={1086}
-              height={1448}
-              sizes="(max-width: 900px) 92vw, 40vw"
-            />
-          </span>
-          <figcaption className="t-mono">Wire forming floor, Mehmedabad</figcaption>
-        </figure>
+      <div className={styles.experience}>
+        <div className={styles.expNumberWrap} data-reveal="rise">
+          <p
+            className={styles.expNumber}
+            data-bgpan
+            style={{
+              backgroundImage: `linear-gradient(rgba(5, 6, 5, 0.14), rgba(5, 6, 5, 0.14)), url(/_vinext/image?url=${floor}&w=1200&q=75)`,
+            }}
+          >
+            <span data-count="15">15</span>+
+          </p>
+          <span className={styles.expRule} data-rule aria-hidden="true" />
+          <p className={`t-mono ${styles.expLabel}`}>Years of manufacturing</p>
+        </div>
 
-        <dl className={styles.facts}>
-          {facts.map((fact, i) => (
-            <div key={fact.label} data-reveal="rise" style={order(i)}>
-              <dd className={"text" in fact ? styles.factWord : undefined}>
-                {"text" in fact ? (
-                  fact.text
-                ) : (
-                  <>
-                    <span data-count={fact.value}>{fact.value}</span>
-                    {fact.suffix && <span className="t-accent">{fact.suffix}</span>}
-                  </>
-                )}
-              </dd>
-              <dt className="t-mono">{fact.label}</dt>
-            </div>
-          ))}
-        </dl>
+        <div className={styles.expText}>
+          <Split as="p" mode="fill" className={`t-statement ${styles.statement}`}>
+            We make the small parts every electrical installation depends on. Cable clips, boxes,
+            nails and clamps, made in our own factory and trusted on sites across India and
+            overseas.
+          </Split>
+          <p className={`t-mono ${styles.expKinds}`} data-reveal="rise">
+            Cable clips / Boxes / Nails / Clamps
+          </p>
+          <Link className="link" href="/products" data-reveal="rise" style={order(1)}>
+            Explore the range
+            <ArrowRight size={16} weight="bold" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
+
+      <dl className={styles.facts}>
+        {facts.map((fact, i) => (
+          <div key={fact.label} data-reveal="rise" style={order(i)}>
+            <dd className={"text" in fact ? styles.factWord : undefined}>
+              {"text" in fact ? fact.text : <span data-count={fact.value}>{fact.value}</span>}
+            </dd>
+            <dt className="t-mono">{fact.label}</dt>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

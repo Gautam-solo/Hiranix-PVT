@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/ArrowRight";
 import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight";
@@ -24,7 +24,8 @@ export function SystemsRail() {
   const track = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLSpanElement>(null);
 
-  useEffect(() => {
+  // A layout effect, so the pin is undone before React removes the section.
+  useLayoutEffect(() => {
     const root = section.current;
     const rail = track.current;
     if (!root || !rail || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -82,7 +83,11 @@ export function SystemsRail() {
     };
   }, []);
 
+  // The pinned <section> gets wrapped in a spacer element by GSAP. Keeping it
+  // inside a plain wrapper means React always removes a node it created itself,
+  // whatever state the pin is in when you leave the page.
   return (
+    <div className={styles.railWrap}>
     <section ref={section} className={styles.rail} data-chapter="ink" aria-labelledby="products-title">
       <div ref={track} className={styles.railTrack}>
         <div className={styles.railIntro}>
@@ -174,5 +179,6 @@ export function SystemsRail() {
         <span ref={bar} />
       </div>
     </section>
+    </div>
   );
 }

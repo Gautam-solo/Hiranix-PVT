@@ -13,6 +13,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
  *   data-words                     words fill as the reader scrolls (Split)
  *   data-rule                      a hairline draws itself in
  *   data-parallax="0.12"           the photo inside drifts as the page scrolls
+ *   data-drift="1|-1"              the row slides sideways against the scroll
+ *   data-bgpan                     a background photo pans as the page scrolls
  *   data-count="15"                count up from zero once, on entry
  *
  * Entry reveals are CSS transitions switched on by an observer; everything
@@ -76,6 +78,33 @@ export function ChapterMotion() {
           stagger: 0.08,
           scrollTrigger: { trigger: el, start: "top 82%", end: "bottom 42%", scrub: 0.6 },
         });
+      });
+
+      // Rows of huge type slide sideways, in alternating directions.
+      gsap.utils.toArray<HTMLElement>("[data-drift]").forEach((row) => {
+        const dir = Number(row.dataset.drift) || 1;
+        gsap.fromTo(
+          row,
+          { xPercent: dir * -7 },
+          {
+            xPercent: dir * 7,
+            ease: "none",
+            scrollTrigger: { trigger: row, start: "top bottom", end: "bottom top", scrub: 0.6 },
+          },
+        );
+      });
+
+      // A photograph inside lettering pans as the page scrolls.
+      gsap.utils.toArray<HTMLElement>("[data-bgpan]").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { backgroundPositionY: "0%" },
+          {
+            backgroundPositionY: "100%",
+            ease: "none",
+            scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: 0.6 },
+          },
+        );
       });
 
       // Photos drift inside their frames, slower than the page.
