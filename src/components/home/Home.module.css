@@ -825,7 +825,16 @@
   }
 
   .brandList li {
-    grid-template-columns: 28px minmax(0, 1fr) auto;
+    grid-template-columns: 24px minmax(0, 1fr) auto;
+    gap: var(--s-3);
+  }
+
+  .brandName {
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+  }
+
+  .brandMark {
+    width: 44px;
   }
 
   .contactActions,

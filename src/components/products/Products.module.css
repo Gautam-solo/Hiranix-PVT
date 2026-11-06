@@ -366,7 +366,14 @@
   }
 
   .name {
+    min-height: 2.3em;
+    margin-bottom: var(--s-3);
     font-size: 1rem;
+  }
+
+  .meta {
+    gap: var(--s-2);
+    font-size: 0.68rem;
   }
 }
 

@@ -239,8 +239,12 @@
 /* Smaller screens ----------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .topGrid,
-    .photos {
+  .topGrid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-6);
+  }
+
+  .photos {
     position: static;
   }
 
