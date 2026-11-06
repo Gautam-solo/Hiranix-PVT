@@ -1013,3 +1013,20 @@
   }
 }
 .hx-menu-drawer:focus{outline:none}
+
+/* Safari 13.1-14 (in the browserslist) has no aspect-ratio, so the stage above
+   would collapse to zero height. Give those browsers an explicit height built
+   from viewport units only: never `%`, which inside a height resolves against
+   the wrapper's height (the bug aspect-ratio fixed). 103vw is the wrapper's
+   width: the hero is the viewport and the wrapper is inset -1.5% each side. */
+@supports not (aspect-ratio: 1 / 1) {
+  .hx-stage {
+    height: calc(min(max(103vw, 165.54vh), calc(203.3vh - 168px)) / 1.6554);
+  }
+
+  @media (max-width: 900px) {
+    .hx-stage {
+      height: var(--hx-stage-height);
+    }
+  }
+}

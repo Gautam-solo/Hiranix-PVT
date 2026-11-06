@@ -1,18 +1,24 @@
 .intro {
-  padding: calc(76px + var(--s-8)) var(--page-pad) var(--section);
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  flex-direction: column;
+  padding: calc(76px + var(--s-6)) var(--page-pad) var(--s-7);
 }
 
+/* Centred in the space between the index row and the footer band. */
 .title {
   display: grid;
-  margin: clamp(32px, 5vw, 80px) 0 0;
+  margin: auto 0;
+  padding: var(--s-7) 0;
   font-weight: inherit;
 }
 
 /* "Small parts." is small on purpose; "BIG SITES." fills the width. */
 .titleSmall {
   font-size: clamp(1.4rem, 4.2vw, 4.4rem);
-  font-variation-settings: "wdth" 75, "wght" 300;
-  letter-spacing: -0.005em;
+  font-variation-settings: "wdth" 90, "wght" 560;
+  letter-spacing: -0.02em;
   line-height: 1;
 }
 
@@ -38,8 +44,87 @@
   color: var(--hx-green);
 }
 
-.titleHint {
-  margin-top: var(--s-5);
+/* Footer band: what we make, a preview of the five floor steps, and the way down. */
+.introFoot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--s-6);
+  align-items: end;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-line);
+}
+
+.introLine {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--c-sub);
+}
+
+.introStrip {
+  display: flex;
+  gap: var(--s-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.introStrip li {
+  display: grid;
+  gap: var(--s-2);
+  justify-items: start;
+}
+
+.introThumb {
+  display: block;
+  width: clamp(52px, 4.6vw, 80px);
+  /* Explicit height too: Safari 13.1-14 has no aspect-ratio (3:4 of the width). */
+  height: clamp(69px, 6.13vw, 107px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.introThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  transition: filter 400ms var(--ease-expo), transform 600ms var(--ease-expo);
+}
+
+.introStrip li:hover .introThumb img {
+  filter: none;
+  transform: scale(1.06);
+}
+
+.introCue {
+  display: grid;
+  gap: var(--s-2);
+  justify-items: end;
+  text-align: right;
+}
+
+.introCue a {
+  color: var(--c-acc);
+  text-decoration: none;
+}
+
+.introCue a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 900px) {
+  .introFoot {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+    align-items: start;
+  }
+
+  .introCue {
+    justify-items: start;
+    text-align: left;
+  }
 }
 
 
@@ -160,25 +245,6 @@
   }
 }
 
-/* Manifesto ----------------------------------------------------------------------- */
-
-.manifesto {
-  padding: var(--section) var(--page-pad);
-}
-
-.manifestoText {
-  max-width: 22ch;
-  margin: clamp(40px, 6vw, 96px) 0 0;
-  font-size: clamp(2rem, 6.4vw, 7.2rem);
-  font-variation-settings: "wdth" 105, "wght" 640;
-  letter-spacing: -0.005em;
-  line-height: 0.98;
-}
-
-.mark {
-  color: #05461f;
-}
-
 /* Five verbs ------------------------------------------------------------------------ */
 
 .verbs {
@@ -279,5 +345,12 @@
   .verbSide,
   .wave [data-glyph] {
     transition: none;
+  }
+}
+
+/* "Move over the words" only means something with a pointer that hovers. */
+@media (hover: none) {
+  .introCue p {
+    display: none;
   }
 }

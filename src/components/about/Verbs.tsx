@@ -41,7 +41,7 @@ export function Verbs() {
   return (
     <section className={styles.verbs} data-chapter="ink" aria-labelledby="verbs-title">
       <div className="hx-index">
-        <p className="t-mono">(03) How it is made</p>
+        <p className="t-mono">(02) How it is made</p>
         <p className="t-mono">Five steps, one roof</p>
       </div>
       <h2 id="verbs-title" className="sr-only">How it is made</h2>

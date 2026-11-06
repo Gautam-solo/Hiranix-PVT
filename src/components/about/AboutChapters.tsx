@@ -2,11 +2,14 @@ import type { CSSProperties } from "react";
 import { AppleLogo, GooglePlayLogo } from "@phosphor-icons/react/dist/ssr";
 import { Split } from "@/components/system/Split";
 import { LetterWave } from "@/components/about/LetterWave";
+import { Photo } from "@/components/system/Photo";
+import { factory } from "@/data/company";
 import styles from "./About.module.css";
 
 const order = (i: number) => ({ "--i": i }) as CSSProperties;
 
-/** Who we are: "small parts" set small, "big sites" set enormous, and alive. */
+/** The opener: "small parts" set small, "big sites" set enormous, and alive,
+ *  closed by a band that previews the factory floor below. */
 export function AboutIntro() {
   return (
     <section className={styles.intro} data-chapter="ink" aria-labelledby="about-title">
@@ -18,28 +21,25 @@ export function AboutIntro() {
         <span className={styles.titleSmall} data-reveal="rise" data-atf="">Small parts.</span>
         <LetterWave text="BIG SITES." accentFrom={4} className={styles.titleBig} />
       </h1>
-      <p className={`t-mono ${styles.titleHint}`} data-reveal="rise" data-atf="">
-        Move over the words
-      </p>
-    </section>
-  );
-}
-
-/** The company in one sentence, read into focus as you scroll. */
-export function AboutManifesto() {
-  return (
-    <section className={styles.manifesto} data-chapter="bone" aria-labelledby="manifesto-title">
-      <div className="hx-index">
-        <p className="t-mono">(02) Who we are</p>
-        <p className="t-mono">Mehmedabad, Gujarat, India</p>
+      <div className={styles.introFoot}>
+        <p className={`t-body ${styles.introLine}`} data-reveal="rise" data-atf="">
+          Electrical fittings, fasteners, cable management and enclosures, made in Mehmedabad, Gujarat.
+        </p>
+        <ol className={styles.introStrip} aria-label="Five steps on the factory floor" data-reveal="rise" data-atf="" style={order(1)}>
+          {factory.map((stage, i) => (
+            <li key={stage.title}>
+              <span className={`frame ${styles.introThumb}`}>
+                <Photo src={stage.src} alt={stage.alt} width={1086} height={1448} sizes="80px" />
+              </span>
+              <span className="t-mono">{String(i + 1).padStart(2, "0")}</span>
+            </li>
+          ))}
+        </ol>
+        <div className={styles.introCue} data-reveal="rise" data-atf="" style={order(2)}>
+          <p className="t-mono">Move over the words</p>
+          <a className="t-mono" href="#verbs-title">Scroll · How it is made <span aria-hidden="true">↓</span></a>
+        </div>
       </div>
-      <h2 id="manifesto-title" className="sr-only">Who we are</h2>
-      <Split as="p" mode="fill" className={styles.manifestoText}>
-        Hiranix India Private Limited brings the electrical and installation products every site
-        uses into <span className={styles.mark}>one clear range</span>, made in our{" "}
-        <span className={styles.mark}>own factory</span> in Mehmedabad, Gujarat, and supplied to
-        customers across India and overseas.
-      </Split>
     </section>
   );
 }
@@ -50,7 +50,7 @@ export function AboutApp() {
     <section className={styles.appSection} data-chapter="ink" aria-labelledby="app-title">
       <div className={styles.app}>
         <div>
-          <p className="t-mono">(05) On your phone</p>
+          <p className="t-mono">(04) On your phone</p>
           <Split id="app-title" className="t-display-l">
             The HIRANIX <span className="t-accent">app</span>
           </Split>
