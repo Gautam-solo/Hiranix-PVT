@@ -186,6 +186,7 @@
 
 .photo {
   aspect-ratio: 4 / 5;
+  background: #e8eae4; /* the studio backdrop, so a tile never flashes dark while its photo loads */
   margin-bottom: var(--s-4);
 }
 

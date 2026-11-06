@@ -51,6 +51,7 @@
 .mainPhoto {
   width: 100%;
   aspect-ratio: 1;
+  background: #e8eae4;
 }
 
 .mainPhoto img {

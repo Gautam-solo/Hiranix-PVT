@@ -26,7 +26,7 @@ export function ProductTile({
           width={1122}
           height={1402}
           sizes="(max-width: 560px) 46vw, (max-width: 900px) 46vw, (max-width: 1200px) 31vw, 23vw"
-          priority={index < 2}
+          priority={index < 4}
         />
         {/* The second view of the product, shown on hover. */}
         {product.alternateImage !== product.image && (

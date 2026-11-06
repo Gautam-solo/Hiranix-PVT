@@ -17,6 +17,8 @@ export function SmoothScroll() {
     if (!("ResizeObserver" in window)) return;
 
     gsap.registerPlugin(ScrollTrigger);
+    // The address bar sliding away on phones must not re-measure every trigger mid-scroll.
+    ScrollTrigger.config({ ignoreMobileResize: true });
     const lenis = new Lenis({
       wrapper: document.documentElement,
       content: document.body,
