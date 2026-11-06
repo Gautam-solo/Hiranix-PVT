@@ -349,11 +349,13 @@
   bottom: 0;
   left: calc((100% - var(--sw)) * 0.58);
   width: var(--sw);
-  height: calc(var(--sw) / 1.6554);
   /* Drop coordinates are authored in the plate's native 1614x975 space, so the
-     stage has to hold that ratio. Deriving the height from --sw instead lets its
-     `100%` resolve against the wrapper's height, skewing the plate away from the
-     products and dropping them through the pedestal surfaces. */
+     stage has to hold that ratio. The height must come from aspect-ratio, never
+     from calc(var(--sw) / 1.6554): inside a height, the `100%` in --sw resolves
+     against the wrapper's HEIGHT, so on any screen wider than 1.6554:1 the stage
+     came out short (1557x900 on a 1512x900 laptop), squashing the plate and
+     sinking every product 17-20 plate px into its pedestal. */
+  height: auto;
   aspect-ratio: 1614 / 975;
   transform-origin: 50% 50%;
   will-change: transform, opacity;
@@ -378,7 +380,12 @@
    the box's footprint sits forward of the back edge, so seating it at 42.26%
    left the whole face in front of the box and read as hovering. */
 .hx-pedestal-metal {
-  top: 43.692%;
+  /* 409 of 975: the glass top's BACK edge where it meets the box's sides
+     (408 at the left side, 413 at the right; 416-422 is the slab's thickness).
+     The box is photographed straight-on, so any contact below that edge lets the
+     edge line enter the box's sides above its bottom and the box reads as sunk
+     into the glass. Measured off hero-plate.webp columns 770 and 940. */
+  top: 41.949%;
   left: 41.76%;
   width: 22.8%;
   height: 0;
@@ -415,7 +422,7 @@
    already seated before the runtime measure lands. Under reduced motion the
    cutouts are visible immediately, so a stale fallback shows as a visible jump. */
 .hx-drop-metal {
-  top: 17.954%;
+  top: 16.21%;
   left: 48.06%;
 }
 
@@ -424,7 +431,9 @@
 }
 
 .hx-drop-clip img {
-  clip-path: inset(0 0 23% 0);
+  /* drop-clip-v2.png is keyed: the arch opening and the plinth strip baked into
+     the old cutout are transparent, so the scene shows through the clip. */
+  filter: drop-shadow(0 6px 6px rgba(0, 0, 0, 0.25));
 }
 
 .hx-drop-tie img {

@@ -38,30 +38,31 @@ type Drop = {
 // float above or sink through the glass.
 //
 // `surface` is where the product's bottom edge meets the pedestal's top face, in
-// plate pixels. It is NOT the face's front rim: the rims slope with the
-// perspective, and a flat-bottomed product is as wide as the face is deep, so a
-// surface taken at the left rim sinks through the right one. Each value below
-// sits 5 to 8 px behind the *highest* front-rim point across the product's width:
-//   metal  front rim 433-435 (left to centre)   -> 426
+// plate pixels. The products are photographed straight-on, so they must land on
+// the top face's UPPER (back) edge. Any lower and that edge line runs into the
+// product's sides above its bottom, and the product reads as sunk into the
+// glass. The flat cable tie is the exception: it lies on the face, so it sits
+// mid-depth. Edges measured off hero-plate.webp beside each product:
+//   metal  back edge 408 (left side) / 413 (right) -> 409: a straight-on box must meet the back edge
 //   pvc    top face is edge-on, rim 628-631     -> 629 (unchanged)
-//   plate  front rim 865 left, 857 right        -> 852
-//   nail   front rim 738                        -> 733
-//   clip   front rim 738                        -> 734
+//   plate  upper (back) edge 837                -> 838
+//   nail   upper (back) edge 720                -> 721
+//   clip   upper (back) edge 720                -> 721
 //   tie    front rim 807, tilted 2deg (+-3.2px) -> 802.5
 //
 //                                surface  foot
 const DROPS: Drop[] = [
   // metal is snapped at runtime against .hx-pedestal-metal — see useLayoutEffect.
-  { id: "metal", name: "Metal Junction Box", asset: "/assets/hiranix/hero-products/metal-junction-box-v4.webp", x: 48.06, y: 17.954, w: 10.2, sx: 53.92, sy: 43.692, sw: 12.2, fall: 0.68, lift: -300, drift: -20, rot: 0 },
-  //                                                                                      426  250.95
+  { id: "metal", name: "Metal Junction Box", asset: "/assets/hiranix/hero-products/metal-junction-box-v4.webp", x: 48.06, y: 16.21, w: 10.2, sx: 53.92, sy: 41.949, sw: 12.2, fall: 0.68, lift: -300, drift: -20, rot: 0 },
+  //                                                                                      409  250.95
   { id: "pvc", name: "Open Surface Box", x: 28.005, y: 46.487, w: 18.835, sx: 37.42, sy: 65.74, sw: 20.5, fall: 0.62, lift: -210, drift: -60, rot: -7 },
   //                                                    629  175.75
-  { id: "plate", name: "Modular Gang Box", x: 44.548, y: 65.92, w: 18.03, sx: 53.56, sy: 87.69, sw: 19.5, fall: 0.58, lift: -150, drift: 20, rot: 4 },
-  //                                                      852  209.28
-  { id: "nail", name: "Concrete Nail", asset: "/assets/hiranix/hero-products/concrete-nail-v2.png", x: 72.85, y: 60.169, w: 1.02, sx: 73.36, sy: 75.59, sw: 3.5, fall: 0.5, lift: -360, drift: 34, rot: 2 },
-  //                                                                                                        733  146.35
-  { id: "clip", name: "Cable Nail Clip", x: 74.64, y: 65.804, w: 6.444, sx: 77.86, sy: 75.79, sw: 8, fall: 0.5, lift: -250, drift: 62, rot: 7 },
-  //                                                 734   92.41
+  { id: "plate", name: "Modular Gang Box", x: 44.548, y: 64.484, w: 18.03, sx: 53.56, sy: 86.254, sw: 19.5, fall: 0.58, lift: -150, drift: 20, rot: 4 },
+  //                                                      838  209.28
+  { id: "nail", name: "Concrete Nail", asset: "/assets/hiranix/hero-products/concrete-nail-v2.png", x: 72.85, y: 58.938, w: 1.02, sx: 73.36, sy: 74.359, sw: 3.5, fall: 0.5, lift: -360, drift: 34, rot: 2 },
+  //                                                                                                        721  146.35
+  { id: "clip", name: "Cable Nail Clip", asset: "/assets/hiranix/drop-clip-v2.png", x: 74.64, y: 64.513, w: 6.444, sx: 77.86, sy: 74.457, sw: 8, fall: 0.5, lift: -250, drift: 62, rot: 7 },
+  //                                                                                       721   92.0
   { id: "tie", name: "Nylon Cable Tie", asset: "/assets/hiranix/hero-products/nylon-cable-tie-v2.png", x: 79.8, y: 81.162, w: 11.36, sx: 85.47, sy: 82.82, sw: 10.8, fall: 0.44, lift: -120, drift: 90, rot: 6 },
   //                                                                                                           802.5 11.17
 ];
